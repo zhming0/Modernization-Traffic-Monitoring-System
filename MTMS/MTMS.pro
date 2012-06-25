@@ -11,8 +11,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        clientmainwindow.cpp
+        clientmainwindow.cpp \
+    imagesender.cpp \
+    clientlogindialog.cpp \
+    imagelistmodelproxy.cpp \
+    imagelistitem.cpp
 
-HEADERS  += clientmainwindow.h
+HEADERS  += clientmainwindow.h \
+    imagesender.h \
+    clientlogindialog.h \
+    imagelistmodelproxy.h \
+    imagelistitem.h
 
-FORMS    += clientmainwindow.ui
+FORMS    += clientmainwindow.ui \
+    clientlogindialog.ui
