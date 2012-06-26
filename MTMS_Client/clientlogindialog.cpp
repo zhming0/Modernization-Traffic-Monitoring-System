@@ -29,6 +29,7 @@ ClientLoginDialog::ClientLoginDialog(ClientSocketProxy* socketProxy, QWidget *pa
     ui->label_wait->setMovie(connectingMovie);
     connectingMovie->start();
 
+    this->setResult(QDialog::Rejected);
     adjustSize();
 
     m_socketProxy = socketProxy;

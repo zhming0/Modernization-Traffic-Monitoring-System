@@ -20,8 +20,14 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     m_loginDialog = new ClientLoginDialog(socketProxy, this);
     if(m_loginDialog->exec() == QDialog::Rejected)
     {
+        this->hide();
         this->close();
     }
+    else
+    {
+        this->show();
+    }
+
 }
 
 ClientMainWindow::~ClientMainWindow()
