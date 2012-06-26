@@ -1,49 +1,38 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MySQlConnection
- Source Server Type    : MySQL
- Source Server Version : 50521
- Source Host           : localhost
- Source Database       : MTMSDB
+ Source Server         : SqliteConnection
+ Source Server Type    : SQLite
+ Source Server Version : 3007004
+ Source Database       : main
 
- Target Server Type    : MySQL
- Target Server Version : 50521
+ Target Server Type    : SQLite
+ Target Server Version : 3007004
  File Encoding         : utf-8
 
- Date: 06/26/2012 16:03:21 PM
+ Date: 06/26/2012 16:35:41 PM
 */
 
-SET NAMES utf8;
-SET FOREIGN_KEY_CHECKS = 0;
+PRAGMA foreign_keys = false;
 
 -- ----------------------------
---  Table structure for `admin`
+--  Table structure for "admin"
 -- ----------------------------
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
-  `aid` int(10) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
-  `passwd` char(32) NOT NULL,
-  PRIMARY KEY (`aid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS "admin";
+CREATE TABLE "admin" (
+	 "username" text(32,0) NOT NULL,
+	 "password" text(32,0) NOT NULL,
+	PRIMARY KEY("username")
+);
 
 -- ----------------------------
---  Records of `admin`
+--  Table structure for "car"
 -- ----------------------------
-BEGIN;
-INSERT INTO `admin` VALUES ('1', 'admin', 'admin');
-COMMIT;
+DROP TABLE IF EXISTS "car";
+CREATE TABLE "car" (
+	 "carid" text(32,0) NOT NULL,
+	 "owner" text(32,0) NOT NULL,
+	PRIMARY KEY("carid")
+);
 
--- ----------------------------
---  Table structure for `car`
--- ----------------------------
-DROP TABLE IF EXISTS `car`;
-CREATE TABLE `car` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `owner` varchar(30) NOT NULL,
-  `carid` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-SET FOREIGN_KEY_CHECKS = 1;
+PRAGMA foreign_keys = true;

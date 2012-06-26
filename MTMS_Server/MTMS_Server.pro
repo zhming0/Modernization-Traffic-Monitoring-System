@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += network
+QT       += sql
 
 TARGET = MTMS_Server
 TEMPLATE = app
@@ -13,12 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         serverwindow.cpp \
-        serverproxy.cpp
+        serverproxy.cpp \
+    serverdbinterface.cpp
 
 HEADERS  += serverwindow.h \
-            serverproxy.h
+            serverproxy.h \
+    serverdbinterface.h
 
 FORMS    += serverwindow.ui
+
+
 
 
 

@@ -60,15 +60,23 @@ void ClientSocketProxy::sendData(const QImage& data)
 
 bool ClientSocketProxy::on_m_socket_connected()
 {
-    sendData(USERNAME);
+    sendData(LOGIN);
     sendData(m_username);
-
-    sendData(PASSWORD);
     sendData(m_passwd);
 }
 void ClientSocketProxy::on_m_socket_readyRead()
 {
     qDebug() << "Reading something";
+    int flag;
+    (*m_stream) >> flag;
+    if (flag == SUCCEEDED)
+    {
+        emit login_succeeded();
+    }
+    if (flag == FAILED)
+    {
+        emit login_failed();
+    }
 }
 void ClientSocketProxy::terminate()
 {
