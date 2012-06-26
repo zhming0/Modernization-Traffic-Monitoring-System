@@ -2,3 +2,5 @@
 /MTMS_Client-build-desktop
 /MTMS_Client/resource/images/Thumbs.db
 *.user
+
+/MTMS_Server-build-desktop
