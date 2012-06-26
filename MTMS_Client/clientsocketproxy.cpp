@@ -10,8 +10,9 @@ ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *p
     QObject(parent)
 {
     m_socket = new QTcpSocket(this);
+    m_stream = new QDataStream(m_socket);
     m_hostAddress = new QHostAddress("127.0.0.1");
-    m_port = 80;
+    m_port = 4000;
 
     m_modelProxy = modelProxy;
 
@@ -37,14 +38,17 @@ void ClientSocketProxy::initConnection()
 
 void ClientSocketProxy::sendData(QString data)
 {
-    m_socket->write(data.toAscii());
+    (*m_stream) << data;
+    m_socket->flush();
 }
 
 void ClientSocketProxy::sendData(int flag)
 {
-    QString s;
-    s.setNum(flag);
-    this->sendData(s);
+//    QString s;
+//    s.setNum(flag);
+//    this->sendData(s);
+    (*m_stream) << flag;
+    m_socket -> flush();
 }
 
 void ClientSocketProxy::sendData(const QImage& data)
@@ -61,15 +65,15 @@ bool ClientSocketProxy::on_m_socket_connected()
 {
     sendData(USERNAME);
     sendData(m_username);
-    m_socket->flush();
+    //m_socket->flush();
 
     sendData(PASSWORD);
     sendData(m_passwd);
-    m_socket->flush();
+    //m_socket->flush();
 }
 void ClientSocketProxy::on_m_socket_readyRead()
 {
-
+    qDebug() << "Reading something";
 }
 void ClientSocketProxy::terminate()
 {
