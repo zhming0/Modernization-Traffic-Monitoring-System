@@ -5,7 +5,7 @@
 bool createConnection()
 {
         QSqlDatabase db=QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName("MTMSDB.db");
+        db.setDatabaseName("MTMSDB.sqlite");
         if (!db.open()) {
                 QMessageBox::critical(0,QObject::tr("Database Error"),
                                                           db.lastError().text());
