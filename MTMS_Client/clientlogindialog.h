@@ -29,6 +29,9 @@ private slots:
     void on_pushButton_more_clicked(bool checked);
     void on_pushButton_login_clicked();
     void on_pushButton_apply_clicked();
+    void on_m_socketProxy_login_succeeded();
+    void on_m_socketProxy_login_failed();
+    void on_m_socketProxy_timeout();
 
 };
 
