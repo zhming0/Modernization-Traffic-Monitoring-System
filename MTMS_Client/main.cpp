@@ -10,7 +10,5 @@ int main(int argc, char *argv[])
     ImageListModelProxy modelProxy;
     ClientSocketProxy socket;
     ClientMainWindow w(&socket, &modelProxy);
-    //w.show();
-
     return a.exec();
 }

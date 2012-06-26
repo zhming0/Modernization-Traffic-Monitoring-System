@@ -22,8 +22,6 @@ public:
     void setModelProxy(ImageListModelProxy* modelProxy);
     void setSocketProxy(ClientSocketProxy* socketProxy);
 
-
-
 private:
     void open();
 
@@ -41,7 +39,6 @@ private slots:
     void on_pushButton_remove_clicked();
     void on_pushButton_send_clicked();
     void on_pushButton_terminate_clicked();
-
 };
 
 #endif // CLIENTMAINWINDOW_H

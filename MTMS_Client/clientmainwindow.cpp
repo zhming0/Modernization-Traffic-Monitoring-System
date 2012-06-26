@@ -18,15 +18,6 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     setSocketProxy(socketProxy);
     this->adjustSize();
     m_loginDialog = new ClientLoginDialog(socketProxy, this);
-    if(m_loginDialog->exec() == QDialog::Rejected)
-    {
-        this->hide();
-        this->close();
-    }
-    else
-    {
-        this->show();
-    }
 
 }
 
