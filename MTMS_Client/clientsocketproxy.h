@@ -27,7 +27,9 @@ public:
     void login(QString username, QString password);
 
 signals:
-
+    void login_succeeded();
+    void login_failed();
+    void timeout();
 public slots:
     bool on_m_socket_connected();
 private slots:

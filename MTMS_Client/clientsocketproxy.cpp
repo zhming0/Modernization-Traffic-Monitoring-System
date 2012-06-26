@@ -44,9 +44,6 @@ void ClientSocketProxy::sendData(QString data)
 
 void ClientSocketProxy::sendData(int flag)
 {
-//    QString s;
-//    s.setNum(flag);
-//    this->sendData(s);
     (*m_stream) << flag;
     m_socket -> flush();
 }
@@ -65,11 +62,9 @@ bool ClientSocketProxy::on_m_socket_connected()
 {
     sendData(USERNAME);
     sendData(m_username);
-    //m_socket->flush();
 
     sendData(PASSWORD);
     sendData(m_passwd);
-    //m_socket->flush();
 }
 void ClientSocketProxy::on_m_socket_readyRead()
 {
@@ -84,6 +79,7 @@ void ClientSocketProxy::terminate()
 void ClientSocketProxy::on_m_socket_error()
 {
     qDebug() << "Connection error\n";
+    emit timeout();
 }
 
 void ClientSocketProxy::setServer(QHostAddress address, quint16 port)
