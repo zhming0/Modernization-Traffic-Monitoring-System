@@ -47,7 +47,7 @@ void ClientLoginDialog::on_pushButton_login_clicked()
     }
 
    // m_socket->connectToHost(m_imageSender->hostAddress(), m_imageSender->port());
-
+    m_socketProxy->login(ui->lineEdit_account->text(), ui->lineEdit_password->text() );
 }
 
 void ClientLoginDialog::on_pushButton_apply_clicked()
