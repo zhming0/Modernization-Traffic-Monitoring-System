@@ -9,6 +9,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QMessageBox>
+#include <QMovie>
 
 ClientLoginDialog::ClientLoginDialog(ClientSocketProxy* socketProxy, QWidget *parent) :
     QDialog(parent),
@@ -16,15 +17,25 @@ ClientLoginDialog::ClientLoginDialog(ClientSocketProxy* socketProxy, QWidget *pa
 {
     ui->setupUi(this);
 
-    ui->widget_configuration->setVisible(false);
+    ui->widget_configuration->setShown(false);
+    this->setFixedHeight(195);
 
     QString Octet = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     ui->lineEdit_host->setValidator(new QRegExpValidator(
              QRegExp("^" + Octet + "\\." + Octet + "\\." + Octet + "\\." + Octet + "$"), this));
 
+    ui->label_wait->setAlignment(Qt::AlignCenter);
+    ui->label_wait->setAttribute(Qt::WA_TranslucentBackground, false);
+    QMovie* connectingMovie = new QMovie(":/loading.gif");
+    ui->label_wait->setMovie(connectingMovie);
+    connectingMovie->start();
+
     adjustSize();
 
     m_socketProxy = socketProxy;
+    connect(m_socketProxy, SIGNAL(login_failed()), this, SLOT(on_m_socketProxy_login_failed()));
+    connect(m_socketProxy, SIGNAL(login_succeeded()), this, SLOT(on_m_socketProxy_login_succeeded()));
+    connect(m_socketProxy, SIGNAL(timeout()), this, SLOT(on_m_socketProxy_timeout()));
 }
 
 ClientLoginDialog::~ClientLoginDialog()
@@ -35,6 +46,7 @@ ClientLoginDialog::~ClientLoginDialog()
 void ClientLoginDialog::on_pushButton_more_clicked(bool checked)
 {
     ui->widget_configuration->setShown(checked);
+    this->setFixedHeight(checked?319:195);
     this->adjustSize();
 }
 
@@ -45,9 +57,8 @@ void ClientLoginDialog::on_pushButton_login_clicked()
         QMessageBox::warning(this, "Warning", "Internal Error#m_imageSender is NULL.");
         return;
     }
-
-   // m_socket->connectToHost(m_imageSender->hostAddress(), m_imageSender->port());
-    m_socketProxy->login(ui->lineEdit_account->text(), ui->lineEdit_password->text() );
+    m_socketProxy->login(ui->lineEdit_account->text(), ui->lineEdit_password->text());
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void ClientLoginDialog::on_pushButton_apply_clicked()
@@ -95,4 +106,21 @@ bool ClientLoginDialog::validateAddress(QString address)
     }
 
     return true;
+}
+
+void ClientLoginDialog::on_m_socketProxy_login_succeeded()
+{
+    accepted();
+}
+
+void ClientLoginDialog::on_m_socketProxy_login_failed()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+    QMessageBox::warning(this, "Warning", "Login failed!");
+}
+
+void ClientLoginDialog::on_m_socketProxy_timeout()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+    QMessageBox::warning(this, "Warning", "Timeout!");
 }

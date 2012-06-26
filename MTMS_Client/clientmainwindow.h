@@ -9,6 +9,7 @@ namespace Ui {
 
 class ImageListModelProxy;
 class ClientSocketProxy;
+class ClientLoginDialog;
 
 
 class ClientMainWindow : public QMainWindow
@@ -24,14 +25,22 @@ public:
 
 
 private:
+    void open();
+
     Ui::ClientMainWindow *ui;
     ImageListModelProxy* m_modelProxy;
     ClientSocketProxy* m_socketProxy;
+    ClientLoginDialog* m_loginDialog;
+
 
 private slots:
     void on_action_Open_triggered();
     void on_action_Exit_triggered();
     void on_action_About_triggered();
+    void on_pushButton_open_clicked();
+    void on_pushButton_remove_clicked();
+    void on_pushButton_send_clicked();
+    void on_pushButton_terminate_clicked();
 
 };
 
