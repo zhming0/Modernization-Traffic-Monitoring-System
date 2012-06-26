@@ -10,7 +10,7 @@ namespace Ui {
 class ImageListModelProxy;
 class ClientSocketProxy;
 class ClientLoginDialog;
-
+class QApplication;
 
 class ClientMainWindow : public QMainWindow
 {

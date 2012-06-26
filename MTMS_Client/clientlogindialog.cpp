@@ -110,7 +110,7 @@ bool ClientLoginDialog::validateAddress(QString address)
 
 void ClientLoginDialog::on_m_socketProxy_login_succeeded()
 {
-    accepted();
+    done(QDialog::Accepted);
 }
 
 void ClientLoginDialog::on_m_socketProxy_login_failed()
