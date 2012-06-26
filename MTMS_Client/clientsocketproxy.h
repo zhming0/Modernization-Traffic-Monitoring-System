@@ -43,6 +43,7 @@ private:
     quint16 m_port;
     ImageListModelProxy* m_modelProxy;
     QString m_username, m_passwd;
+    QDataStream* m_stream;
 };
 
 #endif // CLIENTSOCKETPROXY_H

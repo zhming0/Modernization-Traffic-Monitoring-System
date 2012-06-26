@@ -5,14 +5,23 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 TARGET = MTMS_Server
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        serverwindow.cpp
+        serverwindow.cpp \
+        serverproxy.cpp
 
-HEADERS  += serverwindow.h
+HEADERS  += serverwindow.h \
+            serverproxy.h
 
 FORMS    += serverwindow.ui
+
+
+
+
+
+
