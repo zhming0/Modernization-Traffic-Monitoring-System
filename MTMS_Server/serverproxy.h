@@ -8,8 +8,7 @@ class ServerProxy : public QObject
 {
     Q_OBJECT
     enum Flag{
-        USERNAME,
-        PASSWORD,
+        LOGIN,
         IMAGE,
         FAILED,
         SUCCEEDED

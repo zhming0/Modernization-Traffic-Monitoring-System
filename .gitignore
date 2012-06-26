@@ -1,4 +1,5 @@
 /MTMS/MTMS.pro.user
 /MTMS_Client-build-desktop
 /MTMS_Client/resource/images/Thumbs.db
-*.user
+/*.user
+*DS_Stroe

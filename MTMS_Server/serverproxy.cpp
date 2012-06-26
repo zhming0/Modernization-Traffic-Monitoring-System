@@ -2,6 +2,7 @@
 #include<QTcpServer>
 #include<QTcpSocket>
 #include<qDebug>
+#include"serverdbinterface.h"
 ServerProxy::ServerProxy(QObject *parent) :
     QObject(parent)
 {
@@ -34,20 +35,17 @@ void ServerProxy::on_m_socket_readyRead()
     QDataStream stream(m_socket);
     while (!stream.atEnd())
     {
-        QString s;
         int flag;
         stream >> flag;
-        if (flag == USERNAME)
+        if (flag == LOGIN)
         {
-            qDebug() << "Someone is login";
-            stream >> s;
-            qDebug() << s;
-        }
-        if (flag == PASSWORD)
-        {
-            qDebug() << "Someone is entering password";
-            stream >> s;
-            qDebug() << s;
+            QString un, pd;
+            stream >> un >> pd;
+            qDebug() << un + " is login";
+            if (!ServerDBInterface::login(un, pd))
+                stream << FAILED;
+            else
+                stream << SUCCEEDED;
         }
         if (flag == IMAGE)
         {
