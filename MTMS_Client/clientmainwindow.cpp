@@ -17,15 +17,6 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     setModelProxy(modelProxy);
     setSocketProxy(socketProxy);
     this->adjustSize();
-   /* m_loginDialog = new ClientLoginDialog(socketProxy, this);
-    if(m_loginDialog->exec() == QDialog::Rejected)
-    {
-        this->close();
-    }
-    else
-    {
-    }*/
-
 }
 
 ClientMainWindow::~ClientMainWindow()

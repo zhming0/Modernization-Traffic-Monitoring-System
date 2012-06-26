@@ -11,16 +11,18 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     ImageListModelProxy modelProxy;
     ClientSocketProxy socket;
+
     ClientLoginDialog dialog(&socket);
     int code = dialog.exec();
     if(code == QDialog::Accepted)
     {
+        qDebug() << "Hey!";
        ClientMainWindow w(&socket, &modelProxy);
        w.show();
        return a.exec();
     }
     else
     {
-         return 0;
+         return -1;
     }
 }
