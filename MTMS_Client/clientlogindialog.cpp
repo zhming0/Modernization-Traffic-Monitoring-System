@@ -18,7 +18,6 @@ ClientLoginDialog::ClientLoginDialog(ClientSocketProxy* socketProxy, QWidget *pa
     ui->setupUi(this);
 
     ui->widget_configuration->setShown(false);
-    this->setFixedHeight(195);
 
     QString Octet = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     ui->lineEdit_host->setValidator(new QRegExpValidator(
@@ -46,7 +45,7 @@ ClientLoginDialog::~ClientLoginDialog()
 void ClientLoginDialog::on_pushButton_more_clicked(bool checked)
 {
     ui->widget_configuration->setShown(checked);
-    this->setFixedHeight(checked?319:195);
+  //  this->setFixedHeight(checked?319:195);
     this->adjustSize();
 }
 
