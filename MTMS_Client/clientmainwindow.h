@@ -22,10 +22,16 @@ public:
     void setSocketProxy(ClientSocketProxy* socketProxy);
 
 
+
 private:
     Ui::ClientMainWindow *ui;
     ImageListModelProxy* m_modelProxy;
     ClientSocketProxy* m_socketProxy;
+
+private slots:
+    void on_action_Open_triggered();
+    void on_action_Exit_triggered();
+    void on_action_About_triggered();
 
 };
 

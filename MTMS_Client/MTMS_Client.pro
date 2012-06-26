@@ -27,3 +27,6 @@ FORMS    += clientmainwindow.ui \
     clientlogindialog.ui
 
 QT += network
+
+RESOURCES += \
+    images.qrc

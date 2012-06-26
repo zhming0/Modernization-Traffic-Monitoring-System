@@ -35,5 +35,21 @@ void ClientMainWindow::setSocketProxy(ClientSocketProxy* socketProxy)
     m_socketProxy = socketProxy;
 }
 
+void ClientMainWindow::on_action_Open_triggered()
+{
+
+}
+
+void ClientMainWindow::on_action_Exit_triggered()
+{
+    this->close();
+}
+
+void ClientMainWindow::on_action_About_triggered()
+{
+
+}
+
+
 
 
