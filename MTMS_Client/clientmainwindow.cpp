@@ -3,6 +3,7 @@
 
 #include "imagelistmodelproxy.h"
 #include "clientsocketproxy.h"
+#include "clientlogindialog.h"
 
 #include <QDebug>
 
@@ -12,8 +13,15 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     ui(new Ui::ClientMainWindow)
 {
     ui->setupUi(this);
+    ui->progressBar->setShown(false);
     setModelProxy(modelProxy);
     setSocketProxy(socketProxy);
+    this->adjustSize();
+    m_loginDialog = new ClientLoginDialog(socketProxy, this);
+    if(m_loginDialog->exec() == QDialog::Rejected)
+    {
+        this->close();
+    }
 }
 
 ClientMainWindow::~ClientMainWindow()
@@ -37,7 +45,7 @@ void ClientMainWindow::setSocketProxy(ClientSocketProxy* socketProxy)
 
 void ClientMainWindow::on_action_Open_triggered()
 {
-
+    open();
 }
 
 void ClientMainWindow::on_action_Exit_triggered()
@@ -50,6 +58,30 @@ void ClientMainWindow::on_action_About_triggered()
 
 }
 
+void ClientMainWindow::on_pushButton_open_clicked()
+{
+
+}
+
+void ClientMainWindow::on_pushButton_remove_clicked()
+{
+
+}
+
+void ClientMainWindow::on_pushButton_send_clicked()
+{
+
+}
+
+void ClientMainWindow::on_pushButton_terminate_clicked()
+{
+
+}
+
+void ClientMainWindow::open()
+{
+
+}
 
 
 

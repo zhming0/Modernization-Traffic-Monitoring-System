@@ -10,9 +10,6 @@ int main(int argc, char *argv[])
     ImageListModelProxy modelProxy;
     ClientSocketProxy socket;
     ClientMainWindow w(&socket, &modelProxy);
-
-    ClientLoginDialog dialog(&socket);
-    dialog.show();
     w.show();
 
     return a.exec();

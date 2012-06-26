@@ -45,9 +45,7 @@ void ClientLoginDialog::on_pushButton_login_clicked()
         QMessageBox::warning(this, "Warning", "Internal Error#m_imageSender is NULL.");
         return;
     }
-
-   // m_socket->connectToHost(m_imageSender->hostAddress(), m_imageSender->port());
-    m_socketProxy->login(ui->lineEdit_account->text(), ui->lineEdit_password->text() );
+    m_socketProxy->login(ui->lineEdit_account->text(), ui->lineEdit_password->text());
 }
 
 void ClientLoginDialog::on_pushButton_apply_clicked()
