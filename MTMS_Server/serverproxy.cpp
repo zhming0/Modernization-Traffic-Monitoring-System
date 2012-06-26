@@ -41,7 +41,7 @@ void ServerProxy::on_m_socket_readyRead()
         {
             QString un, pd;
             stream >> un >> pd;
-            qDebug() << un + " is login";
+            qDebug() << un + " is logining.";
             if (!ServerDBInterface::login(un, pd))
                 stream << FAILED;
             else

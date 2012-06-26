@@ -8,7 +8,7 @@
 #include <QDebug>
 
 
-ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListModelProxy* modelProxy, QWidget *parent) :
+ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListModelProxy* modelProxy,  QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ClientMainWindow)
 {
@@ -17,16 +17,14 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     setModelProxy(modelProxy);
     setSocketProxy(socketProxy);
     this->adjustSize();
-    m_loginDialog = new ClientLoginDialog(socketProxy, this);
+   /* m_loginDialog = new ClientLoginDialog(socketProxy, this);
     if(m_loginDialog->exec() == QDialog::Rejected)
     {
-        this->hide();
         this->close();
     }
     else
     {
-        this->show();
-    }
+    }*/
 
 }
 

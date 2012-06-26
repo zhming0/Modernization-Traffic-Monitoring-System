@@ -10,7 +10,7 @@ namespace Ui {
 class ImageListModelProxy;
 class ClientSocketProxy;
 class ClientLoginDialog;
-
+class QApplication;
 
 class ClientMainWindow : public QMainWindow
 {
@@ -21,7 +21,6 @@ public:
     ~ClientMainWindow();
     void setModelProxy(ImageListModelProxy* modelProxy);
     void setSocketProxy(ClientSocketProxy* socketProxy);
-
 
 
 private:
