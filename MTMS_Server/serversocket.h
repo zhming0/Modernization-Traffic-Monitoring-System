@@ -8,7 +8,8 @@ class ServerSocket : public QTcpSocket
         LOGIN,
         IMAGE,
         FAILED,
-        SUCCEEDED
+        SUCCEEDED,
+        PROGRESS
     };
 public:
     ServerSocket(int id);

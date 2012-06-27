@@ -180,11 +180,11 @@ void ClientMainWindow::on_pushButton_send_clicked()
             this->m_modelProxy->setChecked(checkedRows.at(i), false);
             this->m_modelProxy->setStatus(checkedRows.at(i), ImageListModelProxy::FINISHED);
         }
-        this->ui->progressBar->setValue(int(100.0 / path.length() * i));
+        //this->ui->progressBar->setValue(int(100.0 / path.length() * i));
     }
     qDebug() << errorRows;
-    this->ui->progressBar->setValue(100);
-    this->ui->progressBar->setShown(false);
+    //this->ui->progressBar->setValue(100);
+    //this->ui->progressBar->setShown(false);
     this->m_modelProxy->remove(errorRows);
     this->adjustSize();
 }
@@ -234,6 +234,4 @@ void ClientMainWindow::open()
         }
     }
 }
-
-
 

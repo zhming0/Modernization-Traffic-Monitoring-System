@@ -2,6 +2,7 @@
 #include "ui_serverlogindialog.h"
 #include"serverdbinterface.h"
 #include<QMessageBox>
+#include<QCryptographicHash>
 ServerLoginDialog::ServerLoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ServerLoginDialog)
@@ -16,7 +17,7 @@ ServerLoginDialog::~ServerLoginDialog()
 
 void ServerLoginDialog::on_loginButton_clicked()
 {
-    if (ServerDBInterface::login(ui->userNameEdit->text(), ui->userNameEdit->text()))
+    if (ServerDBInterface::login(ui->userNameEdit->text(), QString(QCryptographicHash::hash(ui->userNameEdit->text().toAscii(),QCryptographicHash::Md5).toHex())))
         done(QDialog::Accepted);
     else
         QMessageBox::warning(this, "You idiot", " Login failed, check your username and passwd darling~");

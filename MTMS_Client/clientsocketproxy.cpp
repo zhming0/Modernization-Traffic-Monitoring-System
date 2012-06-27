@@ -76,6 +76,7 @@ void ClientSocketProxy::on_m_socket_readyRead()
     qDebug() << "Reading something";
     int flag;
     (*m_stream) >> flag;
+    qDebug() << "flag = " << flag;
     if (SUCCEEDED == flag)
     {
         emit login_succeeded();
@@ -83,6 +84,11 @@ void ClientSocketProxy::on_m_socket_readyRead()
     if (FAILED == flag)
     {
         emit login_failed();
+    }
+    if (PROGRESS == flag)
+    {
+        int progress;
+        (*m_stream) >> progress;
     }
 }
 void ClientSocketProxy::terminate()

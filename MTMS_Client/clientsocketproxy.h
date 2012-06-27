@@ -14,7 +14,8 @@ enum Flag{
     LOGIN,
     IMAGE,
     FAILED,
-    SUCCEEDED
+    SUCCEEDED,
+    PROGRESS
 };
 public:
     explicit ClientSocketProxy(ImageListModelProxy* modelProxy = NULL, QObject *parent = 0);
