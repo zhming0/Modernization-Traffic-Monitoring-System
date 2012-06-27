@@ -112,3 +112,7 @@ quint16 ClientSocketProxy::port()
 {
     return m_port;
 }
+void ClientSocketProxy::sendImage(const QImage& image)
+{
+    this->sendData(image);
+}

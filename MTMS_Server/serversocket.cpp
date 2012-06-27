@@ -16,6 +16,10 @@ bool ServerSocket::waitNextMessage(int timeout)
         return true;
     return false;
 }
+void ServerSocket::on_disconnected()
+{
+    emit logGenerated(username + " leaved.");
+}
 void ServerSocket::on_readyRead()
 {
     qDebug() << "Reading";
@@ -27,13 +31,16 @@ void ServerSocket::on_readyRead()
         stream >> flag;
         if (flag == LOGIN)
         {
-            QString un, pd;
+            QString pd;
             waitNextMessage(10000);
-            stream>>un;
+            stream>>username;
             waitNextMessage(10000);
             stream>>pd;
-            qDebug() << un + " is logining.";
-            if (!ServerDBInterface::login(un, pd))
+            qDebug() << username + " is logining.";
+
+            emit logGenerated(username + " is logining.");
+
+            if (!ServerDBInterface::login(username, pd))
                 stream << FAILED;
             else
                 stream << SUCCEEDED;
@@ -45,6 +52,7 @@ void ServerSocket::on_readyRead()
             QByteArray bytes;
             stream >> bytes;
             emit imageRead(bytes);
+            emit logGenerated("Received an image from " + username + ".");
         }
     }
     qDebug() << "Read End";

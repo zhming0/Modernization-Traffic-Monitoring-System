@@ -12,7 +12,14 @@ Server::Server(QObject *parent) :
 void Server::startListening(const int &port)
 {
     qDebug() << "Server started\n";
+    emit logGenarated("Server start!");
     this->listen(QHostAddress::Any, port);
+}
+
+void Server::stopListening()
+{
+    emit logGenarated("Server stop!");
+    this->close();
 }
 
 void Server::incomingConnection(int id)
@@ -23,9 +30,16 @@ void Server::incomingConnection(int id)
     thread->start();
     connect(thread, SIGNAL(finished()),
             thread, SLOT(deleteLater()));
+    connect(socket, SIGNAL(logGenerated(QString)),
+            this, SLOT(on_socket_logGenarated(QString)));
 }
 
 void Server::on_socket_imageRead(const QByteArray& bytes)
 {
     emit imageRead(bytes);
+}
+
+void Server::on_socket_logGenarated(const QString & s)
+{
+    emit logGenarated(s);
 }
