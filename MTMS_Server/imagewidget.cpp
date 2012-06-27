@@ -122,7 +122,8 @@ void ImageWidget::load(const QPixmap& pixmap, QString comment)
     m_fileName = comment;
     //this->fitToWindow();
     emit displayed(m_actionFitToWindow->isChecked());
-    m_actionFitToWindow->trigger();
+    if (!m_actionFitToWindow->isChecked())
+        m_actionFitToWindow->trigger();
 }
 
 void ImageWidget::updateActions()

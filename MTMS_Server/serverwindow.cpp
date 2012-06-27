@@ -51,9 +51,5 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     QPixmap* pixelmap = new QPixmap();
     //QImage image;
     pixelmap->loadFromData(bytes, "PNG");
-    //image.loadFromData(bytes, "PNG");
-    //qDebug() << bytes.size();
-    //qDebug() << pixelmap->size();
-    qDebug() << pixelmap->size();
     ui->imageWidget->load(*pixelmap, "");
 }
