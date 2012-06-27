@@ -52,4 +52,5 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     //QImage image;
     pixelmap->loadFromData(bytes, "PNG");
     ui->imageWidget->load(*pixelmap, "");
+    //pixelmap->save("images/".QDateTime::currentDataTime().toString);
 }
