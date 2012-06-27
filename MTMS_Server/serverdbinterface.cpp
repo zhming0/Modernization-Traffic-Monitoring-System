@@ -1,4 +1,5 @@
 #include "serverdbinterface.h"
+#include <QDebug>
 #include<QTSQL>
 ServerDBInterface::ServerDBInterface(QObject *parent) :
     QObject(parent)
