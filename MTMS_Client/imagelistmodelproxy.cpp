@@ -90,7 +90,28 @@ void ImageListModelProxy::setChecked(int index, bool isChecked)
     }
     m_model->item(index, 0)->
             setCheckState(checkState);
+}
 
+QList<QString> ImageListModelProxy::checkedPaths()
+{
+    QList<QStandardItem*> checkStateItems;
+    for(int i = 0; i < m_model->rowCount(); ++i)
+    {
+        checkStateItems << m_model->item(i, 0);
+    }
+    QList<QString> paths;
+    int rowIndex = 0;
+    foreach(QStandardItem* item, checkStateItems)
+    {
+        Qt::CheckState state = item->checkState();
+        if(Qt::Checked == state)
+        {
+            QString path = m_model->item(rowIndex, 1)->text();
+            paths << path;
+        }
+        ++rowIndex;
+    }
+    return paths;
 }
 
 QAbstractItemModel * ImageListModelProxy::model()

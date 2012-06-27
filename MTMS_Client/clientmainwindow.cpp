@@ -21,7 +21,6 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
 
     setModelProxy(modelProxy);
 
-
     setSocketProxy(socketProxy);
     this->adjustSize();
 }
@@ -39,7 +38,6 @@ void ClientMainWindow::setModelProxy(ImageListModelProxy* modelProxy)
         ui->tableView->setModel(m_modelProxy->model());
         ui->tableView->horizontalHeader()->setResizeMode(1, QHeaderView::Stretch);
         ui->tableView->horizontalHeader()->setResizeMode(2, QHeaderView::ResizeToContents);
-
     }
 }
 
@@ -91,8 +89,37 @@ void ClientMainWindow::on_pushButton_clear_clicked()
 
 void ClientMainWindow::on_pushButton_send_clicked()
 {
-   // m_modelProxy-
-    m_socketProxy->sendImage();
+    this->ui->progressBar->setValue(0);
+    this->ui->progressBar->setShown(true);
+    this->adjustSize();
+    QStringList paths = m_modelProxy->checkedPaths();
+    for(int i = 0; i < paths.length(); ++i)
+    {
+        QString path = paths.at(i);
+        QImage image(path);
+        if(image.isNull())
+        {
+            int button = QMessageBox::warning(this, "Warning",
+                                 QString("File %1 is invalid. Do you want to continue?")
+                                 .arg(path), QMessageBox::Yes, QMessageBox::No);
+            if(QMessageBox::No == button)
+            {
+                break;
+            }
+            else if(QMessageBox::Yes == button)
+            {
+                continue;
+            }
+        }
+        else
+        {
+            this->m_socketProxy->sendImage(image);
+        }
+        this->ui->progressBar->setValue(int(100.0 / path.length() * i));
+    }
+    this->ui->progressBar->setValue(100);
+    this->ui->progressBar->setShown(false);
+    this->adjustSize();
 }
 
 void ClientMainWindow::on_pushButton_terminate_clicked()
