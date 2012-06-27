@@ -21,9 +21,10 @@ ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *p
 
 void ClientSocketProxy::login(QString username, QString password)
 {
-    m_socket->connectToHost(*m_hostAddress, m_port);
-    qDebug() << "Login started..\n";
+
+    qDebug() << "Login start..\n";
     m_username = username, m_passwd = password;
+    m_socket->connectToHost(*m_hostAddress, m_port);
 }
 
 void ClientSocketProxy::initConnection()
@@ -54,8 +55,8 @@ void ClientSocketProxy::sendData(const QImage& data)
     QBuffer buf(&bytes);
     buf.open(QIODevice::WriteOnly);
     data.save(&buf);
-    m_socket->write(bytes);
-    m_socket->flush();
+    (*m_stream) << IMAGE;
+    (*m_stream) << bytes;
 }
 
 bool ClientSocketProxy::on_m_socket_connected()
