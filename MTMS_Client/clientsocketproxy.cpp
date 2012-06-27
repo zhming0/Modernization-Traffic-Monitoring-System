@@ -5,7 +5,7 @@
 #include <QDebug>
 #include<QImage>
 #include<QBuffer>
-
+#include<QCryptographicHash>
 ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *parent) :
     QObject(parent)
 {
@@ -16,15 +16,15 @@ ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *p
     m_port = 4000;
 
     m_modelProxy = modelProxy;
-
     initConnection();
 }
 
 void ClientSocketProxy::login(QString username, QString password)
 {
-
     qDebug() << "Login start..\n";
-    m_username = username, m_passwd = password;
+    m_username = username;
+    m_passwd = QString(QCryptographicHash::hash(password.toAscii(),QCryptographicHash::Md5).toHex());
+    qDebug() << m_passwd;
     m_socket->connectToHost(*m_hostAddress, m_port);
 }
 

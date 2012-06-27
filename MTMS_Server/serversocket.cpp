@@ -59,6 +59,7 @@ void ServerSocket::on_readyRead()
             buf.open(QIODevice::WriteOnly);
             while (bytes.length() < size) {
                 waitNextMessage(20000);
+                qDebug() << buf.size();
                 buf.write(this->read(size - bytes.length()));
             }
             emit imageRead(bytes);
