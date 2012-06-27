@@ -42,12 +42,11 @@ void ServerSocket::on_readyRead()
 
             emit logGenerated(username + " is logining.");
 
-            if (!ServerDBInterface::login(username, pd))
+            if (!ServerDBInterface::login(username, pd)) {
                 stream << FAILED;
-            else {
-                stream << SUCCEEDED;
                 abort();
-            }
+            }else
+                stream << SUCCEEDED;
         }
         if (flag == IMAGE)
         {
