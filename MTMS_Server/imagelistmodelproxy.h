@@ -12,6 +12,7 @@ class ImageListModelProxy : public QObject
     Q_OBJECT
 public:
     enum Status {
+        UNRECOGNIZED,
         UNPROCESSED,
         PROCESSED,
         ERROR

@@ -27,11 +27,15 @@ private slots:
 private:
     void initConnection();
     void initTableViews();
+    void loadImageList();
+
     Ui::ServerWindow *ui;
     Server* m_server;
     bool enable;
     ImageListModelProxy* m_modelProxy_recognized;
     ImageListModelProxy* m_modelProxy_unrecognized;
+
+    QString imagePath;
 
 };
 

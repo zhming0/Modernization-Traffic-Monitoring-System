@@ -6,6 +6,9 @@
 #include<QDateTime>
 #include"serverdbinterface.h"
 #include<QDir>
+#include<QFile>
+#include"imagelistitem.h"
+#include<QStringList>
 ServerWindow::ServerWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ServerWindow)
@@ -15,8 +18,10 @@ ServerWindow::ServerWindow(QWidget *parent) :
 
     m_server = new Server(this);
     enable = false;
+    imagePath = "images/";
 
     initConnection();
+    loadImageList();
 }
 ServerWindow::~ServerWindow()
 {
@@ -29,6 +34,23 @@ void ServerWindow::initConnection()
             this, SLOT(on_m_server_logGenerated(QString)));
     connect(m_server, SIGNAL(imageRead(QByteArray)),
             this, SLOT(on_m_server_imageRead(QByteArray)));
+}
+
+void ServerWindow::loadImageList()
+{
+    QList<QStringList> list = ServerDBInterface::getImageList();
+    for (int i = 0; i < list.size(); i++)
+    {
+        QFile* file = new QFile(list[i][2] + list[i][0]);
+        ImageListItem item(file, this);
+        ImageListModelProxy::Status tmp = (ImageListModelProxy::Status)list[i][1].toInt();
+        if (tmp == ImageListModelProxy::UNRECOGNIZED)
+            m_modelProxy_unrecognized->add(item);
+        else {
+            m_modelProxy_recognized->add(item);
+            m_modelProxy_recognized->setStatus(m_modelProxy_recognized->rowCount() - 1, tmp);
+        }
+    }
 }
 
 void ServerWindow::on_serverEnableButton_clicked()
@@ -57,9 +79,18 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     //QImage image;
     pixelmap->loadFromData(bytes, "PNG");
     ui->imageWidget->load(*pixelmap, "");
-    QString filename = QDateTime::currentDateTime().toString();
-    pixelmap->save("images/" + filename, "PNG");
-    ServerDBInterface::addImage(filename, QDir::currentPath() + "/images/");
+    QString filename = QDateTime::currentDateTime().toString() + ".png";
+    pixelmap->save(imagePath + filename, "PNG");
+    ServerDBInterface::addImage(filename, QDir::currentPath() + "/" + imagePath);
+
+    QFile* file = new QFile(imagePath + filename);
+    if (file->exists())
+    {
+        ImageListItem item(file, this);
+        m_modelProxy_unrecognized->add(item);
+    }
+    else
+        on_m_server_logGenerated(imagePath + filename + " is invalid.");
 }
 
 void ServerWindow::initTableViews()
@@ -98,3 +129,7 @@ void ServerWindow::on_pushButton_recognize_clicked()
 {
     qDebug() << "recognize";
 }
+
+
+
+

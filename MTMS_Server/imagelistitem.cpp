@@ -2,12 +2,21 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <cmath>
+#include<QFile>
 
 ImageListItem::ImageListItem(QFileInfo fileInfo, QObject *parent) :
     QObject(parent)
 {
     m_info = NULL;
     setFileInfo(fileInfo);
+}
+
+ImageListItem::ImageListItem(QFile* file, QObject *parent) :
+    QObject(parent)
+{
+    QFileInfo info((*file));
+    m_info = NULL;
+    setFileInfo(info);
 }
 
 ImageListItem::ImageListItem( const ImageListItem& item)

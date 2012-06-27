@@ -32,7 +32,7 @@ bool ServerDBInterface::addImage(const QString& name, const QString& globalPath)
     return false;
 }
 
-const QList<QStringList>& ServerDBInterface::getImageList()
+QList<QStringList> ServerDBInterface::getImageList()
 {
     QList<QStringList> ret;
     QSqlQuery query;

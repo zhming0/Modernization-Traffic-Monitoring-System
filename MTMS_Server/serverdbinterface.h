@@ -12,7 +12,7 @@ public:
     static bool login(const QString& username, const QString& passwd);
 
     static bool addImage(const QString& name, const QString& globalPath);
-    static const QList<QStringList>& getImageList();   //return: list<name, status, path>
+    static QList<QStringList> getImageList();   //return: list<name, status, path>
     static bool setImageStatus(const QString& name, int status);
     static bool removeImage(const QString& name);
 
