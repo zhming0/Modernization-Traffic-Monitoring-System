@@ -1,5 +1,7 @@
 #include "serversocket.h"
 #include"serverdbinterface.h"
+#include<QBuffer>
+#include<QImage>
 ServerSocket::ServerSocket(int id)
 {
     this->setSocketDescriptor(id);
@@ -47,12 +49,19 @@ void ServerSocket::on_readyRead()
         }
         if (flag == IMAGE)
         {
+            int size;
             waitNextMessage(20000);
-            qDebug() << "Someone is uploading image";
+            stream >> size;
+            qDebug() << "Someone is uploading image, size is " << size;
             QByteArray bytes;
-            stream >> bytes;
+            QBuffer buf(&bytes);
+            buf.open(QIODevice::WriteOnly);
+            while (bytes.length() < size) {
+                waitNextMessage(20000);
+                buf.write(this->read(size - bytes.length()));
+            }
             emit imageRead(bytes);
-            emit logGenerated("Received an image from " + username + ".");
+            emit logGenerated("Received an image from " + username + ", image size is " + size+".");
         }
     }
     qDebug() << "Read End";

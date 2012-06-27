@@ -50,14 +50,19 @@ void ClientSocketProxy::sendData(int flag)
     m_socket -> flush();
 }
 
-void ClientSocketProxy::sendData(const QImage& data)
+void ClientSocketProxy::sendData(const QImage& data, QString format)
 {
     QByteArray bytes;
     QBuffer buf(&bytes);
     buf.open(QIODevice::WriteOnly);
-    data.save(&buf);
+    data.save(&buf, "PNG");
     (*m_stream) << IMAGE;
-    (*m_stream) << bytes;
+    (*m_stream) << bytes.length();
+    m_socket->flush();
+    //(*m_stream) << bytes;
+    m_socket->write(bytes);
+    //qDebug() << "+++" << bytes.length();
+    m_socket->flush();
 }
 
 bool ClientSocketProxy::on_m_socket_connected()
@@ -112,7 +117,7 @@ quint16 ClientSocketProxy::port()
 {
     return m_port;
 }
-void ClientSocketProxy::sendImage(const QImage& image)
+void ClientSocketProxy::sendImage(const QImage& image, QString format)
 {
-    this->sendData(image);
+    this->sendData(image, format);
 }

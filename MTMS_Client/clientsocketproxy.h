@@ -23,7 +23,7 @@ public:
     const QHostAddress& hostAddress();
     quint16 port();
     void login(QString username, QString password);
-    void sendImage(const QImage& image);
+    void sendImage(const QImage& image, QString format);
 signals:
     void login_succeeded();
     void login_failed();
@@ -35,7 +35,7 @@ private slots:
     void on_m_socket_readyRead();
 private:
     void sendData(QString data);
-    void sendData(const QImage& data);
+    void sendData(const QImage& data, QString format);
     void sendData(int flag);
     void initConnection();
     QTcpSocket* m_socket;

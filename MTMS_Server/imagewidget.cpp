@@ -120,7 +120,9 @@ void ImageWidget::load(const QPixmap& pixmap, QString comment)
         m_imageLabel->adjustSize();
     m_imageLabel->show();
     m_fileName = comment;
+    //this->fitToWindow();
     emit displayed(m_actionFitToWindow->isChecked());
+    m_actionFitToWindow->trigger();
 }
 
 void ImageWidget::updateActions()

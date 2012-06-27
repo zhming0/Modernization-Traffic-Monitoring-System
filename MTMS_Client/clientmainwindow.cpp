@@ -113,7 +113,7 @@ void ClientMainWindow::on_pushButton_send_clicked()
         }
         else
         {
-            this->m_socketProxy->sendImage(image);
+            this->m_socketProxy->sendImage(image, "PNG");
         }
         this->ui->progressBar->setValue(int(100.0 / path.length() * i));
     }

@@ -32,7 +32,7 @@ void Server::incomingConnection(int id)
             thread, SLOT(deleteLater()));
     connect(socket, SIGNAL(logGenerated(QString)),
             this, SLOT(on_socket_logGenarated(QString)));
-    connect(socket, SIGNAL(readyRead()),
+    connect(socket, SIGNAL(imageRead(QByteArray)),
             this, SLOT(on_socket_imageRead(QByteArray)));
 }
 

@@ -48,8 +48,12 @@ void ServerWindow::on_m_server_logGenarated(const QString& s)
 
 void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
 {
-    qDebug() << "Put image";
     QPixmap* pixelmap = new QPixmap();
-    pixelmap->loadFromData(bytes);
+    //QImage image;
+    pixelmap->loadFromData(bytes, "PNG");
+    //image.loadFromData(bytes, "PNG");
+    //qDebug() << bytes.size();
+    //qDebug() << pixelmap->size();
+    qDebug() << pixelmap->size();
     ui->imageWidget->load(*pixelmap, "");
 }
