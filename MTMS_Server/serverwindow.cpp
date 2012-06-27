@@ -4,6 +4,9 @@
 #include "imagelistmodelproxy.h"
 #include<QDebug>
 #include<QDateTime>
+#include <QFile>
+#include <QFileInfo>
+#include <imagelistitem.h>
 
 ServerWindow::ServerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -78,20 +81,63 @@ void ServerWindow::initTableViews()
 
 void ServerWindow::on_pushButton_update_clicked()
 {
-    qDebug() << "update";
+    QModelIndexList list = ui->tableView_recognized->selectionModel()->selectedRows();
+    if(!list.empty())
+    {
+        int r = list.first().row();
+        m_modelProxy_recognized->setStatus(r, ImageListModelProxy::PROCESSED);
+    }
 }
 
 void ServerWindow::on_pushButton_processAll_clicked()
 {
-    qDebug() << "process all";
+    int rowCount = m_modelProxy_unrecognized->rowCount();
+    for(int i = 0; i < rowCount; ++i)
+    {
+        ui->tableView_unrecognized->selectRow(0);
+        QModelIndexList list = ui->tableView_unrecognized->selectionModel()->selectedRows();
+        if(!list.empty())
+        {
+            int r = list.first().row();
+            QFile file(this->m_modelProxy_unrecognized->path(r));
+            if(file.exists())
+            {
+                QFileInfo fileInfo(file);
+                ImageListItem item(fileInfo);
+                m_modelProxy_recognized->add(item);
+                this->m_modelProxy_unrecognized->remove(r);
+            }
+        }
+    }
 }
 
 void ServerWindow::on_pushButton_clearAllProcessed_clicked()
 {
-    qDebug() << "clear all";
+    int rowCount = m_modelProxy_recognized->rowCount();
+    QList<int> removeList;
+    for(int i = 0; i < rowCount; ++i)
+    {
+        if(m_modelProxy_recognized->status(i) == ImageListModelProxy::PROCESSED)
+        {
+            removeList << i;
+        }
+    }
+    m_modelProxy_recognized->remove(removeList);
 }
 
 void ServerWindow::on_pushButton_recognize_clicked()
 {
-    qDebug() << "recognize";
+    QModelIndexList list = ui->tableView_unrecognized->selectionModel()->selectedRows();
+    if(!list.empty())
+    {
+        int r = list.first().row();
+        QFile file(this->m_modelProxy_unrecognized->path(r));
+        if(file.exists())
+        {
+            QFileInfo fileInfo(file);
+            ImageListItem item(fileInfo);
+            m_modelProxy_recognized->add(item);
+            this->m_modelProxy_unrecognized->remove(r);
+        }
+    }
 }

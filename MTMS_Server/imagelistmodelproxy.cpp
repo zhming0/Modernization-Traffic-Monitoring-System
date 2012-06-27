@@ -180,8 +180,8 @@ QList<QStandardItem*> ImageListModelProxy::createRow()
         QStandardItem* item = new QStandardItem();
         if(i == 0)
         {
-            item->setCheckable(true);
-            item->setCheckState(Qt::Checked);
+            //item->setCheckable(true);
+            //item->setCheckState(Qt::Checked);
             item->setTextAlignment(Qt::AlignVCenter | Qt::AlignCenter);
         }
         if(i == 2)
@@ -221,4 +221,32 @@ QList<int> ImageListModelProxy::checkedRows()
         ++rowIndex;
     }
     return rows;
+}
+
+ImageListModelProxy::Status ImageListModelProxy::status(int index)
+{
+    if(m_model == NULL)
+    {
+        qDebug() << "Internal Error#m_model is NULL.";
+        return "";
+    }
+    if(index < 0 || index >= m_model->rowCount())
+    {
+        qDebug() << "Internal Error#Index out of bounds.";
+        return "";
+    }
+    QString status = m_model->item(index, 3)->text();
+    if(status == "Processed")
+    {
+        return ImageListModelProxy::PROCESSED;
+    }
+    else if (status == "Unprocessed")
+    {
+        return ImageListModelProxy::UNPROCESSED;
+    }
+    else if (status == "Unrecognized")
+    {
+        return ImageListModelProxy::UNRECOGNIZED;
+    }
+    return ImageListModelProxy::ERROR;
 }
