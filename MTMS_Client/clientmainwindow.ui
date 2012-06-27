@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>390</height>
+    <width>700</width>
+    <height>587</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>700</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>ClientMainWindow</string>
@@ -53,6 +65,9 @@
              <height>31</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Open Files</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -72,6 +87,9 @@
              <width>31</width>
              <height>31</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Remove Item</string>
            </property>
            <property name="text">
             <string/>
@@ -93,12 +111,45 @@
              <height>31</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Clear Items</string>
+           </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
             <iconset resource="images.qrc">
              <normaloff>:/cross.png</normaloff>:/cross.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_preview">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>31</width>
+             <height>31</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Preview</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/magnifier.png</normaloff>:/magnifier.png</iconset>
            </property>
           </widget>
          </item>
@@ -139,12 +190,15 @@
              <height>31</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Transmit</string>
+           </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
             <iconset resource="images.qrc">
-             <normaloff>:/mail.png</normaloff>:/mail.png</iconset>
+             <normaloff>:/go_up.png</normaloff>:/go_up.png</iconset>
            </property>
           </widget>
          </item>
@@ -158,6 +212,9 @@
              <width>31</width>
              <height>31</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Terminate</string>
            </property>
            <property name="text">
             <string/>
@@ -200,7 +257,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>530</width>
+     <width>700</width>
      <height>19</height>
     </rect>
    </property>
