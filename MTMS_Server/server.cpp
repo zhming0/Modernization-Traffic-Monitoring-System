@@ -32,6 +32,8 @@ void Server::incomingConnection(int id)
             thread, SLOT(deleteLater()));
     connect(socket, SIGNAL(logGenerated(QString)),
             this, SLOT(on_socket_logGenarated(QString)));
+    connect(socket, SIGNAL(readyRead()),
+            this, SLOT(on_socket_imageRead(QByteArray)));
 }
 
 void Server::on_socket_imageRead(const QByteArray& bytes)
