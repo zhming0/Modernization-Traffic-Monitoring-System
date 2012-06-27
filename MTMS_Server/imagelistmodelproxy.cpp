@@ -6,9 +6,10 @@
 #include <QMessageBox>
 #include <QDebug>
 
-ImageListModelProxy::ImageListModelProxy(QObject *parent) :
+ImageListModelProxy::ImageListModelProxy(ImageListModelProxy::Status initStatus, QObject *parent) :
     QObject(parent)
 {
+    m_initStatus = initStatus;
     createModel();
 }
 
@@ -18,7 +19,7 @@ void ImageListModelProxy::add(ImageListItem item)
 
     QStringList strList;
 
-    strList << item.name() << item.path() << item.size() << "Unprocessed";
+    strList << item.name() << item.path() << item.size() << statusToString(m_initStatus);
     qDebug() << strList;
     for(int i = 0; i < c_columnCount; ++i)
     {
@@ -236,6 +237,28 @@ ImageListModelProxy::Status ImageListModelProxy::status(int index)
         return ImageListModelProxy::ERROR;
     }
     QString status = m_model->item(index, 3)->text();
+    return stringToStatus(status);
+}
+
+QString ImageListModelProxy::statusToString(ImageListModelProxy::Status status)
+{
+    if(status == ImageListModelProxy::PROCESSED)
+    {
+        return "Processed";
+    }
+    else if (status == ImageListModelProxy::UNPROCESSED)
+    {
+        return "Unprocessed";
+    }
+    else if (status == ImageListModelProxy::UNRECOGNIZED)
+    {
+        return "Unrecognized";
+    }
+    return "Error";
+}
+
+ImageListModelProxy::Status ImageListModelProxy::stringToStatus(QString status)
+{
     if(status == "Processed")
     {
         return ImageListModelProxy::PROCESSED;

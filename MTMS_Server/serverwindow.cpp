@@ -98,13 +98,13 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
 
 void ServerWindow::initTableViews()
 {
-    m_modelProxy_recognized = new ImageListModelProxy(this);
+    m_modelProxy_recognized = new ImageListModelProxy(ImageListModelProxy::UNPROCESSED, this);
     ui->tableView_recognized->setModel((QAbstractItemModel*)m_modelProxy_recognized->model());
     ui->tableView_recognized->setColumnHidden(1, true);
     ui->tableView_recognized->setColumnHidden(2, true);
     ui->tableView_recognized->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
     ui->tableView_recognized->horizontalHeader()->setResizeMode(3,QHeaderView::ResizeToContents);
-    m_modelProxy_unrecognized = new ImageListModelProxy(this);
+    m_modelProxy_unrecognized = new ImageListModelProxy(ImageListModelProxy::UNRECOGNIZED,this);
     ui->tableView_unrecognized->setModel((QAbstractItemModel*)m_modelProxy_unrecognized->model());
     ui->tableView_unrecognized->setColumnHidden(1, true);
     ui->tableView_unrecognized->setColumnHidden(2, true);

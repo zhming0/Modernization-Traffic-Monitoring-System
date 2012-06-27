@@ -18,7 +18,7 @@ public:
         ERROR
     };
 
-    explicit ImageListModelProxy(QObject *parent = 0);
+    explicit ImageListModelProxy(ImageListModelProxy::Status initStatus, QObject *parent = 0);
     void add(ImageListItem item);
     void remove(int index);
     void remove(QList<int> indexes);
@@ -37,11 +37,12 @@ public slots:
 
 private:
     QStandardItemModel* m_model;
-
     void createModel();
     QList<QStandardItem*> createRow();
-
     const static int c_columnCount = 4;
+    ImageListModelProxy::Status m_initStatus;
+    QString statusToString(ImageListModelProxy::Status status);
+    ImageListModelProxy::Status stringToStatus(QString status);
 
 };
 
