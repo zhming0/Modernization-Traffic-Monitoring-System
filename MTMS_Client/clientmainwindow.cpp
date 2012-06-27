@@ -75,8 +75,9 @@ void ClientMainWindow::on_pushButton_remove_clicked()
         selectedRows << index.row();
     }
 
-    //int selectedRows.last()
-    //m_modelProxy->remove(selectedRows);
+    int lastRow = selectedRows.last();
+    m_modelProxy->remove(selectedRows);
+
 }
 void ClientMainWindow::on_pushButton_clear_clicked()
 {
