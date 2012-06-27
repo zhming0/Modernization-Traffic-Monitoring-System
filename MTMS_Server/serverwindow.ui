@@ -45,7 +45,7 @@
                <item>
                 <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>Port</string>
+                  <string>Port:</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -70,10 +70,6 @@
             </layout>
            </item>
           </layout>
-          <zorder>lineEdit</zorder>
-          <zorder>label</zorder>
-          <zorder>serverEnableButton</zorder>
-          <zorder>groupBox_2</zorder>
          </widget>
         </item>
         <item>
@@ -94,15 +90,72 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Unrecognized</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QTableView" name="tableView_unrecognized">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="showGrid">
+             <bool>false</bool>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::SolidLine</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QPushButton" name="pushButton_recognize">
+              <property name="toolTip">
+               <string>Recognize a single item.</string>
+              </property>
+              <property name="text">
+               <string>Recognize</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_processAll">
+              <property name="toolTip">
+               <string>Batch process all the items.</string>
+              </property>
+              <property name="text">
+               <string>Process All</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="tab">
          <attribute name="title">
           <string>Recognized</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QTableView" name="tableView"/>
+           <widget class="QTableView" name="tableView_recognized">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="showGrid">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QGroupBox" name="groupBox_2">
@@ -117,7 +170,7 @@
                  <item>
                   <widget class="QLabel" name="label_2">
                    <property name="text">
-                    <string>Owner</string>
+                    <string>Owner:</string>
                    </property>
                   </widget>
                  </item>
@@ -138,7 +191,7 @@
                  <item>
                   <widget class="QLabel" name="label_4">
                    <property name="text">
-                    <string>Car ID</string>
+                    <string>Car ID:</string>
                    </property>
                   </widget>
                  </item>
@@ -177,7 +230,7 @@
               </layout>
              </item>
              <item row="1" column="1">
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="pushButton_update">
                <property name="text">
                 <string>Update</string>
                </property>
@@ -186,43 +239,15 @@
             </layout>
             <zorder></zorder>
             <zorder></zorder>
-            <zorder>pushButton_4</zorder>
+            <zorder>pushButton_update</zorder>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="pushButton_clearAllProcessed">
             <property name="text">
              <string>Clear All Proccessed</string>
             </property>
            </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="tab_2">
-         <attribute name="title">
-          <string>Unrecognized</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QTableView" name="tableView_2"/>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="text">
-               <string>Recognize</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_3">
-              <property name="text">
-               <string>Process All</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
          </layout>
         </widget>
@@ -257,7 +282,7 @@
      <x>0</x>
      <y>0</y>
      <width>630</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>

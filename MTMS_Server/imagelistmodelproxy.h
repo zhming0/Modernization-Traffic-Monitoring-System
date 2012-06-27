@@ -12,9 +12,8 @@ class ImageListModelProxy : public QObject
     Q_OBJECT
 public:
     enum Status {
-        READY,
-        SENDING,
-        FINISHED,
+        UNPROCESSED,
+        PROCESSED,
         ERROR
     };
 
