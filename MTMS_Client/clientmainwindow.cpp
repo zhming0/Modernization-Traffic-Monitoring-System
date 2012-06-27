@@ -17,7 +17,9 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
 {
     ui->setupUi(this);
     ui->progressBar->setShown(false);
+
     setModelProxy(modelProxy);
+
     setSocketProxy(socketProxy);
     this->adjustSize();
 }
@@ -33,6 +35,9 @@ void ClientMainWindow::setModelProxy(ImageListModelProxy* modelProxy)
     if(m_modelProxy != NULL)
     {
         ui->tableView->setModel(m_modelProxy->model());
+        ui->tableView->horizontalHeader()->setResizeMode(1, QHeaderView::Stretch);
+        ui->tableView->horizontalHeader()->setResizeMode(2, QHeaderView::ResizeToContents);
+
     }
 }
 
@@ -58,10 +63,22 @@ void ClientMainWindow::on_action_About_triggered()
 
 void ClientMainWindow::on_pushButton_open_clicked()
 {
-
+    open();
 }
 
 void ClientMainWindow::on_pushButton_remove_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView->selectionModel()->selectedRows();
+    QList<int> selectedRows;
+    foreach(QModelIndex index, seletedIndexes)
+    {
+        selectedRows << index.row();
+    }
+
+    int selectedRows.last()
+    m_modelProxy->remove(selectedRows);
+}
+void ClientMainWindow::on_pushButton_clear_clicked()
 {
 
 }
@@ -87,9 +104,6 @@ void ClientMainWindow::open()
             {
                 QFileInfo info(fileName);
                 ImageListItem item(info);
-                qDebug() << info.fileName();
-                qDebug() << info.filePath();
-                qDebug() << info.size();
                 this->m_modelProxy->add(item);
             }
             else

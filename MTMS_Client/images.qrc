@@ -7,5 +7,6 @@
         <file alias="mail.png">resource/images/mail.png</file>
         <file alias="stop.png">resource/images/stop.png</file>
         <file alias="loading.gif">resource/images/loading.gif</file>
+        <file alias="minus_red.png">resource/images/minus_red.png</file>
     </qresource>
 </RCC>

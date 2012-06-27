@@ -15,10 +15,10 @@ ImageListModelProxy::ImageListModelProxy(QObject *parent) :
 void ImageListModelProxy::add(ImageListItem item)
 {
     QList<QStandardItem*> list = createRow();
-    list.at(0)->setCheckState(Qt::Checked);
+
     QStringList strList;
 
-    strList << "" << item.name() << item.path() << item.size() << "Ready";
+    strList << item.name() << item.path() << item.size() << "Ready";
     qDebug() << strList;
     for(int i = 0; i < c_columnCount; ++i)
     {
@@ -45,6 +45,26 @@ void ImageListModelProxy::remove(int index)
         return;
     }
     m_model->removeRow(index);
+}
+
+void ImageListModelProxy::remove(QList<int> indexes)
+{
+    int rowCount = m_model->rowCount();
+    int delta = 0;
+    foreach(int index, indexes)
+    {
+        index = index + delta;
+        if(index >= 0 && index < rowCount)
+        {
+            m_model->removeRow(index);
+        }
+        else
+        {
+            qDebug() << "Internal Error#index out of bounds.";
+        }
+        --delta;
+        --rowCount;
+    }
 }
 
 void ImageListModelProxy::setChecked(int index, bool isChecked)
@@ -84,7 +104,7 @@ void ImageListModelProxy::createModel()
     m_model->setColumnCount(c_columnCount);
 
     QStringList columnHeaderTextList;
-    columnHeaderTextList << "Selection" << "Name" << "Path" << "Size"<< "Status";
+    columnHeaderTextList <<  "Name" << "Path" << "Size"<< "Status";
     m_model->setHorizontalHeaderLabels(columnHeaderTextList);
 }
 
@@ -97,6 +117,16 @@ QList<QStandardItem*> ImageListModelProxy::createRow()
         if(i == 0)
         {
             item->setCheckable(true);
+            item->setCheckState(Qt::Checked);
+            item->setTextAlignment(Qt::AlignVCenter | Qt::AlignCenter);
+        }
+        if(i == 2)
+        {
+            item->setTextAlignment(Qt::AlignVCenter | Qt::AlignRight);
+        }
+        if(i == 3)
+        {
+            item->setTextAlignment(Qt::AlignVCenter | Qt::AlignCenter);
         }
         list << item;
     }

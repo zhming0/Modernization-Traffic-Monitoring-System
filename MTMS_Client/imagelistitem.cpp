@@ -1,5 +1,7 @@
 #include "imagelistitem.h"
 #include <QFileInfo>
+#include <QDebug>
+#include <cmath>
 
 ImageListItem::ImageListItem(QFileInfo fileInfo, QObject *parent) :
     QObject(parent)
@@ -41,7 +43,7 @@ QString ImageListItem::name() const
     QString str = "";
     if(m_info != NULL)
     {
-        m_info->fileName();
+        str = m_info->fileName();
     }
     return str;
 }
@@ -50,7 +52,7 @@ QString ImageListItem::path() const
     QString str = "";
     if(m_info != NULL)
     {
-        m_info->filePath();
+        str = m_info->filePath();
     }
     return str;
 }
@@ -59,7 +61,7 @@ QString ImageListItem::size() const
     QString str = "";
     if(m_info != NULL)
     {
-        str.append((int)m_info->size());
+        str = QString("%1 KB").arg(ceil((m_info->size()/1024.0)));
     }
     return str;
 }

@@ -15,6 +15,7 @@ public:
     explicit ImageListModelProxy(QObject *parent = 0);
     void add(ImageListItem item);
     void remove(int index);
+    void remove(QList<int> indexes);
     void setChecked(int index, bool isChecked);
     QAbstractItemModel * model();
 
@@ -28,7 +29,7 @@ private:
     void createModel();
     QList<QStandardItem*> createRow();
 
-    const static int c_columnCount = 5;
+    const static int c_columnCount = 4;
 
 };
 

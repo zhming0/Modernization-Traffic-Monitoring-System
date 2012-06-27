@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     int code = dialog.exec();
     if(code == QDialog::Accepted)
     {
-        qDebug() << "Hey!";
+       qDebug() << "Hey!";
        ClientMainWindow w(&socket, &modelProxy);
        w.show();
        return a.exec();
