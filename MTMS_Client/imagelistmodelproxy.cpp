@@ -92,6 +92,38 @@ void ImageListModelProxy::setChecked(int index, bool isChecked)
             setCheckState(checkState);
 }
 
+void ImageListModelProxy::setStatus(int index, ImageListModelProxy::Status s)
+{
+    if(m_model == NULL)
+    {
+        qDebug() << "Internal Error#m_model is NULL.";
+        return;
+    }
+    if(index < 0 || index >= m_model->rowCount())
+    {
+        qDebug() << "Internal Error#Index out of bounds.";
+        return;
+    }
+    QString state = "";
+    if(READY == s)
+    {
+        state = "Ready";
+    }
+    else if(SENDING == s)
+    {
+        state = "Sending";
+    }
+    else if(FINISHED == s)
+    {
+        state = "Finished";
+    }
+    else if(ERROR == s)
+    {
+        state = "Error";
+    }
+    m_model->item(index, 3)->setText(state);
+}
+
 QList<QString> ImageListModelProxy::checkedPaths()
 {
     QList<QStandardItem*> checkStateItems;
@@ -114,7 +146,22 @@ QList<QString> ImageListModelProxy::checkedPaths()
     return paths;
 }
 
-QAbstractItemModel * ImageListModelProxy::model()
+QString ImageListModelProxy::path(int index)
+{
+    if(m_model == NULL)
+    {
+        qDebug() << "Internal Error#m_model is NULL.";
+        return "";
+    }
+    if(index < 0 || index >= m_model->rowCount())
+    {
+        qDebug() << "Internal Error#Index out of bounds.";
+        return "";
+    }
+    return m_model->item(index, 1)->text();
+}
+
+QStandardItemModel * ImageListModelProxy::model()
 {
     return m_model;
 }
@@ -152,4 +199,30 @@ QList<QStandardItem*> ImageListModelProxy::createRow()
         list << item;
     }
     return list;
+}
+
+int ImageListModelProxy::rowCount()
+{
+    return this->m_model->rowCount();
+}
+
+QList<int> ImageListModelProxy::checkedRows()
+{
+    QList<QStandardItem*> checkStateItems;
+    for(int i = 0; i < m_model->rowCount(); ++i)
+    {
+        checkStateItems << m_model->item(i, 0);
+    }
+    QList<int> rows;
+    int rowIndex = 0;
+    foreach(QStandardItem* item, checkStateItems)
+    {
+        Qt::CheckState state = item->checkState();
+        if(Qt::Checked == state)
+        {
+            rows << rowIndex;
+        }
+        ++rowIndex;
+    }
+    return rows;
 }

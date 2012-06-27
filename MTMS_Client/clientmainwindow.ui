@@ -124,7 +124,82 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="pushButton_check">
+           <property name="minimumSize">
+            <size>
+             <width>31</width>
+             <height>31</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/check.png</normaloff>:/check.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_checkAll">
+           <property name="minimumSize">
+            <size>
+             <width>31</width>
+             <height>31</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/multi_check.png</normaloff>:/multi_check.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_uncheck">
+           <property name="minimumSize">
+            <size>
+             <width>31</width>
+             <height>31</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/uncheck.png</normaloff>:/uncheck.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_uncheckAll">
+           <property name="minimumSize">
+            <size>
+             <width>31</width>
+             <height>31</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/multi_uncheck.png</normaloff>:/multi_uncheck.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>

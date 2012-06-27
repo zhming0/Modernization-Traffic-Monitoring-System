@@ -47,7 +47,6 @@ ClientLoginDialog::~ClientLoginDialog()
 void ClientLoginDialog::on_pushButton_more_clicked(bool checked)
 {
     ui->widget_configuration->setShown(checked);
-  //  this->setFixedHeight(checked?319:195);
     this->adjustSize();
 }
 
