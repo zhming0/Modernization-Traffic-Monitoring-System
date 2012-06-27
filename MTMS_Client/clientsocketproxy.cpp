@@ -83,7 +83,7 @@ void ClientSocketProxy::on_m_socket_readyRead()
 void ClientSocketProxy::terminate()
 {
     m_socket->abort();
-    login(m_username, m_passwd);
+    m_socket->connectToHost(*m_hostAddress, m_port);
 }
 
 void ClientSocketProxy::on_m_socket_error()
