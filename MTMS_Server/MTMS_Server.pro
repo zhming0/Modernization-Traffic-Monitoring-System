@@ -14,14 +14,22 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         serverwindow.cpp \
-        serverproxy.cpp \
-    serverdbinterface.cpp
+    serverdbinterface.cpp \
+    serversocket.cpp \
+    server.cpp
 
 HEADERS  += serverwindow.h \
-            serverproxy.h \
-    serverdbinterface.h
+    serverdbinterface.h \
+    serversocket.h \
+    server.h
 
 FORMS    += serverwindow.ui
+
+
+
+
+
+
 
 
 

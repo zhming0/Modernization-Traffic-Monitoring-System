@@ -2,7 +2,7 @@
 #define SERVERWINDOW_H
 
 #include <QMainWindow>
-class ServerProxy;
+class Server;
 namespace Ui {
     class ServerWindow;
 }
@@ -17,7 +17,7 @@ public:
 
 private:
     Ui::ServerWindow *ui;
-    ServerProxy* m_server;
+    Server* m_server;
 };
 
 #endif // SERVERWINDOW_H
