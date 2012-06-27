@@ -3,6 +3,8 @@
 #include "server.h"
 #include<QDebug>
 #include<QDateTime>
+#include"serverdbinterface.h"
+#include<QDir>
 ServerWindow::ServerWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ServerWindow)
@@ -52,5 +54,7 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     //QImage image;
     pixelmap->loadFromData(bytes, "PNG");
     ui->imageWidget->load(*pixelmap, "");
-    //pixelmap->save("images/".QDateTime::currentDataTime().toString);
+    QString filename = QDateTime::currentDateTime().toString();
+    pixelmap->save("images/" + filename, "PNG");
+    ServerDBInterface::addImage(filename, QDir::currentPath() + "/images/");
 }
