@@ -18,7 +18,7 @@ void ImageListModelProxy::add(ImageListItem item)
 
     QStringList strList;
 
-    strList << item.name() << item.path() << item.size() << "Ready";
+    strList << item.name() << item.path() << item.size() << "Unprocessed";
     qDebug() << strList;
     for(int i = 0; i < c_columnCount; ++i)
     {
@@ -105,17 +105,13 @@ void ImageListModelProxy::setStatus(int index, ImageListModelProxy::Status s)
         return;
     }
     QString state = "";
-    if(READY == s)
+    if(UNPROCESSED == s)
     {
-        state = "Ready";
+        state = "Unprocessed";
     }
-    else if(SENDING == s)
+    else if(PROCESSED == s)
     {
-        state = "Sending";
-    }
-    else if(FINISHED == s)
-    {
-        state = "Finished";
+        state = "Processed";
     }
     else if(ERROR == s)
     {
