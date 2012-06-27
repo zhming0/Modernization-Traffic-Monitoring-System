@@ -4,7 +4,6 @@
 #include <QObject>
 
 class ImageListItem;
-class QAbstractItemModel;
 class QStandardItemModel;
 class QStandardItem;
 
@@ -12,13 +11,24 @@ class ImageListModelProxy : public QObject
 {
     Q_OBJECT
 public:
+    enum Status {
+        READY,
+        SENDING,
+        FINISHED,
+        ERROR
+    };
+
     explicit ImageListModelProxy(QObject *parent = 0);
     void add(ImageListItem item);
     void remove(int index);
     void remove(QList<int> indexes);
     void setChecked(int index, bool isChecked);
+    void setStatus(int index, ImageListModelProxy::Status s);
+    int rowCount();
     QList<QString> checkedPaths();
-    QAbstractItemModel * model();
+    QList<int> checkedRows();
+    QString path(int index);
+    QStandardItemModel * model();
 
 signals:
 

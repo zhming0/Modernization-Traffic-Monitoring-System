@@ -12,7 +12,7 @@ class ImagePreviewDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImagePreviewDialog(QWidget *parent = 0);
+    explicit ImagePreviewDialog(const QImage& image, QWidget *parent = 0);
     ~ImagePreviewDialog();
 
 private:

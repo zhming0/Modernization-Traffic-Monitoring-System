@@ -41,6 +41,10 @@ private slots:
     void on_pushButton_terminate_clicked();
     void on_pushButton_clear_clicked();
     void on_pushButton_preview_clicked();
+    void on_pushButton_check_clicked();
+    void on_pushButton_checkAll_clicked();
+    void on_pushButton_uncheck_clicked();
+    void on_pushButton_uncheckAll_clicked();
 };
 
 #endif // CLIENTMAINWINDOW_H

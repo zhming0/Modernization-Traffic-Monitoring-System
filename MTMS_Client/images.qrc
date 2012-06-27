@@ -10,5 +10,9 @@
         <file alias="minus_red.png">resource/images/minus_red.png</file>
         <file alias="magnifier.png">resource/images/magnifier.png</file>
         <file alias="go_up.png">resource/images/go_up.png</file>
+        <file alias="uncheck.png">resource/images/uncheck.png</file>
+        <file alias="check.png">resource/images/check.png</file>
+        <file alias="multi_check.png">resource/images/multi_check.png</file>
+        <file alias="multi_uncheck.png">resource/images/multi_uncheck.png</file>
     </qresource>
 </RCC>
