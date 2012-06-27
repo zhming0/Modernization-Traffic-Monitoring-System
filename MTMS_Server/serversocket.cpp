@@ -8,11 +8,19 @@ ServerSocket::ServerSocket(int id)
     connect(this, SIGNAL(disconnected()),
             this, SLOT(deleteLater()));
 }
-
+bool ServerSocket::waitNextMessage(int timeout)
+{
+    if (this->bytesAvailable())
+        return true;
+    if (waitForReadyRead(timeout))
+        return true;
+    return false;
+}
 void ServerSocket::on_readyRead()
 {
     qDebug() << "Reading";
     QDataStream stream(this);
+    stream.setVersion(QDataStream::Qt_4_7);
     while (!stream.atEnd())
     {
         int flag;
@@ -20,7 +28,10 @@ void ServerSocket::on_readyRead()
         if (flag == LOGIN)
         {
             QString un, pd;
-            stream >> un >> pd;
+            waitNextMessage(10000);
+            stream>>un;
+            waitNextMessage(10000);
+            stream>>pd;
             qDebug() << un + " is logining.";
             if (!ServerDBInterface::login(un, pd))
                 stream << FAILED;
@@ -29,6 +40,7 @@ void ServerSocket::on_readyRead()
         }
         if (flag == IMAGE)
         {
+            waitNextMessage(20000);
             qDebug() << "Someone is uploading image";
             QByteArray bytes;
             stream >> bytes;

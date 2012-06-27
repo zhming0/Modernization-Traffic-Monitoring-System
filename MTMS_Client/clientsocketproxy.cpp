@@ -11,6 +11,7 @@ ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *p
 {
     m_socket = new QTcpSocket(this);
     m_stream = new QDataStream(m_socket);
+    m_stream->setVersion(QDataStream::Qt_4_7);
     m_hostAddress = new QHostAddress("127.0.0.1");
     m_port = 4000;
 

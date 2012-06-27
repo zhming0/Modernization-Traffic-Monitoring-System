@@ -13,11 +13,11 @@ class ServerSocket : public QTcpSocket
 public:
     ServerSocket(int id);
 signals:
-    void imageRead(QByteArray);
+    void imageRead(const QByteArray&);
 private slots:
     void on_readyRead();
 private:
-
+    bool waitNextMessage(int); //For intermission
 };
 
 #endif // SERVERSOCKET_H

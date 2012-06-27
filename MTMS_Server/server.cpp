@@ -24,3 +24,8 @@ void Server::incomingConnection(int id)
     connect(thread, SIGNAL(finished()),
             thread, SLOT(deleteLater()));
 }
+
+void Server::on_socket_imageRead(const QByteArray& bytes)
+{
+    emit imageRead(bytes);
+}
