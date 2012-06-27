@@ -4,13 +4,16 @@
 #include "imagelistmodelproxy.h"
 #include "clientsocketproxy.h"
 #include "clientlogindialog.h"
+#include "imagelistitem.h"
 
 #include <QDebug>
+#include <QMessageBox>
+#include <QFileDialog>
 
-
+//172.28.12.217
 ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListModelProxy* modelProxy,  QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::ClientMainWindow)
+        QMainWindow(parent),
+        ui(new Ui::ClientMainWindow)
 {
     ui->setupUi(this);
     ui->progressBar->setShown(false);
@@ -75,7 +78,29 @@ void ClientMainWindow::on_pushButton_terminate_clicked()
 
 void ClientMainWindow::open()
 {
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open Files"),QDir::currentPath());
+    foreach(QString fileName, fileNames)
+    {
+        if(!fileName.isEmpty())
+        {
+            if(QFile::exists(fileName))
+            {
+                QFileInfo info(fileName);
+                ImageListItem item(info);
+                qDebug() << info.fileName();
+                qDebug() << info.filePath();
+                qDebug() << info.size();
+                this->m_modelProxy->add(item);
+            }
+            else
+            {
+                QMessageBox::warning(this,
+                                     "Warning", QString("File %1 does not exist.").arg(fileName));
+                continue;
+            }
 
+        }
+    }
 }
 
 

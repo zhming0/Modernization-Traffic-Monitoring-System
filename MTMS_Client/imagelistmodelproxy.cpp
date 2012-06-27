@@ -17,7 +17,9 @@ void ImageListModelProxy::add(ImageListItem item)
     QList<QStandardItem*> list = createRow();
     list.at(0)->setCheckState(Qt::Checked);
     QStringList strList;
+
     strList << "" << item.name() << item.path() << item.size() << "Ready";
+    qDebug() << strList;
     for(int i = 0; i < c_columnCount; ++i)
     {
         list.at(i)->setText(strList.at(i));

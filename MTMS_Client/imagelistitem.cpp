@@ -7,6 +7,13 @@ ImageListItem::ImageListItem(QFileInfo fileInfo, QObject *parent) :
     m_info = NULL;
     setFileInfo(fileInfo);
 }
+
+ImageListItem::ImageListItem( const ImageListItem& item)
+{
+    m_info = NULL;
+    setFileInfo(item.fileInfo());
+}
+
 ImageListItem::~ImageListItem()
 {
     if(m_info != NULL)

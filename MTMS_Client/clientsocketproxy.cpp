@@ -22,7 +22,7 @@ ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *p
 void ClientSocketProxy::login(QString username, QString password)
 {
     m_socket->connectToHost(*m_hostAddress, m_port);
-    qDebug() << "Login start..\n";
+    qDebug() << "Login started..\n";
     m_username = username, m_passwd = password;
 }
 
@@ -69,11 +69,11 @@ void ClientSocketProxy::on_m_socket_readyRead()
     qDebug() << "Reading something";
     int flag;
     (*m_stream) >> flag;
-    if (flag == SUCCEEDED)
+    if (SUCCEEDED == flag)
     {
         emit login_succeeded();
     }
-    if (flag == FAILED)
+    if (FAILED == flag)
     {
         emit login_failed();
     }
