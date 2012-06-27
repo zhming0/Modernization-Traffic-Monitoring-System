@@ -44,8 +44,10 @@ void ServerSocket::on_readyRead()
 
             if (!ServerDBInterface::login(username, pd))
                 stream << FAILED;
-            else
+            else {
                 stream << SUCCEEDED;
+                abort();
+            }
         }
         if (flag == IMAGE)
         {
@@ -61,7 +63,7 @@ void ServerSocket::on_readyRead()
                 buf.write(this->read(size - bytes.length()));
             }
             emit imageRead(bytes);
-            emit logGenerated("Received an image from " + username + ", image size is " + size+".");
+            emit logGenerated("Received an image from " + username + QString(", image size is %1 bytes.").arg(size));
         }
     }
     qDebug() << "Read End";
