@@ -18,37 +18,18 @@ SOURCES += main.cpp\
     serversocket.cpp \
     server.cpp \
     imagewidget.cpp \
-    serverlogindialog.cpp
+    serverlogindialog.cpp \
+    imagelistmodelproxy.cpp \
+    imagelistitem.cpp
 
 HEADERS  += serverwindow.h \
     serverdbinterface.h \
     serversocket.h \
     server.h \
     imagewidget.h \
-    serverlogindialog.h
+    serverlogindialog.h \
+    imagelistitem.h \
+    imagelistmodelproxy.h
 
 FORMS    += serverwindow.ui \
     serverlogindialog.ui
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
