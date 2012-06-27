@@ -22,9 +22,8 @@ public:
     void setServer(QHostAddress address, quint16 port);
     const QHostAddress& hostAddress();
     quint16 port();
-    void sendImage();
     void login(QString username, QString password);
-
+    void sendImage(const QImage& image);
 signals:
     void login_succeeded();
     void login_failed();

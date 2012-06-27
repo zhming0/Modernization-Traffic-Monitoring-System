@@ -34,7 +34,7 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="serverEnableButton">
                <property name="text">
                 <string>Start Server</string>
                </property>
@@ -53,7 +53,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSpinBox" name="spinBox">
+                <widget class="QSpinBox" name="portSpinBox">
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
@@ -72,7 +72,7 @@
           </layout>
           <zorder>lineEdit</zorder>
           <zorder>label</zorder>
-          <zorder>pushButton</zorder>
+          <zorder>serverEnableButton</zorder>
           <zorder>groupBox_2</zorder>
          </widget>
         </item>
@@ -234,7 +234,14 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QTextEdit" name="logArea">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
