@@ -70,13 +70,14 @@ void ClientMainWindow::on_pushButton_remove_clicked()
 {
     QModelIndexList selectedIndexes = ui->tableView->selectionModel()->selectedRows();
     QList<int> selectedRows;
-    foreach(QModelIndex index, seletedIndexes)
+    foreach(QModelIndex index, selectedIndexes)
     {
         selectedRows << index.row();
     }
 
-    int selectedRows.last()
+    int lastRow = selectedRows.last();
     m_modelProxy->remove(selectedRows);
+    //if()
 }
 void ClientMainWindow::on_pushButton_clear_clicked()
 {
