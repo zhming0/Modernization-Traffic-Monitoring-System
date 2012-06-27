@@ -106,11 +106,10 @@ void ImageWidget::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
-void ImageWidget::load(QPixmap pixmap, QString comment)
+void ImageWidget::load(const QPixmap& pixmap, QString comment)
 {
 
     m_imageLabel->setPixmap(pixmap);
-
 
     m_scaleFactor = 1.0;
 
@@ -122,7 +121,6 @@ void ImageWidget::load(QPixmap pixmap, QString comment)
     m_imageLabel->show();
     m_fileName = comment;
     emit displayed(m_actionFitToWindow->isChecked());
-
 }
 
 void ImageWidget::updateActions()

@@ -21,7 +21,7 @@ signals:
     void displayed(bool fitToWindow);
 
 public slots:
-    void load(QPixmap pixmap, QString comment);
+    void load(const QPixmap& pixmap, QString comment);
     void fitToWindowChange(bool fitToWindow);
 
 private slots:

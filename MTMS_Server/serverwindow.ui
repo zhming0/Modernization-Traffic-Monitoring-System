@@ -84,6 +84,9 @@
             <height>270</height>
            </size>
           </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
        </layout>

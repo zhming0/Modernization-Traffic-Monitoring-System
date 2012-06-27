@@ -48,5 +48,7 @@ void ServerWindow::on_m_server_logGenarated(const QString& s)
 
 void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
 {
-
+    QPixmap* pixelmap = new QPixmap();
+    pixelmap->loadFromData(bytes);
+    ui->imageWidget->load(*pixelmap, "");
 }

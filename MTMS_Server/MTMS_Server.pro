@@ -17,15 +17,25 @@ SOURCES += main.cpp\
     serverdbinterface.cpp \
     serversocket.cpp \
     server.cpp \
-    imagewidget.cpp
+    imagewidget.cpp \
+    serverlogindialog.cpp
 
 HEADERS  += serverwindow.h \
     serverdbinterface.h \
     serversocket.h \
     server.h \
-    imagewidget.h
+    imagewidget.h \
+    serverlogindialog.h
 
-FORMS    += serverwindow.ui
+FORMS    += serverwindow.ui \
+    serverlogindialog.ui
+
+
+
+
+
+
+
 
 
 

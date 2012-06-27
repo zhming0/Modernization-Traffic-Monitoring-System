@@ -8,7 +8,6 @@ namespace Ui {
 }
 
 class QTcpSocket;
-class ImageSender;
 class ClientSocketProxy;
 
 class ClientLoginDialog : public QDialog
