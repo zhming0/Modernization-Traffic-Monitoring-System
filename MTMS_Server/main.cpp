@@ -2,6 +2,7 @@
 #include "serverwindow.h"
 #include<QMessageBox>
 #include<QtSql>
+#include"serverlogindialog.h"
 bool createConnection()
 {
         QSqlDatabase db=QSqlDatabase::addDatabase("QSQLITE");
@@ -22,9 +23,12 @@ int main(int argc, char *argv[])
 
     if (!createConnection())
         return -1;
-
-    ServerWindow w;
-    w.show();
-
-    return a.exec();
+    ServerLoginDialog login;
+    if (login.exec() == QDialog::Accepted)
+    {
+        ServerWindow w;
+        w.show();
+        return a.exec();
+    }else
+        return -1;
 }
