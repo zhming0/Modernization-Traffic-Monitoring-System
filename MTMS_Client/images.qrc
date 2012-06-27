@@ -8,5 +8,7 @@
         <file alias="stop.png">resource/images/stop.png</file>
         <file alias="loading.gif">resource/images/loading.gif</file>
         <file alias="minus_red.png">resource/images/minus_red.png</file>
+        <file alias="magnifier.png">resource/images/magnifier.png</file>
+        <file alias="go_up.png">resource/images/go_up.png</file>
     </qresource>
 </RCC>

@@ -5,6 +5,7 @@
 #include "clientsocketproxy.h"
 #include "clientlogindialog.h"
 #include "imagelistitem.h"
+#include "imagepreviewdialog.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -19,6 +20,7 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     ui->progressBar->setShown(false);
 
     setModelProxy(modelProxy);
+
 
     setSocketProxy(socketProxy);
     this->adjustSize();
@@ -58,7 +60,7 @@ void ClientMainWindow::on_action_Exit_triggered()
 
 void ClientMainWindow::on_action_About_triggered()
 {
-
+    QMessageBox::about(this, "About", "");
 }
 
 void ClientMainWindow::on_pushButton_open_clicked()
@@ -74,24 +76,34 @@ void ClientMainWindow::on_pushButton_remove_clicked()
     {
         selectedRows << index.row();
     }
-
-    int lastRow = selectedRows.last();
+    int lastRow = -1;
+    if(!selectedRows.empty())
+    {
+        lastRow = selectedRows.last();
+    }
     m_modelProxy->remove(selectedRows);
-    //if()
 }
 void ClientMainWindow::on_pushButton_clear_clicked()
 {
-
+    ui->tableView->selectAll();
+    on_pushButton_remove_clicked();
 }
 
 void ClientMainWindow::on_pushButton_send_clicked()
 {
-
+   // m_modelProxy-
+    m_socketProxy->sendImage();
 }
 
 void ClientMainWindow::on_pushButton_terminate_clicked()
 {
+    m_socketProxy->terminate();
+}
 
+void ClientMainWindow::on_pushButton_preview_clicked()
+{
+    ImagePreviewDialog dialog;
+    dialog.exec();
 }
 
 void ClientMainWindow::open()

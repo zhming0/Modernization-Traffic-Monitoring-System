@@ -40,6 +40,7 @@ private slots:
     void on_pushButton_send_clicked();
     void on_pushButton_terminate_clicked();
     void on_pushButton_clear_clicked();
+    void on_pushButton_preview_clicked();
 };
 
 #endif // CLIENTMAINWINDOW_H
