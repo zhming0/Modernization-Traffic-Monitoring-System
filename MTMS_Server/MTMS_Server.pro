@@ -16,14 +16,18 @@ SOURCES += main.cpp\
         serverwindow.cpp \
     serverdbinterface.cpp \
     serversocket.cpp \
-    server.cpp
+    server.cpp \
+    imagewidget.cpp
 
 HEADERS  += serverwindow.h \
     serverdbinterface.h \
     serversocket.h \
-    server.h
+    server.h \
+    imagewidget.h
 
 FORMS    += serverwindow.ui
+
+
 
 
 
