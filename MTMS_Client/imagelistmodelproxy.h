@@ -17,6 +17,7 @@ public:
     void remove(int index);
     void remove(QList<int> indexes);
     void setChecked(int index, bool isChecked);
+    QList<QString> checkedPaths();
     QAbstractItemModel * model();
 
 signals:
