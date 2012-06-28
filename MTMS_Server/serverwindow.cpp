@@ -49,8 +49,13 @@ void ServerWindow::loadImageList()
     QList<QStringList> list = ServerDBInterface::getImageList();
     for (int i = 0; i < list.size(); i++)
     {
-        QFile* file = new QFile(list[i][2] + list[i][0]);
-        ImageListItem item(file, this);
+        QFile file(list[i][2] + list[i][0]);
+        QFileInfo fileInfo(file);
+        QString timeString(list[i][0]);
+        int pointIndex = timeString.indexOf('.');
+        timeString = timeString.mid(0, pointIndex);
+        qint64 time= (qint64)timeString.toInt();
+        ImageListItem item(fileInfo, true, QDateTime::fromMSecsSinceEpoch(time).toString(), this);
         ImageListModelProxy::Status tmp = (ImageListModelProxy::Status)list[i][1].toInt();
         if (tmp == ImageListModelProxy::UNRECOGNIZED)
             m_modelProxy_unrecognized->add(item);
@@ -87,16 +92,18 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     //QImage image;
     pixelmap->loadFromData(bytes, "PNG");
     ui->imageWidget->load(*pixelmap, "");
-    QString filename = QDateTime::currentDateTime().toString() +QString(" %1.png").arg(QDateTime::currentMSecsSinceEpoch());
+    qint64 currentMSecsSinceEpoch = QDateTime::currentMSecsSinceEpoch();
+    QString filename = QString("%1.png").arg(currentMSecsSinceEpoch);
     pixelmap->save(imagePath + filename, "PNG");
     qDebug() <<  "Image path : " << imagePath + filename;
 
     ServerDBInterface::addImage(filename, QDir::currentPath() + "/" + imagePath);
 
-    QFile* file = new QFile(imagePath + filename);
-    if (file->exists())
+    QFile file(imagePath + filename);
+    if (file.exists())
     {
-        ImageListItem item(file, this);
+        QFileInfo fileInfo(file);
+        ImageListItem item(fileInfo, true, QDateTime::fromMSecsSinceEpoch(currentMSecsSinceEpoch).toString(), this);
         m_modelProxy_unrecognized->add(item);
     }
     else

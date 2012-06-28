@@ -9,7 +9,7 @@ class ImageListItem : public QObject
 {
     Q_OBJECT
 public:
-    explicit ImageListItem(QFileInfo fileInfo, QObject *parent = 0);
+    explicit ImageListItem(const QFileInfo& fileInfo, bool aliasEnabled = false, QString alias = "", QObject *parent = 0);
     explicit ImageListItem(QFile* file, QObject *parent = 0);
     ImageListItem( const ImageListItem& item);
     virtual ~ImageListItem();
@@ -18,6 +18,8 @@ public:
     QString name() const;
     QString path() const;
     QString size() const;
+    void setAliasEnabled(bool enabled);
+    void setAlias(QString alias);
 
 signals:
 
@@ -25,6 +27,8 @@ public slots:
 
 private:
     QFileInfo* m_info;
+    bool m_aliasEnabled;
+    QString m_alias;
 };
 
 #endif // IMAGELISTITEM_H
