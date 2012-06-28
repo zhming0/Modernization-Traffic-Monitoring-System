@@ -151,8 +151,8 @@ void ClientMainWindow::on_pushButton_send_clicked()
     total_sendData = m_modelProxy -> checkedSize();
     writtenBytes = 0;
 
-    connect(m_socketProxy, SIGNAL(bytesWritten(int)),
-            this, SLOT(on_m_socketProxy_bytesWritten(int)));
+    connect(m_socketProxy, SIGNAL(bytesWritten(qint64)),
+            this, SLOT(on_m_socketProxy_bytesWritten(qint64)));
 
     for(int i = 0; i < checkedRows.size(); ++i)
     {
@@ -245,11 +245,12 @@ void ClientMainWindow::open()
 void ClientMainWindow::on_m_socketProxy_bytesWritten(qint64 v)
 {
     writtenBytes += v;
-    if (writtenBytes >= total_sendData) {
+    if (writtenBytes >= total_sendData - 1024) {
         qDebug() << "Finish!";
         this->ui->progressBar->setValue(100);
-        disconnect(m_socketProxy, SIGNAL(bytesWritten(int)),
-                this, SLOT(on_m_socketProxy_bytesWritten(int)));
+        this->ui->progressBar->hide();
+        disconnect(m_socketProxy, SIGNAL(bytesWritten(qint64)),
+                this, SLOT(on_m_socketProxy_bytesWritten(qint64)));
         return;
     }
     qDebug() << "total" << total_sendData;

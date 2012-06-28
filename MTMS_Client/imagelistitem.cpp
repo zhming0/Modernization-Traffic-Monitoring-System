@@ -61,7 +61,7 @@ QString ImageListItem::size() const
     QString str = "";
     if(m_info != NULL)
     {
-        str = QString("%1 KB").arg(ceil((m_info->size()/1024.0)));
+        str = QString("%1 Bytes").arg(m_info->size());
     }
     return str;
 }
