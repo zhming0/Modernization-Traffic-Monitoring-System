@@ -9,6 +9,8 @@ ServerSocket::ServerSocket(int id)
             this, SLOT(on_readyRead()));
     connect(this, SIGNAL(disconnected()),
             this, SLOT(deleteLater()));
+    connect(this, SIGNAL(disconnected()),
+            this, SLOT(on_disconnected()));
 }
 bool ServerSocket::waitNextMessage(int timeout)
 {
@@ -66,4 +68,9 @@ void ServerSocket::on_readyRead()
         }
     }
     qDebug() << "Read End";
+}
+
+void ServerSocket::abortConnection()
+{
+    this->abort();
 }
