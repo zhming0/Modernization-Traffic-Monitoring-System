@@ -242,9 +242,9 @@ int ImageListModelProxy::checkedSize()
         if(Qt::Checked == state)
         {
             QString s = m_model->item(rowIndex, 2)->text();
-            ret += s.mid(0, s.length() - 2).toInt();
+            ret += s.mid(0, s.length() - 5).toInt();
         }
         ++rowIndex;
     }
-    return ret * 1024;
+    return ret;
 }

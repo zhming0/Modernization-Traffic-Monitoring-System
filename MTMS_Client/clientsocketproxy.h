@@ -37,6 +37,7 @@ private slots:
     void on_m_socket_error();
     void on_m_socket_bytesWritten(qint64);
     void on_m_socket_readyRead();
+    void reconnect();
 private:
     void sendData(QString data);
     void sendData(const QImage& data, QString format);

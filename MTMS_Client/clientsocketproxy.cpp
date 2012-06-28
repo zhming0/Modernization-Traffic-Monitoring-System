@@ -139,3 +139,8 @@ int ClientSocketProxy::bytesToWrite()
 {
     return m_socket->bytesToWrite();
 }
+
+void ClientSocketProxy::reconnect()
+{
+    m_socket->connectToHost(*m_hostAddress, m_port);
+}

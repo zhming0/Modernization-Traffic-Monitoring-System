@@ -20,6 +20,7 @@ void Server::stopListening()
 {
     emit logGenerated("Server stopped!");
     this->close();
+    emit serverTerminated();
 }
 
 void Server::incomingConnection(int id)
@@ -34,6 +35,10 @@ void Server::incomingConnection(int id)
             this, SLOT(on_socket_logGenerated(QString)));
     connect(socket, SIGNAL(imageRead(QByteArray)),
             this, SLOT(on_socket_imageRead(QByteArray)));
+    connect(this, SIGNAL(serverTerminated()),
+            socket, SLOT(disconnectFromHostImplementation()));
+    connect(socket, SIGNAL(disconnected()),
+            thread, SLOT(quit()));   //Seems risky
 }
 
 void Server::on_socket_imageRead(const QByteArray& bytes)

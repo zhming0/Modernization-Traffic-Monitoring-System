@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     imagewidget.cpp \
     serverlogindialog.cpp \
     imagelistmodelproxy.cpp \
-    imagelistitem.cpp
+    imagelistitem.cpp \
+    recognizedialog.cpp
 
 HEADERS  += serverwindow.h \
     serverdbinterface.h \
@@ -29,7 +30,12 @@ HEADERS  += serverwindow.h \
     imagewidget.h \
     serverlogindialog.h \
     imagelistitem.h \
-    imagelistmodelproxy.h
+    imagelistmodelproxy.h \
+    recognizedialog.h
 
 FORMS    += serverwindow.ui \
-    serverlogindialog.ui
+    serverlogindialog.ui \
+    recognizedialog.ui
+
+
+

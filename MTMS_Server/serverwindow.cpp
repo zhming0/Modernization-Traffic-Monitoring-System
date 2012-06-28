@@ -13,6 +13,7 @@
 #include <QStringList>
 #include <QModelIndex>
 #include <QMessageBox>
+#include"recognizedialog.h"
 
 ServerWindow::ServerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -189,6 +190,8 @@ void ServerWindow::on_pushButton_recognize_clicked()
             this->m_modelProxy_unrecognized->remove(r);
         }
     }
+    RecognizeDialog* dlg = new RecognizeDialog(this);
+    dlg->exec();
 }
 
 void ServerWindow::on_tableView_unrecognized_pressed(QModelIndex index)
