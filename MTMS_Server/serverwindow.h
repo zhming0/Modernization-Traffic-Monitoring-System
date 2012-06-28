@@ -31,6 +31,8 @@ private slots:
     void on_pushButton_recognize_clicked();
     void on_tableView_unrecognized_pressed(QModelIndex index);
     void on_tableView_recognized_pressed(QModelIndex index);
+    void on_recognized_currentRowChanged(QModelIndex current, QModelIndex previous);
+    void on_unrecognized_currentRowChanged(QModelIndex current, QModelIndex previous);
 private:
     void initConnection();
     void initTableViews();

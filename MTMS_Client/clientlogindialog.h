@@ -31,6 +31,7 @@ private slots:
     void on_m_socketProxy_login_succeeded();
     void on_m_socketProxy_login_failed();
     void on_m_socketProxy_timeout();
+    void on_finished(int code);
 
 };
 

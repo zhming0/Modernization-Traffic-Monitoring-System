@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QTimer>
 
 //172.28.12.217
 ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListModelProxy* modelProxy,  QWidget *parent) :
@@ -23,6 +24,16 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
 
     setSocketProxy(socketProxy);
     this->adjustSize();
+
+    /* Do not modify the sequence of the following function calls.*/
+    /**/c_redLightPath = ":/led_red_black.png";
+    /**/c_greenLightPath = ":/led_green_black.png";
+    /**/this->m_connecting_timer = NULL;
+    /**/this->on_connected();
+    /**/
+
+    connect(this->m_socketProxy, SIGNAL(timeout()), this, SLOT(on_disconnected()));
+    connect(this->m_socketProxy, SIGNAL(login_failed()), this, SLOT(on_connected()));
 }
 
 ClientMainWindow::~ClientMainWindow()
@@ -255,4 +266,51 @@ void ClientMainWindow::on_m_socketProxy_bytesWritten(qint64 v)
     qDebug() << "total" << total_sendData;
     qDebug() << "value" << writtenBytes;
     ui->progressBar->setValue((double)writtenBytes * 100.0/total_sendData);
+}
+
+void ClientMainWindow::on_connecting()
+{
+    if(this->m_connecting_timer != NULL)
+    {
+        m_connecting_timer->stop();
+        disconnect(m_connecting_timer, SIGNAL(timeout()), this, SLOT(on_m_connecting_timer_timeout()));
+        m_connecting_timer->deleteLater();;
+    }
+    ui->label_connectionLight->setEnabled(true);
+    ui->label_connection->setText("connecting");
+    m_connecting_timer = new QTimer(this);
+    connect(m_connecting_timer, SIGNAL(timeout()), this, SLOT(on_m_connecting_timer_timeout()));
+    ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_greenLightPath)));
+    m_connecting_timer->start(1000);
+}
+
+void ClientMainWindow::on_connected()
+{
+    if(this->m_connecting_timer != NULL)
+    {
+        m_connecting_timer->stop();
+        disconnect(m_connecting_timer, SIGNAL(timeout()), this, SLOT(on_m_connecting_timer_timeout()));
+        m_connecting_timer->deleteLater();;
+    }
+    ui->label_connectionLight->setEnabled(true);
+    ui->label_connection->setText("connected");
+    ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_greenLightPath)));
+}
+
+void ClientMainWindow::on_disconnected()
+{
+    if(this->m_connecting_timer != NULL)
+    {
+        m_connecting_timer->stop();
+        disconnect(m_connecting_timer, SIGNAL(timeout()), this, SLOT(on_m_connecting_timer_timeout()));
+        m_connecting_timer->deleteLater();;
+    }
+    ui->label_connectionLight->setEnabled(true);
+    ui->label_connection->setText("disconnected");
+    ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_redLightPath)));
+}
+
+void ClientMainWindow::on_m_connecting_timer_timeout()
+{
+    ui->label_connectionLight->setEnabled(!ui->label_connectionLight->isEnabled());
 }

@@ -37,6 +37,7 @@ ClientLoginDialog::ClientLoginDialog(ClientSocketProxy* socketProxy, QWidget *pa
     connect(m_socketProxy, SIGNAL(login_failed()), this, SLOT(on_m_socketProxy_login_failed()));
     connect(m_socketProxy, SIGNAL(login_succeeded()), this, SLOT(on_m_socketProxy_login_succeeded()));
     connect(m_socketProxy, SIGNAL(timeout()), this, SLOT(on_m_socketProxy_timeout()));
+    connect(this, SIGNAL(finished(int)), this, SLOT(on_finished(int)));
 }
 
 ClientLoginDialog::~ClientLoginDialog()
@@ -123,4 +124,11 @@ void ClientLoginDialog::on_m_socketProxy_timeout()
 {
     ui->stackedWidget->setCurrentIndex(0);
     QMessageBox::warning(this, "Warning", "Timeout!");
+}
+
+void ClientLoginDialog::on_finished(int code)
+{
+    disconnect(m_socketProxy, SIGNAL(login_failed()), this, SLOT(on_m_socketProxy_login_failed()));
+    disconnect(m_socketProxy, SIGNAL(login_succeeded()), this, SLOT(on_m_socketProxy_login_succeeded()));
+    disconnect(m_socketProxy, SIGNAL(timeout()), this, SLOT(on_m_socketProxy_timeout()));
 }

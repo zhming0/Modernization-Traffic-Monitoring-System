@@ -40,8 +40,8 @@ void ServerWindow::initConnection()
     connect(m_server, SIGNAL(imageRead(QByteArray)),
             this, SLOT(on_m_server_imageRead(QByteArray)));
 
-    //connect(ui->tableView_unrecognized, SIGNAL(entered(QModelIndex))SIGNAL(activated(QModelIndex)), this, SLOT(on_tableView_unrecognized_pressed(QModelIndex)));
-    //connect(ui->tableView_recognized, SIGNAL(pressed(QModelIndex)), this, SLOT(on_tableView_recognized_pressed(QModelIndex)));
+    connect(ui->tableView_recognized->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(on_recognized_currentRowChanged(QModelIndex,QModelIndex)));
+    connect(ui->tableView_unrecognized->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(on_unrecognized_currentRowChanged(QModelIndex,QModelIndex)));
 }
 
 void ServerWindow::loadImageList()
@@ -233,4 +233,58 @@ void ServerWindow::on_tableView_recognized_pressed(QModelIndex index)
         ui->imageWidget->load(pixmap, "");
     }
 
+}
+
+void ServerWindow::on_recognized_currentRowChanged(QModelIndex current, QModelIndex previous)
+{
+    int rowCount = this->m_modelProxy_recognized->rowCount();
+    int row = current.row();
+    if(row>=0 && row < rowCount)
+    {
+
+        QString path = m_modelProxy_recognized->path(row);
+        QImage image(path);
+
+        if(image.isNull())
+        {
+
+            m_modelProxy_recognized->setStatus(row, ImageListModelProxy::ERROR);
+            QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+            ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
+            m_modelProxy_recognized->remove(row);
+            QFile::remove(path);
+        }
+        else
+        {
+            QPixmap pixmap = QPixmap::fromImage(image);
+            ui->imageWidget->load(pixmap, "");
+        }
+    }
+}
+
+void ServerWindow::on_unrecognized_currentRowChanged(QModelIndex current, QModelIndex previous)
+{
+    int rowCount = this->m_modelProxy_unrecognized->rowCount();
+    int row = current.row();
+    if(row>=0 && row < rowCount)
+    {
+
+        QString path = m_modelProxy_unrecognized->path(row);
+        QImage image(path);
+
+        if(image.isNull())
+        {
+
+            m_modelProxy_unrecognized->setStatus(row, ImageListModelProxy::ERROR);
+            QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+            ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
+            m_modelProxy_unrecognized->remove(row);
+            QFile::remove(path);
+        }
+        else
+        {
+            QPixmap pixmap = QPixmap::fromImage(image);
+            ui->imageWidget->load(pixmap, "");
+        }
+    }
 }
