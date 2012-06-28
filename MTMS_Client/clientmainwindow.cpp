@@ -149,6 +149,7 @@ void ClientMainWindow::on_pushButton_send_clicked()
     QStringList paths = m_modelProxy->checkedPaths();
     QList<int> checkedRows = m_modelProxy->checkedRows();
     total_sendData = m_modelProxy -> checkedSize();
+    writtenBytes = 0;
 
     connect(m_socketProxy, SIGNAL(bytesWritten(int)),
             this, SLOT(on_m_socketProxy_bytesWritten(int)));
@@ -188,7 +189,7 @@ void ClientMainWindow::on_pushButton_send_clicked()
         }
         //this->ui->progressBar->setValue(int(100.0 / path.length() * i));
     }
-    qDebug() << errorRows;
+    //qDebug() << errorRows;
     //this->ui->progressBar->setValue(100);
     //this->ui->progressBar->setShown(false);
     this->m_modelProxy->remove(errorRows);
@@ -241,14 +242,17 @@ void ClientMainWindow::open()
     }
 }
 
-void ClientMainWindow::on_m_socketProxy_bytesWritten(int v)
+void ClientMainWindow::on_m_socketProxy_bytesWritten(qint64 v)
 {
-    if (v >= total_sendData) {
+    writtenBytes += v;
+    if (writtenBytes >= total_sendData) {
+        qDebug() << "Finish!";
         this->ui->progressBar->setValue(100);
         disconnect(m_socketProxy, SIGNAL(bytesWritten(int)),
                 this, SLOT(on_m_socketProxy_bytesWritten(int)));
+        return;
     }
     qDebug() << "total" << total_sendData;
-    qDebug() << "value" << v * 100.0/total_sendData;
-    ui->progressBar->setValue((double)v * 100.0/total_sendData);
+    qDebug() << "value" << writtenBytes;
+    ui->progressBar->setValue((double)writtenBytes * 100.0/total_sendData);
 }

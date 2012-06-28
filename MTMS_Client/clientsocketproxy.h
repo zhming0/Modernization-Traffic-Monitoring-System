@@ -25,11 +25,12 @@ public:
     quint16 port();
     void login(QString username, QString password);
     void sendImage(const QImage& image, QString format);
+    int bytesToWrite();
 signals:
     void login_succeeded();
     void login_failed();
     void timeout();
-    void bytesWritten(int);
+    void bytesWritten(qint64);
 public slots:
     bool on_m_socket_connected();
 private slots:

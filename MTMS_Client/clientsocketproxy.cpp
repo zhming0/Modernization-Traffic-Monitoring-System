@@ -134,3 +134,8 @@ void ClientSocketProxy::on_m_socket_bytesWritten(qint64 v)
 {
     emit bytesWritten(v);
 }
+
+int ClientSocketProxy::bytesToWrite()
+{
+    return m_socket->bytesToWrite();
+}
