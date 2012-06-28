@@ -357,7 +357,7 @@ void ServerWindow::on_pushButton_unrecognized_uncheckAll_clicked()
 
 void ServerWindow::on_pushButton_recognized_delete_clicked()
 {
-    QStringList paths = this->m_modelProxy_recognized->checkedPaths();
+    QStringList paths = this-> m_modelProxy_recognized->checkedPaths();
     QList<int> checkedRows = this->m_modelProxy_recognized->checkedRows();
 
 
