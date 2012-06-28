@@ -273,3 +273,18 @@ ImageListModelProxy::Status ImageListModelProxy::stringToStatus(QString status)
     }
     return ImageListModelProxy::ERROR;
 }
+
+QString ImageListModelProxy::name(int index)
+{
+    if(m_model == NULL)
+    {
+        qDebug() << "Internal Error#m_model is NULL.";
+        return "";
+    }
+    if(index < 0 || index >= m_model->rowCount())
+    {
+        qDebug() << "Internal Error#Index out of bounds.";
+        return "";
+    }
+    return m_model->item(index, 0)->text();
+}

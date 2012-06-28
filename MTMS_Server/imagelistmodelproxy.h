@@ -28,6 +28,7 @@ public:
     QList<QString> checkedPaths();
     QList<int> checkedRows();
     QString path(int index);
+    QString name(int index);
     ImageListModelProxy::Status status(int index);
     QStandardItemModel * model();
 

@@ -5,12 +5,14 @@
 #include"serverdbinterface.h"
 #include"imagelistitem.h"
 
-#include<QDebug>
-#include<QDateTime>
+#include <QDebug>
+#include <QDateTime>
 #include <QFileInfo>
-#include<QDir>
-#include<QFile>
-#include<QStringList>
+#include <QDir>
+#include <QFile>
+#include <QStringList>
+#include <QModelIndex>
+#include <QMessageBox>
 
 ServerWindow::ServerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,6 +39,9 @@ void ServerWindow::initConnection()
             this, SLOT(on_m_server_logGenerated(QString)));
     connect(m_server, SIGNAL(imageRead(QByteArray)),
             this, SLOT(on_m_server_imageRead(QByteArray)));
+
+    //connect(ui->tableView_unrecognized, SIGNAL(pressed(QModelIndex)), this, SLOT(on_tableView_unrecognized_pressed(QModelIndex)));
+   // connect(ui->tableView_recognized, SIGNAL(pressed(QModelIndex)), this, SLOT(on_tableView_recognized_pressed(QModelIndex)));
 }
 
 void ServerWindow::loadImageList()
@@ -84,6 +89,8 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     ui->imageWidget->load(*pixelmap, "");
     QString filename = QDateTime::currentDateTime().toString() + ".png";
     pixelmap->save(imagePath + filename, "PNG");
+    qDebug() <<  "Image path : " << imagePath + filename;
+
     ServerDBInterface::addImage(filename, QDir::currentPath() + "/" + imagePath);
 
     QFile* file = new QFile(imagePath + filename);
@@ -176,6 +183,43 @@ void ServerWindow::on_pushButton_recognize_clicked()
     }
 }
 
+void ServerWindow::on_tableView_unrecognized_pressed(QModelIndex index)
+{
+    int row = index.row();
+    QString path = m_modelProxy_unrecognized->path(row);
+    QImage image(path);
+    if(image.isNull())
+    {
+        m_modelProxy_unrecognized->setStatus(row, ImageListModelProxy::ERROR);
+        QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+        m_modelProxy_unrecognized->remove(row);
+        ServerDBInterface::removeImage(m_modelProxy_unrecognized->name(row));
+        QFile::remove(path);
+    }
+    else
+    {
+        QPixmap pixmap = QPixmap::fromImage(image);
+        ui->imageWidget->load(pixmap, "");
+    }
+}
 
+void ServerWindow::on_tableView_recognized_pressed(QModelIndex index)
+{
+    int row = index.row();
+    QString path = m_modelProxy_recognized->path(row);
+    QImage image(path);
+    if(image.isNull())
+    {
+        m_modelProxy_recognized->setStatus(row, ImageListModelProxy::ERROR);
+        QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+        m_modelProxy_recognized->remove(row);
+        ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
+        QFile::remove(path);
+    }
+    else
+    {
+        QPixmap pixmap = QPixmap::fromImage(image);
+        ui->imageWidget->load(pixmap, "");
+    }
 
-
+}
