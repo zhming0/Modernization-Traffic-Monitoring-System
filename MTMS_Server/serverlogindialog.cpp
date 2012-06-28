@@ -20,5 +20,5 @@ void ServerLoginDialog::on_loginButton_clicked()
     if (ServerDBInterface::login(ui->userNameEdit->text(), QString(QCryptographicHash::hash(ui->userNameEdit->text().toAscii(),QCryptographicHash::Md5).toHex())))
         done(QDialog::Accepted);
     else
-        QMessageBox::warning(this, "You idiot", " Login failed, check your username and passwd darling~");
+        QMessageBox::warning(this, "Warning", " Login failed!");
 }

@@ -185,11 +185,11 @@ QList<QStandardItem*> ImageListModelProxy::createRow()
             //item->setCheckState(Qt::Checked);
             item->setTextAlignment(Qt::AlignVCenter | Qt::AlignCenter);
         }
-        if(i == 2)
+        else if(i == 2)
         {
             item->setTextAlignment(Qt::AlignVCenter | Qt::AlignRight);
         }
-        if(i == 3)
+        else if(i == 3)
         {
             item->setTextAlignment(Qt::AlignVCenter | Qt::AlignCenter);
         }

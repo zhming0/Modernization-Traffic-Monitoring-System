@@ -18,6 +18,7 @@ public:
     QString name() const;
     QString path() const;
     QString size() const;
+    QString alias() const;
     void setAliasEnabled(bool enabled);
     void setAlias(QString alias);
 

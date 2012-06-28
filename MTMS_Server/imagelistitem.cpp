@@ -54,15 +54,7 @@ QString ImageListItem::name() const
     QString str = "";
     if(m_info != NULL)
     {
-        if(this->m_aliasEnabled)
-        {
-            str = m_alias;
-        }
-        else
-        {
-            str = m_info->fileName();
-        }
-
+        str = m_info->fileName();
     }
     return str;
 }
@@ -93,4 +85,9 @@ void ImageListItem::setAliasEnabled(bool enabled)
 void ImageListItem::setAlias(QString alias)
 {
     this->m_alias = alias;
+}
+
+QString ImageListItem::alias() const
+{
+    return this->alias();
 }
