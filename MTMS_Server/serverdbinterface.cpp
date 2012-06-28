@@ -29,6 +29,7 @@ bool ServerDBInterface::addImage(const QString& name, const QString& globalPath)
     if (query.exec(QString("INSERT INTO images VALUES('%1', 0, '%2')").arg(name).arg(globalPath)))
         return true;
     qDebug() << query.lastError();
+    qDebug() << "add image error";
     return false;
 }
 

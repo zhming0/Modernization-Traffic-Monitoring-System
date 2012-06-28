@@ -2,11 +2,16 @@
 #define SERVERWINDOW_H
 
 #include <QMainWindow>
+#include <QModelIndex>
+
 class Server;
 class ImageListModelProxy;
+
+
 namespace Ui {
     class ServerWindow;
 }
+
 
 class ServerWindow : public QMainWindow
 {
@@ -24,6 +29,8 @@ private slots:
     void on_pushButton_processAll_clicked();
     void on_pushButton_clearAllProcessed_clicked();
     void on_pushButton_recognize_clicked();
+    void on_tableView_unrecognized_pressed(QModelIndex index);
+    void on_tableView_recognized_pressed(QModelIndex index);
 private:
     void initConnection();
     void initTableViews();

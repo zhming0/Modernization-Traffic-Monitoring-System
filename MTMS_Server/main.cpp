@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QLocale::setDefault(QLocale(QLocale::English, QLocale::AnyCountry));
     if (!createConnection())
         return -1;
     ServerLoginDialog login;
