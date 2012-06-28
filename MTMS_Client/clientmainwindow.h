@@ -29,6 +29,7 @@ private:
     ImageListModelProxy* m_modelProxy;
     ClientSocketProxy* m_socketProxy;
     ClientLoginDialog* m_loginDialog;
+    int total_sendData;
 
 
 private slots:
@@ -45,6 +46,7 @@ private slots:
     void on_pushButton_checkAll_clicked();
     void on_pushButton_uncheck_clicked();
     void on_pushButton_uncheckAll_clicked();
+    void on_m_socketProxy_bytesWritten(int);
 };
 
 #endif // CLIENTMAINWINDOW_H

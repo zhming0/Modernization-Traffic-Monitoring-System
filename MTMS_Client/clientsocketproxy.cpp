@@ -36,6 +36,8 @@ void ClientSocketProxy::initConnection()
             this, SLOT(on_m_socket_error()));
     connect(m_socket, SIGNAL(readyRead()),
             this, SLOT(on_m_socket_readyRead()));
+    connect(m_socket, SIGNAL(bytesWritten(qint64)),
+            this, SLOT(on_m_socket_bytesWritten(qint64)));
 }
 
 void ClientSocketProxy::sendData(QString data)
@@ -126,4 +128,9 @@ quint16 ClientSocketProxy::port()
 void ClientSocketProxy::sendImage(const QImage& image, QString format)
 {
     this->sendData(image, format);
+}
+
+void ClientSocketProxy::on_m_socket_bytesWritten(qint64 v)
+{
+    emit bytesWritten(v);
 }

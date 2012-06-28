@@ -87,7 +87,7 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     //QImage image;
     pixelmap->loadFromData(bytes, "PNG");
     ui->imageWidget->load(*pixelmap, "");
-    QString filename = QDateTime::currentDateTime().toString() + ".png";
+    QString filename = QDateTime::currentDateTime().toString() +QString(" %1.png").arg(QDateTime::currentMSecsSinceEpoch());
     pixelmap->save(imagePath + filename, "PNG");
     qDebug() <<  "Image path : " << imagePath + filename;
 

@@ -29,10 +29,12 @@ signals:
     void login_succeeded();
     void login_failed();
     void timeout();
+    void bytesWritten(int);
 public slots:
     bool on_m_socket_connected();
 private slots:
     void on_m_socket_error();
+    void on_m_socket_bytesWritten(qint64);
     void on_m_socket_readyRead();
 private:
     void sendData(QString data);

@@ -226,3 +226,25 @@ QList<int> ImageListModelProxy::checkedRows()
     }
     return rows;
 }
+
+int ImageListModelProxy::checkedSize()
+{
+    QList<QStandardItem*> checkStateItems;
+    for(int i = 0; i < m_model->rowCount(); ++i)
+    {
+        checkStateItems << m_model->item(i, 0);
+    }
+    int ret = 0;
+    int rowIndex = 0;
+    foreach(QStandardItem* item, checkStateItems)
+    {
+        Qt::CheckState state = item->checkState();
+        if(Qt::Checked == state)
+        {
+            QString s = m_model->item(rowIndex, 2)->text();
+            ret += s.mid(0, s.length() - 2).toInt();
+        }
+        ++rowIndex;
+    }
+    return ret * 1024;
+}

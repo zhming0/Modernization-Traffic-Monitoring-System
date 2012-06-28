@@ -27,6 +27,7 @@ public:
     int rowCount();
     QList<QString> checkedPaths();
     QList<int> checkedRows();
+    int checkedSize();
     QString path(int index);
     QStandardItemModel * model();
 

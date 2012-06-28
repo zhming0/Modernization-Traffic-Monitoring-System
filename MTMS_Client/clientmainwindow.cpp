@@ -148,10 +148,16 @@ void ClientMainWindow::on_pushButton_send_clicked()
     this->adjustSize();
     QStringList paths = m_modelProxy->checkedPaths();
     QList<int> checkedRows = m_modelProxy->checkedRows();
+    total_sendData = m_modelProxy -> checkedSize();
+
+    connect(m_socketProxy, SIGNAL(bytesWritten(int)),
+            this, SLOT(on_m_socketProxy_bytesWritten(int)));
+
     for(int i = 0; i < checkedRows.size(); ++i)
     {
         this->m_modelProxy->setStatus(checkedRows.at(i), ImageListModelProxy::READY);
     }
+
     QList<int> errorRows;
     for(int i = 0; i < paths.length(); ++i)
     {
@@ -235,3 +241,14 @@ void ClientMainWindow::open()
     }
 }
 
+void ClientMainWindow::on_m_socketProxy_bytesWritten(int v)
+{
+    if (v >= total_sendData) {
+        this->ui->progressBar->setValue(100);
+        disconnect(m_socketProxy, SIGNAL(bytesWritten(int)),
+                this, SLOT(on_m_socketProxy_bytesWritten(int)));
+    }
+    qDebug() << "total" << total_sendData;
+    qDebug() << "value" << v * 100.0/total_sendData;
+    ui->progressBar->setValue((double)v * 100.0/total_sendData);
+}

@@ -10,20 +10,10 @@
  Target Server Version : 3007004
  File Encoding         : utf-8
 
- Date: 06/27/2012 21:01:30 PM
+ Date: 06/28/2012 10:23:56 AM
 */
 
 PRAGMA foreign_keys = false;
-
--- ----------------------------
---  Table structure for "_images_old_20120627"
--- ----------------------------
-DROP TABLE IF EXISTS "_images_old_20120627";
-CREATE TABLE "_images_old_20120627" (
-	 "name" text NOT NULL,
-	 "status" integer NOT NULL DEFAULT 0,
-	PRIMARY KEY("name")
-);
 
 -- ----------------------------
 --  Table structure for "admin"
@@ -34,14 +24,6 @@ CREATE TABLE "admin" (
 	 "password" text(32,0) NOT NULL,
 	PRIMARY KEY("username")
 );
-
--- ----------------------------
---  Records of "admin"
--- ----------------------------
-BEGIN;
-INSERT INTO "admin" VALUES ('admin', 'admin');
-INSERT INTO "admin" VALUES ('a', 'b');
-COMMIT;
 
 -- ----------------------------
 --  Table structure for "car"
