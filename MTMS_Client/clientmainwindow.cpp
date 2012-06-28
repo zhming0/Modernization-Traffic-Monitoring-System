@@ -29,11 +29,13 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
     /**/c_redLightPath = ":/led_red_black.png";
     /**/c_greenLightPath = ":/led_green_black.png";
     /**/this->m_connecting_timer = NULL;
-    /**/this->on_connected();
-    /**/
+    /**///this->on_connected();
+
+    m_timer = new QTimer(this);
 
     connect(this->m_socketProxy, SIGNAL(timeout()), this, SLOT(on_disconnected()));
-    connect(this->m_socketProxy, SIGNAL(login_failed()), this, SLOT(on_connected()));
+    connect(this->m_socketProxy, SIGNAL(login_succeeded()), this, SLOT(on_connected()));
+
 }
 
 ClientMainWindow::~ClientMainWindow()
@@ -281,18 +283,27 @@ void ClientMainWindow::on_connecting()
     ui->label_connection->setText("connecting");
     m_connecting_timer = new QTimer(this);
     connect(m_connecting_timer, SIGNAL(timeout()), this, SLOT(on_m_connecting_timer_timeout()));
-    ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_greenLightPath)));
+    ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_redLightPath)));
     m_connecting_timer->start(1000);
 }
 
 void ClientMainWindow::on_connected()
 {
+
+    ui->pushButton_send->setEnabled(true);
+    ui->pushButton_terminate->setEnabled(true);
     if(this->m_connecting_timer != NULL)
     {
         m_connecting_timer->stop();
         disconnect(m_connecting_timer, SIGNAL(timeout()), this, SLOT(on_m_connecting_timer_timeout()));
         m_connecting_timer->deleteLater();;
     }
+    m_connecting_timer = NULL;
+
+    m_timer->stop();
+    disconnect(m_timer, SIGNAL(timeout()), this->m_socketProxy, SLOT(reconnect()));
+
+
     ui->label_connectionLight->setEnabled(true);
     ui->label_connection->setText("connected");
     ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_greenLightPath)));
@@ -300,6 +311,8 @@ void ClientMainWindow::on_connected()
 
 void ClientMainWindow::on_disconnected()
 {
+    ui->pushButton_send->setEnabled(false);
+    ui->pushButton_terminate->setEnabled(false);
     if(this->m_connecting_timer != NULL)
     {
         m_connecting_timer->stop();
@@ -309,6 +322,15 @@ void ClientMainWindow::on_disconnected()
     ui->label_connectionLight->setEnabled(true);
     ui->label_connection->setText("disconnected");
     ui->label_connectionLight->setPixmap(QPixmap::fromImage(QImage(this->c_redLightPath)));
+
+    /* reconnection*/
+
+    m_timer->stop();
+    disconnect(m_timer, SIGNAL(timeout()), this->m_socketProxy, SLOT(reconnect()));
+
+    m_timer->start(10000);
+    connect(m_timer, SIGNAL(timeout()), this->m_socketProxy, SLOT(reconnect()));
+    this->on_connecting();
 }
 
 void ClientMainWindow::on_m_connecting_timer_timeout()
