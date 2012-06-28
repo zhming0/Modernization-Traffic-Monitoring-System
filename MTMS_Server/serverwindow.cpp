@@ -54,6 +54,7 @@ void ServerWindow::loadImageList()
         QString timeString(list[i][0]);
         int pointIndex = timeString.indexOf('.');
         timeString = timeString.mid(0, pointIndex);
+        qDebug() << timeString;
         qint64 time= (qint64)timeString.toInt();
         ImageListItem item(fileInfo, true, QDateTime::fromMSecsSinceEpoch(time).toString(), this);
         ImageListModelProxy::Status tmp = (ImageListModelProxy::Status)list[i][1].toInt();
@@ -88,13 +89,13 @@ void ServerWindow::on_m_server_logGenerated(const QString& s)
 
 void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
 {
-    QPixmap* pixelmap = new QPixmap();
-    //QImage image;
-    pixelmap->loadFromData(bytes, "PNG");
-    ui->imageWidget->load(*pixelmap, "");
+    QPixmap pixelmap = QPixmap();
+    pixelmap.loadFromData(bytes, "PNG");
+    ui->imageWidget->load(pixelmap, "");
     qint64 currentMSecsSinceEpoch = QDateTime::currentMSecsSinceEpoch();
     QString filename = QString("%1.png").arg(currentMSecsSinceEpoch);
-    pixelmap->save(imagePath + filename, "PNG");
+    filename = filename.trimmed();
+    pixelmap.save(imagePath + filename, "PNG");
     qDebug() <<  "Image path : " << imagePath + filename;
 
     ServerDBInterface::addImage(filename, QDir::currentPath() + "/" + imagePath);
@@ -195,12 +196,13 @@ void ServerWindow::on_tableView_unrecognized_pressed(QModelIndex index)
     int row = index.row();
     QString path = m_modelProxy_unrecognized->path(row);
     QImage image(path);
+    qDebug() << path;
     if(image.isNull())
     {
         m_modelProxy_unrecognized->setStatus(row, ImageListModelProxy::ERROR);
         QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
-        m_modelProxy_unrecognized->remove(row);
         ServerDBInterface::removeImage(m_modelProxy_unrecognized->name(row));
+        m_modelProxy_unrecognized->remove(row);
         QFile::remove(path);
     }
     else
@@ -215,12 +217,14 @@ void ServerWindow::on_tableView_recognized_pressed(QModelIndex index)
     int row = index.row();
     QString path = m_modelProxy_recognized->path(row);
     QImage image(path);
+
     if(image.isNull())
     {
+
         m_modelProxy_recognized->setStatus(row, ImageListModelProxy::ERROR);
         QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
-        m_modelProxy_recognized->remove(row);
         ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
+        m_modelProxy_recognized->remove(row);
         QFile::remove(path);
     }
     else
