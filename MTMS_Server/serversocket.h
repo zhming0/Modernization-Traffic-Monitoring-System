@@ -19,6 +19,7 @@ signals:
 private slots:
     void on_readyRead();
     void on_disconnected();
+    void abortConnection();
 private:
     bool waitNextMessage(int); //For intermission
     QString username;

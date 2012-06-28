@@ -37,6 +37,8 @@ void Server::incomingConnection(int id)
             this, SLOT(on_socket_imageRead(QByteArray)));
     connect(this, SIGNAL(serverTerminated()),
             socket, SLOT(disconnectFromHostImplementation()));
+    connect(this, SIGNAL(serverTerminated()),
+            socket, SLOT(abortConnection()));
     connect(socket, SIGNAL(disconnected()),
             thread, SLOT(quit()));   //Seems risky
 }
