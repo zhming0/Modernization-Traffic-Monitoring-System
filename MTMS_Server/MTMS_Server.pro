@@ -37,5 +37,5 @@ FORMS    += serverwindow.ui \
     serverlogindialog.ui \
     recognizedialog.ui
 
-
-
+RESOURCES += \
+    images.qrc

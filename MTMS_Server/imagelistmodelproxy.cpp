@@ -181,8 +181,8 @@ QList<QStandardItem*> ImageListModelProxy::createRow()
         QStandardItem* item = new QStandardItem();
         if(i == 0)
         {
-            //item->setCheckable(true);
-            //item->setCheckState(Qt::Checked);
+            item->setCheckable(true);
+            item->setCheckState(Qt::Unchecked);
             item->setTextAlignment(Qt::AlignVCenter | Qt::AlignCenter);
         }
         else if(i == 2)

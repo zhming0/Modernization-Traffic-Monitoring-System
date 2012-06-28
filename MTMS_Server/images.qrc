@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="check.png">resourses/images/check.png</file>
+        <file alias="cross.png">resourses/images/cross.png</file>
+        <file alias="go_up.png">resourses/images/go_up.png</file>
+        <file alias="led_green_black.png">resourses/images/led_green_black.png</file>
+        <file alias="led_red_black.png">resourses/images/led_red_black.png</file>
+        <file alias="loading.gif">resourses/images/loading.gif</file>
+        <file alias="magnifier.png">resourses/images/magnifier.png</file>
+        <file alias="mail.png">resourses/images/mail.png</file>
+        <file alias="minus.png">resourses/images/minus.png</file>
+        <file alias="minus_red.png">resourses/images/minus_red.png</file>
+        <file alias="multi_check.png">resourses/images/multi_check.png</file>
+        <file alias="multi_uncheck.png">resourses/images/multi_uncheck.png</file>
+        <file alias="open.png">resourses/images/open.png</file>
+        <file alias="plus.png">resourses/images/plus.png</file>
+        <file alias="ship.png">resourses/images/ship.png</file>
+        <file alias="stop.png">resourses/images/stop.png</file>
+        <file alias="uncheck.png">resourses/images/uncheck.png</file>
+        <file alias="file_delete.png">resourses/images/file_delete.png</file>
+    </qresource>
+</RCC>

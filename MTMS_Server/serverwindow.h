@@ -33,6 +33,18 @@ private slots:
     void on_tableView_recognized_pressed(QModelIndex index);
     void on_recognized_currentRowChanged(QModelIndex current, QModelIndex previous);
     void on_unrecognized_currentRowChanged(QModelIndex current, QModelIndex previous);
+
+    void on_pushButton_unrecognized_delete_clicked();
+    void on_pushButton_unrecognized_check_clicked();
+    void on_pushButton_unrecognized_checkAll_clicked();
+    void on_pushButton_unrecognized_uncheck_clicked();
+    void on_pushButton_unrecognized_uncheckAll_clicked();
+    void on_pushButton_recognized_delete_clicked();
+    void on_pushButton_recognized_check_clicked();
+    void on_pushButton_recognized_checkAll_clicked();
+    void on_pushButton_recognized_uncheck_clicked();
+    void on_pushButton_recognized_uncheckAll_clicked();
+
 private:
     void initConnection();
     void initTableViews();

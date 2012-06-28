@@ -15,6 +15,7 @@
 #include <QMessageBox>
 #include"recognizedialog.h"
 
+
 ServerWindow::ServerWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ServerWindow)
@@ -190,8 +191,8 @@ void ServerWindow::on_pushButton_recognize_clicked()
             this->m_modelProxy_unrecognized->remove(r);
         }
     }
-    RecognizeDialog* dlg = new RecognizeDialog(this);
-    dlg->exec();
+    RecognizeDialog dlg(this);
+    dlg.exec();
 }
 
 void ServerWindow::on_tableView_unrecognized_pressed(QModelIndex index)
@@ -289,5 +290,131 @@ void ServerWindow::on_unrecognized_currentRowChanged(QModelIndex current, QModel
             QPixmap pixmap = QPixmap::fromImage(image);
             ui->imageWidget->load(pixmap, "");
         }
+    }
+}
+
+void ServerWindow::on_pushButton_unrecognized_delete_clicked()
+{
+    QStringList paths = this->m_modelProxy_unrecognized->checkedPaths();
+    QList<int> checkedRows = this->m_modelProxy_unrecognized->checkedRows();
+
+
+    foreach(int row, checkedRows)
+    {
+        QString name = this->m_modelProxy_unrecognized->name(row);
+        ServerDBInterface::removeImage(name);
+    }
+    m_modelProxy_unrecognized->remove(checkedRows);
+    foreach(QString path, paths)
+    {
+        QFile::remove(path);
+    }
+
+}
+void ServerWindow::on_pushButton_unrecognized_check_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView_unrecognized->selectionModel()->selectedRows();
+    QList<int> selectedRows;
+    foreach(QModelIndex index, selectedIndexes)
+    {
+        selectedRows << index.row();
+    }
+    foreach(int i, selectedRows)
+    {
+        this->m_modelProxy_unrecognized->setChecked(i, true);
+    }
+}
+
+void ServerWindow::on_pushButton_unrecognized_checkAll_clicked()
+{
+    for(int i = 0; i < m_modelProxy_unrecognized->rowCount(); ++i)
+    {
+        this->m_modelProxy_unrecognized->setChecked(i, true);
+    }
+}
+
+void ServerWindow::on_pushButton_unrecognized_uncheck_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView_unrecognized->selectionModel()->selectedRows();
+    QList<int> selectedRows;
+    foreach(QModelIndex index, selectedIndexes)
+    {
+        selectedRows << index.row();
+    }
+    foreach(int i, selectedRows)
+    {
+        this->m_modelProxy_unrecognized->setChecked(i, false);
+    }
+}
+
+void ServerWindow::on_pushButton_unrecognized_uncheckAll_clicked()
+{
+    for(int i = 0; i < m_modelProxy_unrecognized->rowCount(); ++i)
+    {
+        this->m_modelProxy_unrecognized->setChecked(i, false);
+    }
+}
+
+void ServerWindow::on_pushButton_recognized_delete_clicked()
+{
+    QStringList paths = this->m_modelProxy_recognized->checkedPaths();
+    QList<int> checkedRows = this->m_modelProxy_recognized->checkedRows();
+
+
+    foreach(int row, checkedRows)
+    {
+        QString name = this->m_modelProxy_recognized->name(row);
+        ServerDBInterface::removeImage(name);
+    }
+    m_modelProxy_recognized->remove(checkedRows);
+    foreach(QString path, paths)
+    {
+        QFile::remove(path);
+    }
+
+}
+
+void ServerWindow::on_pushButton_recognized_check_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView_recognized->selectionModel()->selectedRows();
+    QList<int> selectedRows;
+    foreach(QModelIndex index, selectedIndexes)
+    {
+        selectedRows << index.row();
+    }
+    foreach(int i, selectedRows)
+    {
+        this->m_modelProxy_recognized->setChecked(i, true);
+    }
+
+}
+
+void ServerWindow::on_pushButton_recognized_checkAll_clicked()
+{
+    for(int i = 0; i < m_modelProxy_recognized->rowCount(); ++i)
+    {
+        this->m_modelProxy_recognized->setChecked(i, true);
+    }
+}
+
+void ServerWindow::on_pushButton_recognized_uncheck_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView_recognized->selectionModel()->selectedRows();
+    QList<int> selectedRows;
+    foreach(QModelIndex index, selectedIndexes)
+    {
+        selectedRows << index.row();
+    }
+    foreach(int i, selectedRows)
+    {
+        this->m_modelProxy_recognized->setChecked(i, false);
+    }
+}
+
+void ServerWindow::on_pushButton_recognized_uncheckAll_clicked()
+{
+    for(int i = 0; i < m_modelProxy_recognized->rowCount(); ++i)
+    {
+        this->m_modelProxy_recognized->setChecked(i, false);
     }
 }

@@ -197,6 +197,7 @@ void ClientMainWindow::on_pushButton_send_clicked()
         else
         {
             this->m_socketProxy->sendImage(image, "PNG");
+
             this->m_modelProxy->setChecked(checkedRows.at(i), false);
             this->m_modelProxy->setStatus(checkedRows.at(i), ImageListModelProxy::FINISHED);
         }
