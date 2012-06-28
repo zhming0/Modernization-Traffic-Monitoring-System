@@ -40,8 +40,8 @@ void ServerWindow::initConnection()
     connect(m_server, SIGNAL(imageRead(QByteArray)),
             this, SLOT(on_m_server_imageRead(QByteArray)));
 
-    //connect(ui->tableView_unrecognized, SIGNAL(pressed(QModelIndex)), this, SLOT(on_tableView_unrecognized_pressed(QModelIndex)));
-   // connect(ui->tableView_recognized, SIGNAL(pressed(QModelIndex)), this, SLOT(on_tableView_recognized_pressed(QModelIndex)));
+    //connect(ui->tableView_unrecognized, SIGNAL(entered(QModelIndex))SIGNAL(activated(QModelIndex)), this, SLOT(on_tableView_unrecognized_pressed(QModelIndex)));
+    //connect(ui->tableView_recognized, SIGNAL(pressed(QModelIndex)), this, SLOT(on_tableView_recognized_pressed(QModelIndex)));
 }
 
 void ServerWindow::loadImageList()
