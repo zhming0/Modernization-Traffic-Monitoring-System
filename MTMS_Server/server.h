@@ -13,6 +13,7 @@ public:
 signals:
     void imageRead(const QByteArray&);
     void logGenerated(const QString&);
+    void serverTerminated();
 public slots:
     void on_socket_imageRead(const QByteArray&);
     void on_socket_logGenerated(const QString &);
