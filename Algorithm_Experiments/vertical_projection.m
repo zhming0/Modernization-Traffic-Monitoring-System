@@ -1,4 +1,4 @@
-function V = stat_vertical(I)
+function V = vertical_projection(I)
     [r, c] = size(I);
     V = zeros(1, r);
     for i = 1 : r
