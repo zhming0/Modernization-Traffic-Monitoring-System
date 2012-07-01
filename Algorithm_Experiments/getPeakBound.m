@@ -1,10 +1,11 @@
-function [ result ] = getBand( vector, step )
+function [ result ] = getPeakBound( vector, step )
 %step phase 1 = 0.55, phase 2 = 0.42
     [r, c] = size(vector);
     left = -1;
     right = -1;
     flag = 0;
     idx = 1;
+    result = [];
     while left ~= -1 && right ~= -1 && left ~= right && idx <= 5|| flag == 0
         %left, right
        [maxvalue, maxindex] = max(vector);
@@ -22,17 +23,12 @@ function [ result ] = getBand( vector, step )
                break;
            end
        end
-       if (right ~= -1 && right ~= -1)
+       if (right ~= -1 && left ~= -1)
            result(idx, :) = [left, maxindex, right];
            idx = idx + 1;
-       end
-       
-       if left == -1 || right == -1
-           break;
-       end
-       
-       for i = left : right
-           vector(1, i) = 0;
+           for i = left : right
+                vector(1, i) = 0;
+           end
        end
     end
 end
