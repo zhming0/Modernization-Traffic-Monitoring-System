@@ -6,7 +6,7 @@ function [ result ] = getPeakBound( vector, step )
     flag = 0;
     idx = 1;
     result = [];
-    while left ~= -1 && right ~= -1 && left ~= right && idx <= 5|| flag == 0
+    while left ~= -1 && right ~= -1 && left ~= right && idx <= 3|| flag == 0
         %left, right
        [maxvalue, maxindex] = max(vector);
        left = -1; right = -1;
