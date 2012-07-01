@@ -15,7 +15,8 @@ function [] = test_main( path)
     figure; imshow(I);
     
     for i = 1 : r
-        widerplate(i, :) = find_plate_area(E, widerplate(i, :), 4, 0.85);
+        widerplate(i, :) = find_plate_area(I, widerplate(i, :), 4, 0.9);
+        break;
     end
     
     sorted_plates = heuristic_sort(E, widerplate);

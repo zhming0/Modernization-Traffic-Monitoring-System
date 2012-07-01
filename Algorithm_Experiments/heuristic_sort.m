@@ -12,6 +12,7 @@ function [ result ] = heuristic_sort( src, plates )
        x2 = plates(i, 2);
        y1 = plates(i, 3);
        y2 = plates(i, 4);
+       
        data = src(y1 : y2, x1 : x2);
        proj = vertical_projection(data);
        a2 = 1/(max(proj));
