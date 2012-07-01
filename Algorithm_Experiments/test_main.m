@@ -15,7 +15,8 @@ function [] = test_main( path)
     figure; imshow(I);
     
     for i = 1 : r
-        widerplate(i, :) = find_plate_area(I, widerplate(i, :), 4, 0.9);
+        %[widerplate(i, 2) , widerplate(i, 1)]
+        widerplate(i, :) = find_plate_area(I, widerplate(i, :), int32(widerplate(i, 2) - widerplate(i, 1))/15, 0.6);
         break;
     end
     
