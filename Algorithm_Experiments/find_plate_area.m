@@ -5,42 +5,49 @@ function R = find_plate_area(src, widerplate, h, Cd)
     y1 = widerplate(1, 3);
     y2 = widerplate(1, 4);
     I = src(y1:y2, x1:x2);
+    %[y1, y2, x1, x2]
     %figure; imshow(I);
+    %I = morphologic_process(I,10);
+    %figure; imshow(I);figure;
+    
     V = horizontal_intensity_projection(I);
-%     V = rank_filter(double(V), 9);
     %figure; plot(V);
     Vdiff = diff_h(V, h);
-    %Vdiff
-    %size(Vdiff)
-%     figure; plot(Vdiff);
     Vdiff_len = length(Vdiff);
     Vdiff_len_half_toInt = int32(Vdiff_len/2);
-    Vdiff_min = min(Vdiff) * Cd;
-    Vdiff_max = max(Vdiff) * Cd;
+    %Vdiff_min = min(Vdiff) * Cd;
+    %Vdiff_max = max(Vdiff) * Cd;
+    
+    
     Vdiff_left = Vdiff(1:Vdiff_len_half_toInt);
     Vdiff_right = Vdiff(Vdiff_len_half_toInt:end);
     
-     MAX = -100000000; MIN = 100000000;
-     left = 1; right = 1;
-    for i = 1 : length(Vdiff_left)
+    [Vdiff_min, Vdiff_min_idx] = min(Vdiff_left);
+    [Vdiff_max, Vdiff_max_idx] = max(Vdiff_right);
+    Vdiff_min = Vdiff_min * Cd;
+    Vdiff_max = Vdiff_max * Cd;
+    
+    %figure; plot(Vdiff);
+    
+    MAX = -100000000; MIN = 100000000;
+    left = Vdiff_min_idx; right = Vdiff_max_idx;
+    
+    for i = 1 : Vdiff_min_idx
         if (Vdiff_left(i) <= Vdiff_min && Vdiff_left(i) >=  MAX)
             MAX = Vdiff_left(i);  
             left = i;
+            break;
         end
     end
-    for i = 1 : length(Vdiff_right)
+    for i = fliplr(Vdiff_max_idx : length(Vdiff_right))
         if (Vdiff_right(i) >= Vdiff_max && Vdiff_right(i) <=  MIN)
             MIN = Vdiff_right(i);  
             right = i;
+            break;
         end
     end
-    
-%     [~,right] = max(((Vdiff_right <= Vdiff_min)~=0) .* Vdiff_right);
-%     plot(((Vdiff_right <= Vdiff_min)~=0) .* Vdiff_right);
-%     [~,left] = min(((Vdiff_left >= Vdiff_max)~=0) .* Vdiff_left);
-    %R = I(:, left:right);
-    %figure; plot(Vdiff_right);
-    R = [x1 + left, x1 + right + Vdiff_len_half_toInt, y1, y2];
+
+    R = [x1 + left, x1 + right + Vdiff_len_half_toInt + h/2, y1, y2];
     %[x1 + left, x1 + right + Vdiff_len_half_toInt]
-    [left, right]
+    %[left, right]
 end
