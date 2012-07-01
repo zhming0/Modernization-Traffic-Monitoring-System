@@ -11,17 +11,16 @@ function [] = test_main( path)
     bands = getPeakBound(proj, 0.35);
     
     widerplate = getWiderPlate(E, bands);
-    [r, c] = size(widerplate);
+    [r, ~] = size(widerplate);
     figure; imshow(I);
     
     for i = 1 : r
-        %[widerplate(i, 2) , widerplate(i, 1)]
-        widerplate(i, :) = find_plate_area(I, widerplate(i, :), int32(widerplate(i, 2) - widerplate(i, 1))/15, 0.6);
-        break;
+        widerplate(i, :) = find_plate_area(I, widerplate(i, :), int32(widerplate(i, 2) - widerplate(i, 1))/15, 0.5);
+        %break;
     end
     
     sorted_plates = heuristic_sort(E, widerplate);
-    [value, index] = max(sorted_plates)
+    [~, index] = max(sorted_plates);
     mark_in_figure(I, widerplate(index, 1), 'vertical', '-b');
     mark_in_figure(I, widerplate(index, 2), 'vertical', '-r');
     mark_in_figure(I, widerplate(index, 3), 'horizontal', '-b');

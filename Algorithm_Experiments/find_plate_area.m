@@ -5,13 +5,14 @@ function R = find_plate_area(src, widerplate, h, Cd)
     y1 = widerplate(1, 3);
     y2 = widerplate(1, 4);
     I = src(y1:y2, x1:x2);
+    %[y1, y2, x1, x2]
     %figure; imshow(I);
+    %I = morphologic_process(I,10);
+    %figure; imshow(I);figure;
+    
     V = horizontal_intensity_projection(I);
     %figure; plot(V);
     Vdiff = diff_h(V, h);
-    %Vdiff
-    %size(Vdiff)
-%     figure; plot(Vdiff);
     Vdiff_len = length(Vdiff);
     Vdiff_len_half_toInt = int32(Vdiff_len/2);
     %Vdiff_min = min(Vdiff) * Cd;
@@ -45,13 +46,8 @@ function R = find_plate_area(src, widerplate, h, Cd)
             break;
         end
     end
-    
-%     [~,right] = max(((Vdiff_right <= Vdiff_min)~=0) .* Vdiff_right);
-%     plot(((Vdiff_right <= Vdiff_min)~=0) .* Vdiff_right);
-%     [~,left] = min(((Vdiff_left >= Vdiff_max)~=0) .* Vdiff_left);
-    %R = I(:, left:right);
-    %figure; plot(Vdiff_right);
-    R = [x1 + left, x1 + right + Vdiff_len_half_toInt, y1, y2];
+
+    R = [x1 + left, x1 + right + Vdiff_len_half_toInt + h/2, y1, y2];
     %[x1 + left, x1 + right + Vdiff_len_half_toInt]
-    [left, right]
+    %[left, right]
 end
