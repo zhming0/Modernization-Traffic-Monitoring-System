@@ -63,6 +63,7 @@ function pieces = extract_pieces(I)
         piece = I(1 : r, dividePoints(i):dividePoints(i+1));
         piece = piece(Vpiece_left:Vpiece_right, :);
         piece = bwareaopen(piece ,4);
+        %piece = getMaxConnectedArea(piece, 4);
 
         [pr, pc] = size(piece);
         Vpiece_left_ = 1;
