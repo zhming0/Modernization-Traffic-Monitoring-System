@@ -12,20 +12,25 @@ function [ result ] = stupid_recognize( target )
         end
         cnt = cnt + 1;
         s = list(i).name(1:findstr(list(i).name, '.') - 1);
-        template_list(cnt) = struct('character', s, 'data', rgb2gray(imread([template , list(i).name])) ~= 0); 
+        template_list(cnt) = struct('character', s, 'data', rgb2gray(imread([template , list(i).name]))); 
         %template_list(cnt) = node;
         %size(template_list.cnt.data)
     end
-    target = rgb2gray(target) ~=0;
-    target = imresize(target, [238, 123]);
+    %target = rgb2gray(target) ~=0;
+    %target = imresize(target, [238, 123]);
+    target = (target ~= 1);
     list = zeros(cnt, 1);
     for i = 1 : cnt
         %size(target)
         %size(template_list(i).data)
-        temp = target - template_list(i).data;
-        list(i, :) = sum(sum(abs(temp)));
+        %temp = target - template_list(i).data;
+        temp = and(target, template_list(i).data);
+        temp2 = xor(target, template_list(i).data);
+        %figure; imshow(temp);
+        %list(i, :) = sum(sum(abs(temp)))/sum(sum(template_list(cnt).data));
+        list(i, :) = sum(sum(abs(temp))) - sum(sum(abs(temp2)));
     end
-    [~, index] = min(list);
+    [~, index] = max(list);
     result = template_list(index).character;
 end
 

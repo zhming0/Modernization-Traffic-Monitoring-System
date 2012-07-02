@@ -33,4 +33,12 @@ function [] = test_main( path)
     mark_in_figure(I, widerplate(index, 2), 'vertical', '-r');
     mark_in_figure(I, widerplate(index, 3), 'horizontal', '-b');
     mark_in_figure(I, widerplate(index, 4), 'horizontal', '-r');
+    R = I(widerplate(index, 3) : widerplate(index, 4), widerplate(index, 1): widerplate(index, 2));
+    pieces = extract_pieces(R);
+    
+     for i = 1 : length(pieces)
+         result(i) = stupid_recognize(pieces(i).image);
+     end
+     result
+    %stupid_recognize(pieces(6).image)
 end

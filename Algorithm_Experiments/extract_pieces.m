@@ -41,7 +41,7 @@ function pieces = extract_pieces(I)
     end
     hold off;
     Vpiece = vertical_projection(~I);
-    figure; plot(Vpiece);
+    %figure; plot(Vpiece);
     Vpiece_max = max(Vpiece);
     Cf = 0.8;
     len_Vpiece = length(Vpiece);
@@ -94,7 +94,7 @@ function pieces = extract_pieces(I)
             end
         end
         piece = piece(: , Vpiece_left_:Vpiece_right_);
-        piece = imresize(piece,[123, 238], 'bicubic');
+        piece = imresize(piece,[238, 123], 'bicubic');
         figure; imshow(piece);
         s = struct('image', piece);
         pieces(i) = s;
