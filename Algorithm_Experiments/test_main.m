@@ -39,6 +39,6 @@ function [] = test_main( path)
      for i = 1 : length(pieces)
          result(i) = stupid_recognize(pieces(i).image);
      end
-     result
+%      result
     %stupid_recognize(pieces(6).image)
 end
