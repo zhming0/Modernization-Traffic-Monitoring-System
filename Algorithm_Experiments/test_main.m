@@ -7,14 +7,20 @@ function [] = test_main( path)
     %figure; imshow(E);
     proj = vertical_projection(E);
     proj = rank_filter(proj, 9);
-    %figure; plot(proj);
-    bands = getPeakBound(proj, 0.35);
-    
+    step = 0.35;
+    bands = getPeakBound(proj, step);
+    [r, ~] = size(bands); 
+    while (r == 0)
+        bands = getPeakBound(proj, step * 1.2);
+        step = step * 1.2;
+        [r, ~] = size(bands);
+    end
     widerplate = getWiderPlate(E, bands);
     [r, ~] = size(widerplate);
     figure; imshow(I);
     for i = 1 : r
-        widerplate(i, :) = find_plate_area(I, widerplate(i, :), int32((widerplate(i, 2) - widerplate(i, 1)))/15, 0.5);
+        %widerplate(i, :) = find_plate_area(I, widerplate(i, :), int32((widerplate(i, 2) - widerplate(i, 1)))/15, 0.5);
+        widerplate(i, :) = find_plate_area(I, widerplate(i, :), int32((widerplate(i, 2) - widerplate(i, 1)))/20, 0.3);
     end
     
     sorted_plates = heuristic_sort(E, widerplate);
@@ -36,9 +42,10 @@ function [] = test_main( path)
     R = I(widerplate(index, 3) : widerplate(index, 4), widerplate(index, 1): widerplate(index, 2));
     pieces = extract_pieces(R);
     
-%      for i = 1 : length(pieces)
-%          result(i) = stupid_recognize(pieces(i).image);
-%      end
-%      result
+    %entropy_recognize(pieces(1).image, 1)
     stupid_recognize(pieces(1).image, 1)
+     for i = 2 : length(pieces)
+         stupid_recognize(pieces(i).image, 0)
+         %entropy_recognize(pieces(i).image, 0)
+     end
 end
