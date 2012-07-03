@@ -96,7 +96,9 @@ function pieces = extract_pieces(I)
         end
         piece = piece(: , Vpiece_left_:Vpiece_right_);
         piece = imresize(piece,[238, 123], 'bicubic');
+
         %figure; imshow(piece);
+
         s = struct('image', piece);
         pieces(i) = s;
     end
