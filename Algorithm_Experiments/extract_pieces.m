@@ -1,8 +1,10 @@
-function pieces = extract_pieces(I)
+function pieces = extract_pieces(I, showResult)
     I = 255 - I;
     [r, c] = size(I);
     I = Bernsen(I);
-    figure; imshow(I);
+    if(showResult)
+        subplot(2,4,1), imshow(I);
+    end
     V = horizontal_intensity_projection(I);
     Vm = max(V);
     Va = mean(V);
@@ -41,7 +43,6 @@ function pieces = extract_pieces(I)
     end
     hold off;
     Vpiece = vertical_projection(~I);
-    %figure; plot(Vpiece);
     Vpiece_max = max(Vpiece);
     Cf = 0.8;
     len_Vpiece = length(Vpiece);
@@ -59,12 +60,22 @@ function pieces = extract_pieces(I)
             break;
         end
     end  
+
+    
     for i = 1 : len_dividePoints - 1
         piece = I(1 : r, dividePoints(i):dividePoints(i+1));
         piece = piece(Vpiece_left:Vpiece_right, :);
-        piece = bwareaopen(piece ,4);
-        %piece = getMaxConnectedArea(piece, 4);
-
+        
+        %First character should be (if correctly segmented) a Chinese
+        %character, which stays between the segement line 1 and 2.
+%         if(i == 1)
+%             piece = bwareaopen(piece, 4);         
+%         else
+%             piece = getMaxConnectedArea(piece, 4);
+%         end
+           piece = bwareaopen(piece, 4, 4);
+%               piece = ~getMaxConnectedArea(piece, 4);
+%         piece = imdilate(piece, strel('disk', 1));
         [pr, pc] = size(piece);
         Vpiece_left_ = 1;
         Vpiece_right_ = pc;
@@ -97,9 +108,14 @@ function pieces = extract_pieces(I)
         piece = piece(: , Vpiece_left_:Vpiece_right_);
         piece = imresize(piece,[238, 123], 'bicubic');
 
-        %figure; imshow(piece);
+%         figure; imshow(piece);
 
         s = struct('image', piece);
         pieces(i) = s;
+    end
+    if (showResult)
+        for i = 1 : len_dividePoints - 1
+            subplot(2,4, i+1), imshow(pieces(i).image);
+        end
     end
 end

@@ -13,9 +13,12 @@ function [ result ] = stupid_recognize( target, isHan )
         if (list(i).name(1) == '.')
             continue;
         end
+        if (strcmp(list(i).name,  'Thumbs.db') == 1)
+            continue;
+        end
         cnt = cnt + 1;
         s = list(i).name(1:findstr(list(i).name, '.') - 1);
-        template_list(cnt) = struct('character', s, 'data', rgb2gray(imread([template , list(i).name])) > 25); 
+        template_list(cnt) = struct('character', s, 'data', im2bw(imread([template , list(i).name]))); 
     end
     %target = rgb2gray(target) ~=0;
     %target = imresize(target, [238, 123]);
