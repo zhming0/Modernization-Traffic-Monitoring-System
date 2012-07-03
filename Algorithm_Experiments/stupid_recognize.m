@@ -15,7 +15,7 @@ function [ result ] = stupid_recognize( target, isHan )
         end
         cnt = cnt + 1;
         s = list(i).name(1:findstr(list(i).name, '.') - 1);
-        template_list(cnt) = struct('character', s, 'data', rgb2gray(imread([template , list(i).name]))); 
+        template_list(cnt) = struct('character', s, 'data', rgb2gray(imread([template , list(i).name])) > 25); 
     end
     %target = rgb2gray(target) ~=0;
     %target = imresize(target, [238, 123]);
@@ -26,10 +26,8 @@ function [ result ] = stupid_recognize( target, isHan )
             list(i, : ) = -10000000000;
             continue;
         end
-        temp = and(target, template_list(i).data);
+        temp = and(target, template_list(i).data);        
         temp2 = xor(target, template_list(i).data);
-        %figure; imshow(temp);
-        %list(i, :) = sum(sum(abs(temp)))/sum(sum(template_list(cnt).data));
         list(i, :) = sum(sum(abs(temp))) - sum(sum(abs(temp2)));
     end
     [~, index] = max(list);
