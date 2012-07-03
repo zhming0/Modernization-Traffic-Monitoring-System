@@ -6,15 +6,14 @@ function [ result ] = getWiderPlate( src, band )
     %src = edge(src, 'sobel', [],'vertical');
     for i = 1 : r
         data = src(band(i, 1) : band(i, 3), :);
-        %figure; imshow(data);
         %[size(src) size(data)]
         proj = horizontal_projection(data);
         %size(proj)
         %(band(i, 3) - band(i, 1)) * 2 - 1
         proj = rank_filter(proj, (band(i, 3) - band(i, 1)) * 2 - 1);
-        %size(proj)
-        %figure; plot(proj);
-        temp = getPeakBound(proj, 0.56);
+
+        %temp = getPeakBound(proj, 0.56);
+        temp = getPeakBound(proj, 0.36);
         [tr, tc] = size(temp);
         
         for j = 1 : tr
