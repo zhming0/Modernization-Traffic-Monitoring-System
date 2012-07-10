@@ -77,7 +77,7 @@ function [Color, ratio] = detect(I, limit)
      [~,maxofS] = max(hist(S(V~=0), 1:4));
      [~,maxofV] = max(hist(V(V~=0), 1:4));
 %      maxofH
-    fprintf('H = %d;S = %d;V = %d;\n', maxofH, maxofS, maxofV);
+%     fprintf('H = %d;S = %d;V = %d;\n', maxofH, maxofS, maxofV);
     
     if (maxofV == 0)
         Color = 'black';
