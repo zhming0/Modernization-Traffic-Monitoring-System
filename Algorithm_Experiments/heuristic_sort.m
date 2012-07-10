@@ -1,6 +1,7 @@
 function [ result ] = heuristic_sort( src, plates )
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
+    result = [];
     [r, ~] = size(plates);
     %src = edge(src, 'sobel', [],'vertical');
     idx = 1;

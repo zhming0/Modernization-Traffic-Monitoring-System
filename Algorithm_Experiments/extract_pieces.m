@@ -3,6 +3,7 @@ function pieces = extract_pieces(I, showResult)
     [r, c] = size(I);
     I = Bernsen(I);
     if(showResult)
+        figure;
         subplot(2,4,1), imshow(I);
     end
     V = horizontal_intensity_projection(I);
