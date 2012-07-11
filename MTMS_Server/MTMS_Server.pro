@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 QT       += network
 QT       += sql
 
@@ -21,7 +21,12 @@ SOURCES += main.cpp\
     serverlogindialog.cpp \
     imagelistmodelproxy.cpp \
     imagelistitem.cpp \
-    recognizedialog.cpp
+    recognizedialog.cpp \
+    neuron.cpp \
+    neuralnetworkxmlhandler.cpp \
+    neuralnetwork.cpp \
+    neurallayer.cpp \
+    gradient.cpp
 
 HEADERS  += serverwindow.h \
     serverdbinterface.h \
@@ -31,7 +36,12 @@ HEADERS  += serverwindow.h \
     serverlogindialog.h \
     imagelistitem.h \
     imagelistmodelproxy.h \
-    recognizedialog.h
+    recognizedialog.h \
+    neuron.h \
+    neuralnetworkxmlhandler.h \
+    neuralnetwork.h \
+    neurallayer.h \
+    gradient.h
 
 FORMS    += serverwindow.ui \
     serverlogindialog.ui \
@@ -39,3 +49,5 @@ FORMS    += serverwindow.ui \
 
 RESOURCES += \
     images.qrc
+
+
