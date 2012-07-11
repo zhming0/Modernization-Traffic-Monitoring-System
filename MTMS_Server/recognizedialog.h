@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class QProcess;
+class ImageWidget;
 
 namespace Ui {
     class RecognizeDialog;
@@ -31,6 +32,8 @@ private:
     QString c_savepath;
     QString c_binpath;
     QProcess* m_process;
+    ImageWidget* getDigitImageWidget(int i);
+    void clearDigitImageWidgets();
     int m_number;
 };
 

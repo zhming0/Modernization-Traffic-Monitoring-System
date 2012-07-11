@@ -96,9 +96,18 @@ void RecognizeDialog::readResult()
             qDebug() << number;
             if(number <= 7)
             {
-                for(int i = 0; i < number; ++i)
+                for(int i = 1; i <= number; ++i)
                 {
+                    QString impath(c_savepath + QString("%1.png").arg(number));
+                    QImage image(impath);
+                    if(!image.isNull())
+                    {
 
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
             this->setEnabled(true);
@@ -106,6 +115,43 @@ void RecognizeDialog::readResult()
         else if(str.startsWith("[error]"))
         {
             this->setEnabled(true);
+            number = -1;
         }
+    }
+}
+
+ImageWidget* RecognizeDialog::getDigitImageWidget(int i)
+{
+    if(i > 7 || i <= 0)
+    {
+        return NULL;
+    }
+    else
+    {
+        switch(i)
+        {
+        case 1:
+            return ui->widget_digit_1;
+        case 2:
+            return ui->widget_digit_2;
+        case 3:
+            return ui->widget_digit_3;
+        case 4:
+            return ui->widget_digit_4;
+        case 5:
+            return ui->widget_digit_5;
+        case 6:
+            return ui->widget_digit_6;
+        case 7:
+            return ui->widget_digit_7;
+        }
+    }
+}
+
+void RecognizeDialog::clearDigitImageWidgets()
+{
+    for(int i = 1; i <= 7; ++i)
+    {
+        getDigitImageWidget(i);
     }
 }
