@@ -182,17 +182,27 @@ void ServerWindow::on_pushButton_recognize_clicked()
     if(!list.empty())
     {
         int r = list.first().row();
-        QFile file(this->m_modelProxy_unrecognized->path(r));
-        if(file.exists())
+        QString path = m_modelProxy_unrecognized->path(r);
+        QFile file(path);
+        QFileInfo fileInfo(file);
+        path = fileInfo.absoluteFilePath();
+        if(QFile::exists(path))
         {
-            QFileInfo fileInfo(file);
-            ImageListItem item(fileInfo);
-            m_modelProxy_recognized->add(item);
-            this->m_modelProxy_unrecognized->remove(r);
+            RecognizeDialog dlg(path,this);
+            int dialogCode = dlg.exec();
+            if(QDialog::Accepted == dialogCode)
+            {
+                QFileInfo fileInfo(file);
+                ImageListItem item(fileInfo);
+                m_modelProxy_recognized->add(item);
+                this->m_modelProxy_unrecognized->remove(r);
+            }
+            else
+            {
+                qDebug() << "Recognize cancelled.";
+            }
         }
     }
-    RecognizeDialog dlg(this);
-    dlg.exec();
 }
 
 void ServerWindow::on_tableView_unrecognized_pressed(QModelIndex index)

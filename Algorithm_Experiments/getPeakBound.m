@@ -1,13 +1,12 @@
 function [ result ] = getPeakBound( vector, step )
 %step phase 1 = 0.55, phase 2 = 0.42
-    [r, c] = size(vector);
+    [~, c] = size(vector);
     left = -1;
     right = -1;
     flag = 0;
     idx = 1;
     result = [];
-    while left ~= -1 && right ~= -1 && left ~= right && idx <= 3|| flag == 0
-        %left, right
+    while left ~= -1 && right ~= -1 && left ~= right && idx <= 1|| flag == 0
        [maxvalue, maxindex] = max(vector);
        left = -1; right = -1;
        flag = 1;

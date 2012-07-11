@@ -1,6 +1,7 @@
 function [ result ] = getWiderPlate( src, band )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
+    result = [];
     [r, c] = size(band);
     cnt = 1;
     %src = edge(src, 'sobel', [],'vertical');
