@@ -7,15 +7,17 @@
 #include<QImage>
 #include<QColor>
 #include "neuralnetwork.h"
+#include<QDir>
 
 RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RecognizeDialog)
 {
-    this->recognizeMode = 0;
+    this->recognizeMode = 1;
     this->chineseXmlPath = "./chinese.xml";
     this->otherXmlPath = "./other.xml";
     this->numberXmlPath = "./number.xml";
+    this->englishXmlPath = "./character.xml";
 
     c_savepath = "./workspace/";
     c_binpath = "./bin/";
@@ -60,8 +62,18 @@ void RecognizeDialog::on_pushButton_localize_clicked()
     this->clearDigitImageWidgets();
     QProcess* proc = new QProcess(this);
     m_process = proc;
+
     QString app = c_binpath + "Localization";
+
+    #if defined(__APPLE__) || defined(MACOSX)
+        app.append(".app");
+    #endif
     proc->start(app);
+    qDebug() << app;
+    if (!proc->waitForStarted()){
+        qDebug() << "No such app";
+        return;
+    }
     connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(readResult()));
     proc->write(QString("'"+m_fileName+"'").append("\n").toUtf8());
     proc->write(QString("'"+c_savepath+"'").append("\n").toUtf8());
@@ -72,6 +84,27 @@ void RecognizeDialog::on_pushButton_localize_clicked()
 void RecognizeDialog::on_pushButton_recognize_clicked()
 {
     qDebug() << "Recognize";
+    QDir dir(c_savepath);
+    QStringList list = dir.entryList();
+    QString s = "0000000";
+    int cnt = 0;
+    for (int i = 0; i < list.length() && cnt < this->m_number; i++)
+    {
+        QChar ret;
+        if (list[i][0] == '.')
+            continue;
+        cnt++;
+        if (list[i][0] == '1')
+            ret = recognize(c_savepath +list[i], chineseXmlPath);
+        else if (list[i][0] == '2')
+            ret = recognize(c_savepath +list[i], englishXmlPath, 0);
+        else
+            ret = recognize(c_savepath +list[i], otherXmlPath, 0);
+        QChar tmp = list[i][0];
+        QString tmp_s(tmp);
+        s[tmp_s.toInt() - 1] = ret;
+    }
+    this->ui->lineEdit_result->setText(s);
 }
 
 void RecognizeDialog::disableDialog()
@@ -186,11 +219,52 @@ QVector<double> RecognizeDialog::imageToVector(const QImage &img)
     }
 }
 
+QVector<double> RecognizeDialog::imageToVector(const QImage &img, int mode)
+{
+    QImage image = imageNormalize(img);
+    if (mode == 1)
+        return imageFeatureExtraction(image);
+    else {
+        QVector<double> res;
+        QSize size=image.size();
+        for(int x=0;x<size.width();x++)
+            for(int y=0;y<size.height();y++)
+            {
+                res<<qGray(image.pixel(x,y));
+            }
+        return res;
+    }
+}
+
 QChar RecognizeDialog::recognize(QString imagePath, const QString &type)
 {
     NeuralNetwork network(type);
     QImage image(imagePath);
     QVector<double> res = network.test(imageToVector(image));
+    QString alphaString = network.getNetworkString();
+    int maxI=0;
+    for (int i = 0; i < res.size(); i++) {
+        QString percent;
+        percent.sprintf("%f",res[i]);
+        if(i<alphaString.length())
+        {
+            qDebug() << alphaString[i] << " : " << percent;
+        }else
+        {
+            qDebug() << "[" << i << "] : " << percent;
+        }
+        if(res[i]>res[maxI])
+            maxI=i;
+    }
+    qDebug()<<"I suppose its:"<<alphaString[maxI];
+    return alphaString[maxI];
+}
+
+QChar RecognizeDialog::recognize(QString imagePath, const QString &type, int mode)
+{
+    NeuralNetwork network(type);
+    QImage image(imagePath);
+    QVector<double> res = network.test(imageToVector(image, mode));
     QString alphaString = network.getNetworkString();
     int maxI=0;
     for (int i = 0; i < res.size(); i++) {

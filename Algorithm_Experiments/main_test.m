@@ -27,7 +27,7 @@ pieces = main(filename);
 
 if(~isempty(pieces))
    for i = 1 : length(pieces)
-       imwrite(pieces(i).image, strcat([savepath, '\\', num2str(i), '.png']), 'png');
+       imwrite(pieces(i).image, strcat([savepath, num2str(i), '.png']), 'png');
    end
    fprintf(strcat(['[num]', num2str(length(pieces))], '\n'));
    return;

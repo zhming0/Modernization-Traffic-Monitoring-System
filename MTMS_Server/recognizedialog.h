@@ -23,9 +23,10 @@ public:
 private:
     QVector<double> imageToVector(const QImage& image);
     QChar recognize(QString imagePath,const QString& type);
+    QChar recognize(QString imagePath,const QString& type, int mode);
     QImage imageNormalize(const QImage& image);
     QVector<double> imageFeatureExtraction(const QImage& image);
-
+    QVector<double> imageToVector(const QImage& image, int mode);
 
 private slots:
     void on_pushButton_cancel_clicked();
@@ -37,7 +38,7 @@ private slots:
 
 private:
     int recognizeMode;
-    QString chineseXmlPath, numberXmlPath, otherXmlPath;
+    QString chineseXmlPath, numberXmlPath, otherXmlPath, englishXmlPath;
 
     Ui::RecognizeDialog *ui;
     QString m_fileName;
