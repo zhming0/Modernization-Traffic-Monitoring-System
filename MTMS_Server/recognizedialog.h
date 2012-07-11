@@ -20,6 +20,13 @@ public:
     explicit RecognizeDialog(const QString fileName, QWidget *parent = 0);
     ~RecognizeDialog();
 
+private:
+    QVector<double> imageToVector(const QImage& image);
+    QChar recognize(QString imagePath,const QString& type);
+    QImage imageNormalize(const QImage& image);
+    QVector<double> imageFeatureExtraction(const QImage& image);
+
+
 private slots:
     void on_pushButton_cancel_clicked();
     void on_pushButton_okAndSave_clicked();
@@ -27,9 +34,6 @@ private slots:
     void on_pushButton_recognize_clicked();
     void disableDialog();
     void readResult();
-
-    //char recognize(QString imagePath,const QString& type);
-    //QVector<double> imageToVector(const QImage& image);
 
 private:
     int recognizeMode;
