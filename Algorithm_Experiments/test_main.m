@@ -44,10 +44,11 @@ function [] = test_main( path)
     
 
     %entropy_recognize(pieces(1).image, 1)
-    stupid_recognize(pieces(1).image, 1)
-     for i = 2 : length(pieces)
-         stupid_recognize(pieces(i).image, 0)
-         %entropy_recognize(pieces(i).image, 0)
-     end
-
+    blur_recognize(pieces(1).image, 1)
+    %stupid_recognize(pieces(1).image, 1)
+    for i = 2 : length(pieces)
+        %stupid_recognize(pieces(i).image, 0)
+        %entropy_recognize(pieces(i).image, 0)
+        blur_recognize(pieces(i).image, 0)
+    end
 end
