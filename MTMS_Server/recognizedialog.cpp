@@ -29,7 +29,7 @@ RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
         QMessageBox::warning(this, "Warning", "Image file does not exist!");
         disableDialog();
     }
-
+    m_number = -1;
 }
 
 RecognizeDialog::~RecognizeDialog()

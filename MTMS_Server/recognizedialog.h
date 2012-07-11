@@ -31,6 +31,7 @@ private:
     QString c_savepath;
     QString c_binpath;
     QProcess* m_process;
+    int m_number;
 };
 
 #endif // RECOGNIZEDIALOG_H
