@@ -4,12 +4,19 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QProcess>
+#include<QImage>
+#include<QColor>
 #include "neuralnetwork.h"
 
 RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RecognizeDialog)
 {
+    this->recognizeMode = 0;
+    this->chineseXmlPath = "./chinese.xml";
+    this->otherXmlPath = "./other.xml";
+    this->numberXmlPath = "./number.xml";
+
     c_savepath = "./workspace/";
     c_binpath = "./bin/";
     ui->setupUi(this);
@@ -108,4 +115,105 @@ void RecognizeDialog::readResult()
             this->setEnabled(true);
         }
     }
+}
+
+QImage RecognizeDialog::imageNormalize(const QImage &image)
+{
+    //return image.scaled(15, 30,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+    return image.scaled(10, 16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+}
+
+QVector<double> RecognizeDialog::imageToVector(const QImage &img)
+{
+    QImage image = imageNormalize(img);
+    if (recognizeMode == 1)
+        return imageFeatureExtraction(image);
+    else {
+        QVector<double> res;
+        QSize size=image.size();
+        for(int x=0;x<size.width();x++)
+            for(int y=0;y<size.height();y++)
+            {
+                res<<qGray(image.pixel(x,y));
+            }
+        return res;
+    }
+}
+
+QChar RecognizeDialog::recognize(QString imagePath, const QString &type)
+{
+    NeuralNetwork network(type);
+    QImage image(imagePath);
+    QVector<double> res = network.test(imageToVector(image));
+    QString alphaString = network.getNetworkString();
+    int maxI=0;
+    for (int i = 0; i < res.size(); i++) {
+        QString percent;
+        percent.sprintf("%f",res[i]);
+        if(i<alphaString.length())
+        {
+            qDebug() << alphaString[i] << " : " << percent;
+        }else
+        {
+            qDebug() << "[" << i << "] : " << percent;
+        }
+        if(res[i]>res[maxI])
+            maxI=i;
+    }
+    qDebug()<<"I suppose its:"<<alphaString[maxI];
+    return alphaString[maxI];
+}
+
+QVector<double> RecognizeDialog::imageFeatureExtraction(const QImage &image)
+{
+    //----------features-------------
+        static double features[12][4] = {
+            {0,1,0,1}, //0
+            {1,0,1,0}, //1
+            {0,0,1,1}, //2
+            {1,1,0,0}, //3
+            {0,0,0,1}, //4
+            {1,0,0,0}, //5
+            {1,1,1,0}, //6
+            {0,1,1,1}, //7
+            {0,0,1,0}, //8
+            {0,1,0,0}, //9
+            {1,0,1,1}, //10
+            {1,1,0,1}  //11
+        };
+        static int featuresLength = 12;
+        //------------features-------------
+        QSize size = image.size();
+        double array[size.width() + 2][size.height() + 2];
+        for (int x = 0; x < size.width(); x++)
+            for (int y = 0; y < size.height(); y++) {
+                array[x + 1][y + 1] = qGray(image.pixel(x, y)) / 255.0;
+            }
+        for (int x = 0; x < size.width() + 2; x++)
+            array[x][0] = array[x][size.height() + 1] = 1.0;
+        for (int y = 0; y < size.height() + 2; y++)
+            array[0][y] = array[size.width() + 1][y] = 1.0;
+
+        int w = size.width() + 2, h = size.height() + 2;
+
+        QVector<double> ret(featuresLength * 4);
+        ret.fill(0);
+        for (int i = 0; i < featuresLength; i++)
+        {
+            for (int x = 0; x < w - 1; x++)
+                for (int y = 0; y < h - 1; y++)
+                {
+                    double match = 0;
+                    match += qAbs(array[x][y] - features[i][0]);
+                    match += qAbs(array[x + 1][y] - features[i][1]);
+                    match += qAbs(array[x][y + 1] - features[i][2]);
+                    match += qAbs(array[x + 1][y + 1] - features[i][3]);
+
+                    int bias = 0;
+                    if (x >= w / 2) bias += featuresLength;
+                    if (y >= h / 2) bias += featuresLength * 2;
+                    ret[bias + i] += (match < 0.05 ? 1 : 0);
+                }
+        }
+        return ret;
 }
