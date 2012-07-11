@@ -52,7 +52,7 @@ void ClientSocketProxy::sendData(int flag)
     m_socket -> flush();
 }
 
-void ClientSocketProxy::sendData(const QImage& data, QString format)
+void ClientSocketProxy::sendData(const QImage& data)
 {
     QByteArray bytes;
     QBuffer buf(&bytes);
@@ -64,7 +64,7 @@ void ClientSocketProxy::sendData(const QImage& data, QString format)
     //(*m_stream) << bytes;
     m_socket->write(bytes);
     //qDebug() << "+++" << bytes.length();
-    m_socket->flush();
+    //m_socket->flush();
 }
 
 bool ClientSocketProxy::on_m_socket_connected()
@@ -91,12 +91,14 @@ void ClientSocketProxy::on_m_socket_readyRead()
     {
         int progress;
         (*m_stream) >> progress;
+        qDebug() << progress;
     }
 }
 void ClientSocketProxy::terminate()
 {
-    m_socket->abort();
-    m_socket->connectToHost(*m_hostAddress, m_port);
+    //m_socket->abort();
+    //m_socket->connectToHost(*m_hostAddress, m_port);
+    m_socket->reset();
 }
 
 void ClientSocketProxy::on_m_socket_error()
@@ -125,9 +127,9 @@ quint16 ClientSocketProxy::port()
 {
     return m_port;
 }
-void ClientSocketProxy::sendImage(const QImage& image, QString format)
+void ClientSocketProxy::sendImage(const QImage& image)
 {
-    this->sendData(image, format);
+    this->sendData(image);
 }
 
 void ClientSocketProxy::on_m_socket_bytesWritten(qint64 v)

@@ -14,7 +14,7 @@ function [ result ] = entropy_recognize( target, isHan )
             list(i, :) = 1000000000;
             continue;
         end
-        temp = or(target, template_list(i).data);
+        temp = xor(target, template_list(i).data);
         list(i, :) = entropy(temp);
     end
     [~, index] = min(list);

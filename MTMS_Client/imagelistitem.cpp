@@ -2,7 +2,8 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <cmath>
-
+#include<QImage>
+#include<QBuffer>
 ImageListItem::ImageListItem(QFileInfo fileInfo, QObject *parent) :
     QObject(parent)
 {
@@ -61,7 +62,13 @@ QString ImageListItem::size() const
     QString str = "";
     if(m_info != NULL)
     {
-        str = QString("%1 Bytes").arg(m_info->size());
+        QImage img(m_info->absoluteFilePath());
+        QByteArray ba;
+        QBuffer buffer(&ba);
+        buffer.open(QIODevice::WriteOnly);
+        img.save(&buffer, "PNG");
+        str = QString("%1 Bytes").arg(ba.size());
+        //str = QString("%1 Bytes").arg(m_info->size());
     }
     return str;
 }

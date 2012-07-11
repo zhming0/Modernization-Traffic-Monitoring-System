@@ -11,7 +11,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QTimer>
-
+#include <QThread>
+#include <QApplication>
 //172.28.12.217
 ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListModelProxy* modelProxy,  QWidget *parent) :
         QMainWindow(parent),
@@ -35,7 +36,6 @@ ClientMainWindow::ClientMainWindow(ClientSocketProxy* socketProxy, ImageListMode
 
     connect(this->m_socketProxy, SIGNAL(timeout()), this, SLOT(on_disconnected()));
     connect(this->m_socketProxy, SIGNAL(login_succeeded()), this, SLOT(on_connected()));
-
 }
 
 ClientMainWindow::~ClientMainWindow()
@@ -56,7 +56,11 @@ void ClientMainWindow::setModelProxy(ImageListModelProxy* modelProxy)
 
 void ClientMainWindow::setSocketProxy(ClientSocketProxy* socketProxy)
 {
+    //QThread* thread = new QThread();
     m_socketProxy = socketProxy;
+    //m_socketProxy->moveToThread(thread);
+    //thread->start();
+    //connect(m_socketProxy, SIGNAL(destroyed()), thread, SLOT(quit()));
 }
 
 void ClientMainWindow::on_action_Open_triggered()
@@ -157,13 +161,13 @@ void ClientMainWindow::on_pushButton_uncheckAll_clicked()
 void ClientMainWindow::on_pushButton_send_clicked()
 {
     this->ui->progressBar->setValue(0);
-    this->ui->progressBar->setShown(true);
     this->adjustSize();
     QStringList paths = m_modelProxy->checkedPaths();
     QList<int> checkedRows = m_modelProxy->checkedRows();
     total_sendData = m_modelProxy -> checkedSize();
     writtenBytes = 0;
-
+    if (total_sendData > 0)
+        this->ui->progressBar->setShown(true);
     connect(m_socketProxy, SIGNAL(bytesWritten(qint64)),
             this, SLOT(on_m_socketProxy_bytesWritten(qint64)));
 
@@ -196,13 +200,22 @@ void ClientMainWindow::on_pushButton_send_clicked()
         }
         else
         {
-            this->m_socketProxy->sendImage(image, "PNG");
+            while (this->m_socketProxy->bytesToWrite() > 0) {
+                QApplication::processEvents();
+            }
+            this->m_socketProxy->sendImage(image);
 
             this->m_modelProxy->setChecked(checkedRows.at(i), false);
-            this->m_modelProxy->setStatus(checkedRows.at(i), ImageListModelProxy::FINISHED);
+            if (i > 0)
+                this->m_modelProxy->setStatus(checkedRows.at(i - 1), ImageListModelProxy::FINISHED);
         }
-        //this->ui->progressBar->setValue(int(100.0 / path.length() * i));
+        QApplication::processEvents();
     }
+    while (this->m_socketProxy->bytesToWrite() > 0)
+        QApplication::processEvents();
+    if (paths.length() > 0)
+        this->m_modelProxy->setStatus(checkedRows.at(paths.length() - 1), ImageListModelProxy::FINISHED);
+
     //qDebug() << errorRows;
     //this->ui->progressBar->setValue(100);
     //this->ui->progressBar->setShown(false);
@@ -212,6 +225,7 @@ void ClientMainWindow::on_pushButton_send_clicked()
 
 void ClientMainWindow::on_pushButton_terminate_clicked()
 {
+    qDebug() << "I want to terminate!!!";
     m_socketProxy->terminate();
 }
 
@@ -270,6 +284,7 @@ void ClientMainWindow::on_m_socketProxy_bytesWritten(qint64 v)
     qDebug() << "total" << total_sendData;
     qDebug() << "value" << writtenBytes;
     ui->progressBar->setValue((double)writtenBytes * 100.0/total_sendData);
+    QApplication::processEvents();
 }
 
 void ClientMainWindow::on_connecting()

@@ -2,9 +2,11 @@
 #define RECOGNIZEDIALOG_H
 
 #include <QDialog>
+#include<QVector>
 
 class QProcess;
 class ImageWidget;
+class QImage;
 
 namespace Ui {
     class RecognizeDialog;
@@ -26,7 +28,13 @@ private slots:
     void disableDialog();
     void readResult();
 
+    //char recognize(QString imagePath,const QString& type);
+    //QVector<double> imageToVector(const QImage& image);
+
 private:
+    int recognizeMode;
+    QString chineseXmlPath, numberXmlPath, otherXmlPath;
+
     Ui::RecognizeDialog *ui;
     QString m_fileName;
     QString c_savepath;

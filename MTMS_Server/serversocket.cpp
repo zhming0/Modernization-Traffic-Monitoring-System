@@ -63,6 +63,7 @@ void ServerSocket::on_readyRead()
                 waitNextMessage(20000);
                 buf.write(this->read(size - bytes.length()));
             }
+            //stream << PROGRESS << size;
             emit imageRead(bytes);
             emit logGenerated("Received an image from " + username + QString(", image size is %1 bytes.").arg(size));
         }

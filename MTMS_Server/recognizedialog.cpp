@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QProcess>
-
+#include "neuralnetwork.h"
 
 RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
     QDialog(parent),
