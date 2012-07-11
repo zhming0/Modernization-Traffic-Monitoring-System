@@ -15,25 +15,32 @@ ClientLoginDialog::ClientLoginDialog(ClientSocketProxy* socketProxy, QWidget *pa
     QDialog(parent),
     ui(new Ui::ClientLoginDialog)
 {
+    /* Setup ui */
     ui->setupUi(this);
-
     ui->widget_configuration->setShown(false);
 
+    /* Setup the RegExp of ipv4 line edit */
     QString Octet = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     ui->lineEdit_host->setValidator(new QRegExpValidator(
              QRegExp("^" + Octet + "\\." + Octet + "\\." + Octet + "\\." + Octet + "$"), this));
 
+    /* Setup waiting label */
     ui->label_wait->setAlignment(Qt::AlignCenter);
     ui->label_wait->setAttribute(Qt::WA_TranslucentBackground, false);
     QMovie* connectingMovie = new QMovie(":/loading.gif");
     ui->label_wait->setMovie(connectingMovie);
     connectingMovie->start();
 
+    /* Set the initialized returing code to rejected */
     this->setResult(QDialog::Rejected);
 
+    /* Adjust size */
     adjustSize();
 
+    /* Keep a reference of socketProxy */
     m_socketProxy = socketProxy;
+
+    /* Build connections */
     connect(m_socketProxy, SIGNAL(login_failed()), this, SLOT(on_m_socketProxy_login_failed()));
     connect(m_socketProxy, SIGNAL(login_succeeded()), this, SLOT(on_m_socketProxy_login_succeeded()));
     connect(m_socketProxy, SIGNAL(timeout()), this, SLOT(on_m_socketProxy_timeout()));

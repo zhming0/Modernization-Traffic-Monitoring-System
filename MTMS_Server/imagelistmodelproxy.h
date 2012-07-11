@@ -7,6 +7,7 @@ class ImageListItem;
 class QStandardItemModel;
 class QStandardItem;
 
+/* Copied from Client project, look up there */
 class ImageListModelProxy : public QObject
 {
     Q_OBJECT

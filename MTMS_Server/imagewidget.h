@@ -10,6 +10,7 @@ class QVBoxLayout;
 class QScrollArea;
 class QScrollBar;
 
+/* Copied from Client project, look up there */
 class ImageWidget : public QWidget
 {
     Q_OBJECT
