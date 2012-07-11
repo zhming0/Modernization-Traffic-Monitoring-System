@@ -7,7 +7,19 @@ class ImageListItem;
 class QStandardItemModel;
 class QStandardItem;
 
-/* A Proxy helps the Client MainWindow easily maintain and manage the image list */
+//! A proxy helps easily maintain and manage the image list
+/*!
+  ImageListItem is seen as the basic element of this class, whenever you need to add a new
+  item, make one.
+  To remove one or more items, use remove.
+  To set the check state of one item, use setChecked.
+  To set the status of one item, use setStatus.
+  To get the total number of items in the list, use rowCount.
+  To get the index list of all the checked items, use checkedRows.
+  You can get a specific item's path, using path, you may also need to get the path list of all the checked items, use checkedPath.
+  If the total size of checked item is needed, use checkedSize.
+  When you need to set model to a view, use model to get the inside model.
+ */
 class ImageListModelProxy : public QObject
 {
     Q_OBJECT
@@ -20,14 +32,23 @@ public:
         ERROR
     };
 
-    /* Constructor */
     explicit ImageListModelProxy(QObject *parent = 0);
 
-    /* Destructor */
+    /*!
+      Adds one item.
+      @param item ImageListItem is seen as the basic element of this class, to add one
+      you need to construct an ImageListItem object, and pass it to this function.
+      */
     void add(ImageListItem item);
 
-    /* Removes one item according to index or say, an index list */
+    /*! Removes one item according to the index
+      @param index The item to be removed.
+      */
     void remove(int index);
+
+    /*! Removes a list of items according to the indexes
+      @param indexes The indexes of items to be removed.
+      */
     void remove(QList<int> indexes);
 
     /* Sets specific item checked */

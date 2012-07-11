@@ -106,6 +106,11 @@ void ImageWidget::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
+/*
+ * Loads a pixmap and sets the comment
+ * @param [in] pixmap The pixmap to load
+ * @param [in] comment The comment of pixmap, can be an empty string.
+ */
 void ImageWidget::load(QPixmap pixmap, QString comment)
 {
 

@@ -3,10 +3,13 @@
 
 
 #include<QTcpServer>
+
+/* Inherits from QTcpServer, used to communicate with clients */
 class Server : public QTcpServer
 {
     Q_OBJECT
 public:
+    /* Constructor */
     explicit Server(QObject *parent = 0);
     void startListening(const int& port);
     void stopListening();

@@ -12,20 +12,18 @@ namespace Ui {
     class RecognizeDialog;
 }
 
+/* The dialog used to localize and recognize */
 class RecognizeDialog : public QDialog
 {
     Q_OBJECT
 
 public:
+    /* Passing in a filename which the dialog will try to open, if succeeded,
+     * Display image file, and await there to be recognized */
     explicit RecognizeDialog(const QString fileName, QWidget *parent = 0);
+
+    /* Destructor */
     ~RecognizeDialog();
-
-private:
-    QVector<double> imageToVector(const QImage& image);
-    QChar recognize(QString imagePath,const QString& type);
-    QImage imageNormalize(const QImage& image);
-    QVector<double> imageFeatureExtraction(const QImage& image);
-
 
 private slots:
     void on_pushButton_cancel_clicked();
@@ -36,9 +34,13 @@ private slots:
     void readResult();
 
 private:
+    QVector<double> imageToVector(const QImage& image);
+    QChar recognize(QString imagePath,const QString& type);
+    QImage imageNormalize(const QImage& image);
+    QVector<double> imageFeatureExtraction(const QImage& image);
+
     int recognizeMode;
     QString chineseXmlPath, numberXmlPath, otherXmlPath;
-
     Ui::RecognizeDialog *ui;
     QString m_fileName;
     QString c_savepath;
