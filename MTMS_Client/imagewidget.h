@@ -10,6 +10,7 @@ class QVBoxLayout;
 class QScrollArea;
 class QScrollBar;
 
+/* A widget to display an image */
 class ImageWidget : public QWidget
 {
     Q_OBJECT
@@ -21,6 +22,7 @@ signals:
     void displayed(bool fitToWindow);
 
 public slots:
+    /* The only useful function which loads a pixmap, comment can be anything */
     void load(QPixmap pixmap, QString comment);
     void fitToWindowChange(bool fitToWindow);
 

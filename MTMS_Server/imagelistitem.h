@@ -5,6 +5,8 @@
 
 class QFileInfo;
 class QFile;
+
+/* Copied from Client project, look up there */
 class ImageListItem : public QObject
 {
     Q_OBJECT
