@@ -29,7 +29,7 @@ RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
         QMessageBox::warning(this, "Warning", "Image file does not exist!");
         disableDialog();
     }
-
+    m_number = -1;
 }
 
 RecognizeDialog::~RecognizeDialog()
@@ -58,7 +58,6 @@ void RecognizeDialog::on_pushButton_localize_clicked()
     proc->write(QString("'"+c_savepath+"'").append("\n").toUtf8());
     proc->closeWriteChannel();
     this->setEnabled(false);
-
 }
 
 void RecognizeDialog::on_pushButton_recognize_clicked()
@@ -80,6 +79,8 @@ void RecognizeDialog::disableDialog()
     ui->widget_digit_3->setEnabled(false);
     ui->widget_digit_4->setEnabled(false);
     ui->widget_digit_6->setEnabled(false);
+    ui->widget_digit_5->setEnabled(false);
+    ui->widget_digit_7->setEnabled(false);
     ui->pushButton_cancel->setText("&Close");
 }
 
@@ -89,5 +90,22 @@ void RecognizeDialog::readResult()
     {
         QString str(m_process->readAllStandardOutput());
         qDebug() << str;
+        if(str.startsWith("[num]"))
+        {
+            int number = str.mid(5).toInt();
+            qDebug() << number;
+            if(number <= 7)
+            {
+                for(int i = 0; i < number; ++i)
+                {
+
+                }
+            }
+            this->setEnabled(true);
+        }
+        else if(str.startsWith("[error]"))
+        {
+            this->setEnabled(true);
+        }
     }
 }
