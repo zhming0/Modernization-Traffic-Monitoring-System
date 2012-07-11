@@ -43,10 +43,6 @@ private slots:
     void readResult();
 
 private:
-    QVector<double> imageToVector(const QImage& image);
-    QChar recognize(QString imagePath,const QString& type);
-    QImage imageNormalize(const QImage& image);
-    QVector<double> imageFeatureExtraction(const QImage& image);
 
     int recognizeMode;
 

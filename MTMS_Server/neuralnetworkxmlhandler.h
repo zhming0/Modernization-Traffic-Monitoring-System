@@ -6,7 +6,10 @@
 class NeuralNetwork;
 //class NeuralLayer;
 class Neuron;
-
+//! This class handle the XML IO.
+/*!
+  I don't want to make document for this.....
+*/
 class NeuralNetworkXmlHandler : public QXmlContentHandler
 {
 public:
