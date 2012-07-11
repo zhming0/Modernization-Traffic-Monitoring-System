@@ -5,6 +5,7 @@
 #include<QVector>
 
 class QProcess;
+class ImageWidget;
 class QImage;
 
 namespace Ui {
@@ -43,6 +44,8 @@ private:
     QString c_savepath;
     QString c_binpath;
     QProcess* m_process;
+    ImageWidget* getDigitImageWidget(int i);
+    void clearDigitImageWidgets();
     int m_number;
 };
 

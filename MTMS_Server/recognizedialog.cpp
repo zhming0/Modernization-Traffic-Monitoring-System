@@ -37,6 +37,7 @@ RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
         disableDialog();
     }
     m_number = -1;
+    this->clearDigitImageWidgets();
 }
 
 RecognizeDialog::~RecognizeDialog()
@@ -56,6 +57,7 @@ void RecognizeDialog::on_pushButton_okAndSave_clicked()
 
 void RecognizeDialog::on_pushButton_localize_clicked()
 {
+    this->clearDigitImageWidgets();
     QProcess* proc = new QProcess(this);
     m_process = proc;
     QString app = c_binpath + "Localization";
@@ -100,19 +102,63 @@ void RecognizeDialog::readResult()
         if(str.startsWith("[num]"))
         {
             int number = str.mid(5).toInt();
-            qDebug() << number;
-            if(number <= 7)
+            bool error = false;
+            for(int i = 1; i <= (number <= 7 ? number : 7); ++i)
             {
-                for(int i = 0; i < number; ++i)
+                QString impath(c_savepath + QString("%1.png").arg(i));
+                qDebug() << impath;
+                QImage image(impath);
+                if(!image.isNull())
                 {
-
+                    this->getDigitImageWidget(i)->load(QPixmap::fromImage(image), "");
                 }
+                else
+                {
+                    m_number = -1;
+                    this->clearDigitImageWidgets();
+                    error = true;
+                    break;
+                }
+            }
+            if(!error)
+            {
+                m_number = number <=7 ? number : 7;
             }
             this->setEnabled(true);
         }
         else if(str.startsWith("[error]"))
         {
+            this->clearDigitImageWidgets();
             this->setEnabled(true);
+            m_number = -1;
+        }
+    }
+}
+
+ImageWidget* RecognizeDialog::getDigitImageWidget(int i)
+{
+    if(i > 7 || i <= 0)
+    {
+        return NULL;
+    }
+    else
+    {
+        switch(i)
+        {
+        case 1:
+            return ui->widget_digit_1;
+        case 2:
+            return ui->widget_digit_2;
+        case 3:
+            return ui->widget_digit_3;
+        case 4:
+            return ui->widget_digit_4;
+        case 5:
+            return ui->widget_digit_5;
+        case 6:
+            return ui->widget_digit_6;
+        case 7:
+            return ui->widget_digit_7;
         }
     }
 }
@@ -216,4 +262,13 @@ QVector<double> RecognizeDialog::imageFeatureExtraction(const QImage &image)
                 }
         }
         return ret;
+}
+void RecognizeDialog::clearDigitImageWidgets()
+{
+    for(int i = 1; i <= 7; ++i)
+    {
+        ImageWidget* iw = getDigitImageWidget(i);
+        QImage image(":/black.png");
+        iw->load(QPixmap::fromImage(image), "");
+    }
 }
