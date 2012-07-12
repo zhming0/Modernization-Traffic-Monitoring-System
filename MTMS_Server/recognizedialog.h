@@ -56,6 +56,7 @@ private:
     void clearDigitImageWidgets();
 
     int recognizeMode;
+    bool isRecognized;
     QString chineseXmlPath, numberXmlPath, otherXmlPath, englishXmlPath;
     Ui::RecognizeDialog *ui;
     QString m_fileName;

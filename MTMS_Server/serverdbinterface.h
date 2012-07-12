@@ -38,6 +38,8 @@ public:
       @param name The file name
       */
     static bool removeImage(const QString& name);
+    static QString getImageResult(const QString& name);
+    static void setImageResult(const QString& name, const QString& result);
 
     /*!
       Update a record of a car

@@ -137,6 +137,11 @@ void ServerWindow::on_pushButton_update_clicked()
     {
         int r = list.first().row();
         m_modelProxy_recognized->setStatus(r, ImageListModelProxy::PROCESSED);
+        ServerDBInterface::setImageStatus(m_modelProxy_recognized->name(r), ImageListModelProxy::PROCESSED);
+        ServerDBInterface::setImageResult(m_modelProxy_recognized->name(r), ui->lineEdit_carid->text());
+        if (ServerDBInterface::updateCar(ui->lineEdit_owner->text(), ui->spinBox_violation->value(), ui->lineEdit_carid->text())) {
+            on_m_server_logGenerated(QString("Succeed updating! Owner is %1.").arg(ui->lineEdit_owner->text()));
+        }
     }
 }
 
@@ -198,7 +203,7 @@ void ServerWindow::on_pushButton_recognize_clicked()
                 this->m_modelProxy_unrecognized->remove(r);
 
                 //QString result = dlg.getResult();
-
+                ServerDBInterface::setImageResult(item.name(), dlg.getResult());
                 ServerDBInterface::setImageStatus(item.name(), ImageListModelProxy::UNPROCESSED);
             }
             else
@@ -274,7 +279,11 @@ void ServerWindow::on_recognized_currentRowChanged(QModelIndex current, QModelIn
         }
         else
         {
-            ui->lineEdit_carid->setText(recognizedPlate[row]);
+            ui->lineEdit_carid->setText(ServerDBInterface::getImageResult(m_modelProxy_recognized->name(row)));
+            QStringList list = ServerDBInterface::getCar(ServerDBInterface::getImageResult(m_modelProxy_recognized->name(row)));
+            ui->lineEdit_owner->setText(list[1]);
+            ui->spinBox_violation->setValue(list[2].toInt());
+
             QPixmap pixmap = QPixmap::fromImage(image);
             ui->imageWidget->load(pixmap, "");
         }

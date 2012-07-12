@@ -10,6 +10,7 @@ ServerDBInterface::ServerDBInterface(QObject *parent) :
 
 bool ServerDBInterface::login(const QString& username, const QString& passwd)
 {
+    //qDebug() << "Hey";
     QSqlQuery query;
     if (query.exec(QString("SELECT password FROM admin WHERE username = '%1'").arg(username)))
     {
@@ -72,6 +73,9 @@ bool ServerDBInterface::removeImage(const QString &name)
 bool ServerDBInterface::updateCar(const QString& owner, const int& violation, const QString& carId)
 {
     QSqlQuery query;
+    query.exec(QString("SELECT * FROM car WHERE carid = '%1'").arg(carId));
+    if (!query.next())
+        return ServerDBInterface::addCar(owner, violation, carId);
     if (query.exec(QString("UPDATE car SET owner = '%1' , violation = %2 , carid = '%3' WHERE carId = '%3'").arg(owner).arg(violation).arg(carId)))
         return true;
     qDebug() << query.lastError();
@@ -81,7 +85,7 @@ bool ServerDBInterface::updateCar(const QString& owner, const int& violation, co
 bool ServerDBInterface::addCar(const QString& owner, const int& violation, const QString& carId)
 {
     QSqlQuery query;
-    if (query.exec(QString("INSERT INT car VALUES('%3' , '%1' , %2)").arg(owner).arg(violation).arg(carId)))
+    if (query.exec(QString("INSERT INTO car VALUES('%3' , '%1' , %2)").arg(owner).arg(violation).arg(carId)))
         return true;
     qDebug() << query.lastError();
     return false;
@@ -93,9 +97,31 @@ QStringList ServerDBInterface::getCar(const QString &carid)
     QSqlQuery query;
     if (query.exec(QString("SELECT * FROM car WHERE carid = '%1'").arg(carid)))
     {
-        query.next();
-        list << query.value(0).toString() << query.value(1).toString() << query.value(2).toString();
+        if (query.next())
+            list << carid << query.value(1).toString() << query.value(2).toString();
+        else
+            list << carid << "Unknown" << "0";
     }else
         qDebug() << query.lastError();
     return list;
+}
+
+QString ServerDBInterface::getImageResult(const QString &name)
+{
+    QSqlQuery query;
+    QString s;
+    if (query.exec(QString("SELECT rec_result FROM images WHERE name = '%1'").arg(name))) {
+        query.next();
+        s = query.value(0).toString();
+    }else
+        qDebug() << query.lastError();
+    return s;
+}
+
+void ServerDBInterface::setImageResult(const QString &name, const QString &result)
+{
+    QSqlQuery query;
+    if (query.exec(QString("UPDATE images SET rec_result = '%1' WHERE name = '%2'").arg(result).arg(name))) {
+    }else
+        qDebug() << query.lastError();
 }
