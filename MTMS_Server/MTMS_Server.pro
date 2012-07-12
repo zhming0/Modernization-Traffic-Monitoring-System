@@ -2,6 +2,10 @@
 #
 # Project created by QtCreator 2012-06-26T11:02:48
 #
+# Modernization-Traffic-Monitoring-System
+# It is a C/S architecture desktop application, in
+# whose server side, users are able to recognize
+# car plate numbers.
 #-------------------------------------------------
 
 QT       += core gui xml

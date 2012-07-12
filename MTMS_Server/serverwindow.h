@@ -12,7 +12,9 @@ namespace Ui {
     class ServerWindow;
 }
 
-
+//! The server window
+/*!
+  */
 class ServerWindow : public QMainWindow
 {
     Q_OBJECT
