@@ -196,6 +196,8 @@ void ServerWindow::on_pushButton_recognize_clicked()
                 ImageListItem item(fileInfo);
                 m_modelProxy_recognized->add(item);
                 this->m_modelProxy_unrecognized->remove(r);
+                QString result = dlg.getResult();
+                this->ui->lineEdit_carid->setText(result);
             }
             else
             {

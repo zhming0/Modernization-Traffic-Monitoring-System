@@ -26,6 +26,8 @@ public:
     /* Destructor */
     ~RecognizeDialog();
 
+    QString getResult() const;
+
 private:
     QVector<double> imageToVector(const QImage& image);
     QChar recognize(QString imagePath,const QString& type);
@@ -55,6 +57,7 @@ private:
     ImageWidget* getDigitImageWidget(int i);
     void clearDigitImageWidgets();
     int m_number;
+    QString result;
 };
 
 #endif // RECOGNIZEDIALOG_H

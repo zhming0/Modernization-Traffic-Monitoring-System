@@ -105,6 +105,12 @@ void RecognizeDialog::on_pushButton_recognize_clicked()
         s[tmp_s.toInt() - 1] = ret;
     }
     this->ui->lineEdit_result->setText(s);
+    result = s;
+}
+
+QString RecognizeDialog::getResult() const
+{
+    return result;
 }
 
 void RecognizeDialog::disableDialog()
