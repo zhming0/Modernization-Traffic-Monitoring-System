@@ -17,7 +17,7 @@ ServerLoginDialog::~ServerLoginDialog()
 
 void ServerLoginDialog::on_loginButton_clicked()
 {
-    if (ServerDBInterface::login(ui->userNameEdit->text(), QString(QCryptographicHash::hash(ui->userNameEdit->text().toAscii(),QCryptographicHash::Md5).toHex())))
+    if (ServerDBInterface::login(ui->userNameEdit->text(), QString(QCryptographicHash::hash(ui->passWordEdit->text().toAscii(),QCryptographicHash::Md5).toHex())))
         done(QDialog::Accepted);
     else
         QMessageBox::warning(this, "Warning", " Login failed!");

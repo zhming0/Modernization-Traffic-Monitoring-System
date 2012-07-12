@@ -15,6 +15,8 @@ public:
     static QList<QStringList> getImageList();   //return: list<name, status, path>
     static bool setImageStatus(const QString& name, int status);
     static bool removeImage(const QString& name);
+    static QString getImageResult(const QString& name);
+    static void setImageResult(const QString& name, const QString& result);
 
     static bool updateCar(const QString& name, const int& violation, const QString& carId);
     static bool addCar(const QString& name, const int& violation, const QString& carId);

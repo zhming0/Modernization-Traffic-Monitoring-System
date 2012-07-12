@@ -40,6 +40,8 @@ RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
     }
     m_number = -1;
     this->clearDigitImageWidgets();
+
+    isRecognized = false;
 }
 
 RecognizeDialog::~RecognizeDialog()
@@ -54,6 +56,11 @@ void RecognizeDialog::on_pushButton_cancel_clicked()
 
 void RecognizeDialog::on_pushButton_okAndSave_clicked()
 {
+    if (!isRecognized)
+    {
+        QMessageBox::warning(this, "Not recognized yet", "Please Recognize it first. XD");
+        return;
+    }
     this->accept();
 }
 
@@ -106,6 +113,7 @@ void RecognizeDialog::on_pushButton_recognize_clicked()
     }
     this->ui->lineEdit_result->setText(s);
     result = s;
+    isRecognized = true;
 }
 
 QString RecognizeDialog::getResult() const

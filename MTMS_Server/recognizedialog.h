@@ -47,6 +47,7 @@ private slots:
 private:
 
     int recognizeMode;
+    bool isRecognized;
 
     QString chineseXmlPath, numberXmlPath, otherXmlPath, englishXmlPath;
     Ui::RecognizeDialog *ui;
