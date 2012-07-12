@@ -58,6 +58,7 @@ private:
 
     QString imagePath;
 
+    QVector<QString> recognizedPlate;
 };
 
 #endif // SERVERWINDOW_H

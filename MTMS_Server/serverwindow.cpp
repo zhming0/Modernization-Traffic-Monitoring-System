@@ -196,8 +196,10 @@ void ServerWindow::on_pushButton_recognize_clicked()
                 ImageListItem item(fileInfo);
                 m_modelProxy_recognized->add(item);
                 this->m_modelProxy_unrecognized->remove(r);
-                QString result = dlg.getResult();
-                this->ui->lineEdit_carid->setText(result);
+
+                //QString result = dlg.getResult();
+
+                ServerDBInterface::setImageStatus(item.name(), ImageListModelProxy::UNPROCESSED);
             }
             else
             {
@@ -272,6 +274,7 @@ void ServerWindow::on_recognized_currentRowChanged(QModelIndex current, QModelIn
         }
         else
         {
+            ui->lineEdit_carid->setText(recognizedPlate[row]);
             QPixmap pixmap = QPixmap::fromImage(image);
             ui->imageWidget->load(pixmap, "");
         }
@@ -377,6 +380,7 @@ void ServerWindow::on_pushButton_recognized_delete_clicked()
     {
         QString name = this->m_modelProxy_recognized->name(row);
         ServerDBInterface::removeImage(name);
+        this->recognizedPlate.remove(row);
     }
     m_modelProxy_recognized->remove(checkedRows);
     foreach(QString path, paths)
