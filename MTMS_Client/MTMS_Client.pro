@@ -9,6 +9,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 TARGET = MTMS_Client
 TEMPLATE = app
@@ -35,7 +36,7 @@ FORMS    += clientmainwindow.ui \
     clientlogindialog.ui \
     imagepreviewdialog.ui
 
-QT += network
+
 
 RESOURCES += \
     images.qrc

@@ -12,6 +12,7 @@ QT       += core gui xml
 QT       += network
 QT       += sql
 
+
 TARGET = MTMS_Server
 TEMPLATE = app
 
