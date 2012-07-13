@@ -1,8 +1,8 @@
 #include "serverdbinterface.h"
 #include <QDebug>
-#include<QTSQL>
-#include<QStringList>
-#include<QList>
+#include <QTSQL>
+#include <QStringList>
+#include <QList>
 ServerDBInterface::ServerDBInterface(QObject *parent) :
     QObject(parent)
 {

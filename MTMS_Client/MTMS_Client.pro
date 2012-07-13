@@ -39,3 +39,5 @@ QT += network
 
 RESOURCES += \
     images.qrc
+RC_FILE = logo.rc
+

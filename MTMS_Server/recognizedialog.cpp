@@ -4,20 +4,21 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QProcess>
-#include<QImage>
-#include<QColor>
+#include <QImage>
+#include <QColor>
+#include <QDir>
+
 #include "neuralnetwork.h"
-#include<QDir>
 
 RecognizeDialog::RecognizeDialog(const QString fileName, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RecognizeDialog)
 {
     this->recognizeMode = 1;
-    this->chineseXmlPath = "./chinese.xml";
-    this->otherXmlPath = "./other.xml";
-    this->numberXmlPath = "./number.xml";
-    this->englishXmlPath = "./character.xml";
+    this->chineseXmlPath = "./xml/chinese.xml";
+    this->otherXmlPath = "./xml/other.xml";
+    this->numberXmlPath = "./xml/number.xml";
+    this->englishXmlPath = "./xml/character.xml";
 
     c_savepath = "./workspace/";
     c_binpath = "./bin/";
@@ -130,7 +131,6 @@ void RecognizeDialog::disableDialog()
     ui->pushButton_localize->setEnabled(false);
     ui->pushButton_okAndSave->setEnabled(false);
     ui->pushButton_recognize->setEnabled(false);
-    //ui->lineEdit_matchRate->setEnabled(false);
     ui->lineEdit_result->setEnabled(false);
     ui->widget_targetImage->setEnabled(false);
     ui->widget_digit_1->setEnabled(false);
@@ -211,6 +211,7 @@ ImageWidget* RecognizeDialog::getDigitImageWidget(int i)
             return ui->widget_digit_7;
         }
     }
+    return NULL;
 }
 
 QImage RecognizeDialog::imageNormalize(const QImage &image)

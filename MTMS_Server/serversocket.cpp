@@ -1,7 +1,7 @@
 #include "serversocket.h"
-#include"serverdbinterface.h"
-#include<QBuffer>
-#include<QImage>
+#include "serverdbinterface.h"
+#include <QBuffer>
+#include <QImage>
 ServerSocket::ServerSocket(int id)
 {
     this->setSocketDescriptor(id);
