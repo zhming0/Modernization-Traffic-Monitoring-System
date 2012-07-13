@@ -58,7 +58,7 @@ void RecognizeDialog::on_pushButton_okAndSave_clicked()
 {
     if (!isRecognized)
     {
-        QMessageBox::warning(this, "Not recognized yet", "Please Recognize it first. XD");
+        QMessageBox::warning(this, "Warning", "Please Recognize it first.");
         return;
     }
     this->accept();

@@ -46,6 +46,7 @@ private slots:
     void on_pushButton_recognized_checkAll_clicked();
     void on_pushButton_recognized_uncheck_clicked();
     void on_pushButton_recognized_uncheckAll_clicked();
+    void on_action_about_triggered();
 
 private:
     void initConnection();

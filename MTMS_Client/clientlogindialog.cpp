@@ -67,6 +67,11 @@ void ClientLoginDialog::on_pushButton_login_clicked()
     }
     m_socketProxy->login(ui->lineEdit_account->text(), ui->lineEdit_password->text());
     ui->stackedWidget->setCurrentIndex(1);
+    if(ui->pushButton_more->isChecked())
+    {
+        ui->widget_configuration->hide();
+        this->adjustSize();
+    }
 }
 
 void ClientLoginDialog::on_pushButton_apply_clicked()
@@ -124,12 +129,22 @@ void ClientLoginDialog::on_m_socketProxy_login_succeeded()
 void ClientLoginDialog::on_m_socketProxy_login_failed()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    if(ui->pushButton_more->isChecked())
+    {
+        this->ui->widget_configuration->show();
+        this->adjustSize();
+    }
     QMessageBox::warning(this, "Warning", "Login failed!");
 }
 
 void ClientLoginDialog::on_m_socketProxy_timeout()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    if(ui->pushButton_more->isChecked())
+    {
+        this->ui->widget_configuration->show();
+        this->adjustSize();
+    }
     QMessageBox::warning(this, "Warning", "Timeout!");
 }
 

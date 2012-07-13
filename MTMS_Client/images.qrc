@@ -16,5 +16,7 @@
         <file alias="multi_uncheck.png">resource/images/multi_uncheck.png</file>
         <file alias="led_red_black.png">resource/images/led_red_black.png</file>
         <file alias="led_green_black.png">resource/images/led_green_black.png</file>
+        <file alias="logo.png">resource/images/logo.png</file>
+        <file alias="logo_small.png">resource/images/logo_small.png</file>
     </qresource>
 </RCC>
