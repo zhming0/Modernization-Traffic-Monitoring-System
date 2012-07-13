@@ -75,7 +75,10 @@ void ClientMainWindow::on_action_Exit_triggered()
 
 void ClientMainWindow::on_action_About_triggered()
 {
-    QMessageBox::about(this, "About", "");
+    QMessageBox::about(this, "About", "<b>Modernization Traffic Monitoring System</b>\n"
+"is a C/S architecture desktop application, in\n"
+"whose server side, users are able to recognize\n"
+"car plate numbers.\n");
 }
 
 void ClientMainWindow::on_pushButton_open_clicked()

@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
-    <height>586</height>
+    <width>683</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ServerWindow</string>
+   <string>MTMS - Server</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/logo_small.png</normaloff>:/logo_small.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -30,44 +34,59 @@
           <property name="title">
            <string>Server</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <widget class="QPushButton" name="serverEnableButton">
+              <widget class="QLabel" name="label_port">
                <property name="text">
-                <string>Start Server</string>
+                <string>&amp;Port:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="buddy">
+                <cstring>portSpinBox</cstring>
                </property>
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout">
-               <item>
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Port:</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="portSpinBox">
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                 <property name="maximum">
-                  <number>65535</number>
-                 </property>
-                 <property name="value">
-                  <number>4000</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <widget class="QSpinBox" name="portSpinBox">
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="maximum">
+                <number>65535</number>
+               </property>
+               <property name="value">
+                <number>4000</number>
+               </property>
+              </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>93</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="serverEnableButton">
+             <property name="toolTip">
+              <string>Click to start the server.</string>
+             </property>
+             <property name="text">
+              <string>&amp;Start Server</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -96,7 +115,7 @@
          <attribute name="title">
           <string>Unrecognized</string>
          </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QTableView" name="tableView_unrecognized">
             <property name="editTriggers">
@@ -256,6 +275,35 @@
              </widget>
             </item>
             <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_recognize">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Recognize the selected item...</string>
+              </property>
+              <property name="text">
+               <string>&amp;Recognize...</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>84</width>
+                <height>23</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -267,30 +315,6 @@
                </size>
               </property>
              </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
-             <widget class="QPushButton" name="pushButton_recognize">
-              <property name="toolTip">
-               <string>Recognize a single item.</string>
-              </property>
-              <property name="text">
-               <string>Recognize</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_processAll">
-              <property name="toolTip">
-               <string>Batch process all the items.</string>
-              </property>
-              <property name="text">
-               <string>Process All</string>
-              </property>
-             </widget>
             </item>
            </layout>
           </item>
@@ -457,6 +481,39 @@
              </widget>
             </item>
             <item>
+             <widget class="Line" name="line_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_clearAllProcessed">
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>31</width>
+                <height>31</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Clear all that have been processed.</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="images.qrc">
+                <normaloff>:/cross.png</normaloff>:/cross.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -483,8 +540,14 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
                  <item>
                   <widget class="QLabel" name="label_2">
+                   <property name="toolTip">
+                    <string>Owner of the car.</string>
+                   </property>
                    <property name="text">
-                    <string>Owner:</string>
+                    <string>&amp;Owner:</string>
+                   </property>
+                   <property name="buddy">
+                    <cstring>lineEdit_owner</cstring>
                    </property>
                   </widget>
                  </item>
@@ -496,6 +559,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="toolTip">
+                    <string>Owner of the car.</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -504,8 +570,14 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <item>
                   <widget class="QLabel" name="label_4">
+                   <property name="toolTip">
+                    <string>Plate number of the car.</string>
+                   </property>
                    <property name="text">
-                    <string>Car ID:</string>
+                    <string>Plate &amp;Number:</string>
+                   </property>
+                   <property name="buddy">
+                    <cstring>lineEdit_carid</cstring>
                    </property>
                   </widget>
                  </item>
@@ -520,6 +592,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="toolTip">
+                    <string>Plate number of the car.</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -530,23 +605,36 @@
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
                 <widget class="QLabel" name="label_3">
+                 <property name="toolTip">
+                  <string>Changing the violation number here.</string>
+                 </property>
                  <property name="text">
-                  <string>Violation</string>
+                  <string>&amp;Violation</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
+                 <property name="buddy">
+                  <cstring>spinBox_violation</cstring>
+                 </property>
                 </widget>
                </item>
                <item>
-                <widget class="QSpinBox" name="spinBox_violation"/>
+                <widget class="QSpinBox" name="spinBox_violation">
+                 <property name="toolTip">
+                  <string>Changing the violation number here.</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
              <item row="1" column="1">
               <widget class="QPushButton" name="pushButton_update">
+               <property name="toolTip">
+                <string>Update the data.</string>
+               </property>
                <property name="text">
-                <string>Update</string>
+                <string>&amp;Update</string>
                </property>
               </widget>
              </item>
@@ -554,13 +642,6 @@
             <zorder></zorder>
             <zorder></zorder>
             <zorder>pushButton_update</zorder>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_clearAllProcessed">
-            <property name="text">
-             <string>Clear All Proccessed</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -595,11 +676,38 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>630</width>
-     <height>22</height>
+     <width>683</width>
+     <height>19</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_about"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Help"/>
   </widget>
+  <action name="action_exit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -613,5 +721,22 @@
  <resources>
   <include location="images.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>action_exit</sender>
+   <signal>triggered()</signal>
+   <receiver>ServerWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>341</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

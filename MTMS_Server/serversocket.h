@@ -1,6 +1,10 @@
 #ifndef SERVERSOCKET_H
 #define SERVERSOCKET_H
 #include<QTcpSocket>
+
+//! The server socket
+/*!
+  */
 class ServerSocket : public QTcpSocket
 {
     Q_OBJECT
@@ -12,6 +16,9 @@ class ServerSocket : public QTcpSocket
         PROGRESS
     };
 public:
+    /*! initialize a new ServerSocket
+      @param id The id.
+      */
     ServerSocket(int id);
 signals:
     void imageRead(const QByteArray&);

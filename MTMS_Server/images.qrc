@@ -19,5 +19,8 @@
         <file alias="uncheck.png">resourses/images/uncheck.png</file>
         <file alias="file_delete.png">resourses/images/file_delete.png</file>
         <file alias="black.png">resourses/images/black.png</file>
+        <file alias="logo.png">resourses/images/logo.png</file>
+        <file alias="logo_small.png">resourses/images/logo_small.png</file>
+        <file alias="recognize.png">resourses/images/recognize.png</file>
     </qresource>
 </RCC>

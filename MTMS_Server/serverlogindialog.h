@@ -7,6 +7,9 @@ namespace Ui {
     class ServerLoginDialog;
 }
 
+//! Server login dialog
+/*!
+  */
 class ServerLoginDialog : public QDialog
 {
     Q_OBJECT

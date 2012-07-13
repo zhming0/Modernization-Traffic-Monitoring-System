@@ -29,6 +29,7 @@ ServerWindow::ServerWindow(QWidget *parent) :
 
     initConnection();
     loadImageList();
+    ui->imageWidget->load(QPixmap::fromImage(QImage(":/black.png")), "");
 }
 ServerWindow::~ServerWindow()
 {
@@ -75,11 +76,17 @@ void ServerWindow::on_serverEnableButton_clicked()
     {
         enable = false;
         m_server->stopListening();
-        ui->serverEnableButton->setText("Start Server");
+        ui->serverEnableButton->setText("&Start Server");
+        ui->serverEnableButton->setToolTip("Click to start the server.");
+        ui->portSpinBox->setEnabled(true);
+        ui->label_port->setEnabled(true);
     }else {
         enable = true;
         m_server->startListening(ui->portSpinBox->text().toInt());
-        ui->serverEnableButton->setText("Stop Server");
+        ui->serverEnableButton->setText("&Stop Server");
+        ui->serverEnableButton->setToolTip("Click to stop the server.");
+        ui->portSpinBox->setEnabled(false);
+        ui->label_port->setEnabled(false);
     }
 }
 
@@ -100,6 +107,7 @@ void ServerWindow::on_m_server_imageRead(const QByteArray & bytes)
     pixelmap.save(imagePath + filename, "PNG");
     qDebug() <<  "Image path : " << imagePath + filename;
 
+    qDebug() << filename << "...";
     ServerDBInterface::addImage(filename, QDir::currentPath() + "/" + imagePath);
 
     QFile file(imagePath + filename);
@@ -178,7 +186,20 @@ void ServerWindow::on_pushButton_clearAllProcessed_clicked()
             removeList << i;
         }
     }
+    QStringList paths;
+    foreach(int row, removeList)
+    {
+        QString name = this->m_modelProxy_recognized->name(row);
+        QString path = this->m_modelProxy_recognized->path(row);
+        paths << path;
+        ServerDBInterface::removeImage(name);
+        this->recognizedPlate.remove(row);
+    }
     m_modelProxy_recognized->remove(removeList);
+    foreach(QString path, paths)
+    {
+        QFile::remove(path);
+    }
 }
 
 void ServerWindow::on_pushButton_recognize_clicked()
@@ -223,10 +244,11 @@ void ServerWindow::on_tableView_unrecognized_pressed(QModelIndex index)
     if(image.isNull())
     {
         m_modelProxy_unrecognized->setStatus(row, ImageListModelProxy::ERROR);
-        QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
         ServerDBInterface::removeImage(m_modelProxy_unrecognized->name(row));
         m_modelProxy_unrecognized->remove(row);
         QFile::remove(path);
+        //QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+
     }
     else
     {
@@ -245,9 +267,9 @@ void ServerWindow::on_tableView_recognized_pressed(QModelIndex index)
     {
 
         m_modelProxy_recognized->setStatus(row, ImageListModelProxy::ERROR);
-        QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
         ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
         m_modelProxy_recognized->remove(row);
+       // QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
         QFile::remove(path);
     }
     else
@@ -272,7 +294,7 @@ void ServerWindow::on_recognized_currentRowChanged(QModelIndex current, QModelIn
         {
 
             m_modelProxy_recognized->setStatus(row, ImageListModelProxy::ERROR);
-            QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+          //  QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
             ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
             m_modelProxy_recognized->remove(row);
             QFile::remove(path);
@@ -304,7 +326,7 @@ void ServerWindow::on_unrecognized_currentRowChanged(QModelIndex current, QModel
         {
 
             m_modelProxy_unrecognized->setStatus(row, ImageListModelProxy::ERROR);
-            QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
+           // QMessageBox::warning(this, "Warning", "File invalid, will be removed from the list.");
             ServerDBInterface::removeImage(m_modelProxy_recognized->name(row));
             m_modelProxy_unrecognized->remove(row);
             QFile::remove(path);
@@ -442,4 +464,12 @@ void ServerWindow::on_pushButton_recognized_uncheckAll_clicked()
     {
         this->m_modelProxy_recognized->setChecked(i, false);
     }
+}
+
+void ServerWindow::on_action_about_triggered()
+{
+    QMessageBox::about(this, "About", "<b>Modernization Traffic Monitoring System</b>\n"
+                        "is a C/S architecture desktop application, in\n"
+                        "whose server side, users are able to recognize\n"
+                        "car plate numbers.\n");
 }
