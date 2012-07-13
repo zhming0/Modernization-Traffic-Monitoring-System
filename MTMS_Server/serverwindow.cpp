@@ -186,6 +186,9 @@ void ServerWindow::on_pushButton_clearAllProcessed_clicked()
             removeList << i;
         }
     }
+
+
+
     QStringList paths;
     foreach(int row, removeList)
     {
@@ -193,7 +196,7 @@ void ServerWindow::on_pushButton_clearAllProcessed_clicked()
         QString path = this->m_modelProxy_recognized->path(row);
         paths << path;
         ServerDBInterface::removeImage(name);
-        this->recognizedPlate.remove(row);
+      //  this->recognizedPlate.remove(row);
     }
     m_modelProxy_recognized->remove(removeList);
     foreach(QString path, paths)
@@ -411,7 +414,7 @@ void ServerWindow::on_pushButton_recognized_delete_clicked()
     {
         QString name = this->m_modelProxy_recognized->name(row);
         ServerDBInterface::removeImage(name);
-        this->recognizedPlate.remove(row);
+       // this->recognizedPlate.remove(row);
     }
     m_modelProxy_recognized->remove(checkedRows);
     foreach(QString path, paths)

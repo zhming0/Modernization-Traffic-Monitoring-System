@@ -283,10 +283,16 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_recognize">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>31</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>31</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="toolTip">
