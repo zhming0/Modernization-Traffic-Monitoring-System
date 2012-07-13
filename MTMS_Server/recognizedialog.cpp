@@ -97,12 +97,14 @@ void RecognizeDialog::on_pushButton_recognize_clicked()
     int cnt = 0;
     for (int i = 0; i < list.length() && cnt < this->m_number; i++)
     {
+        qDebug () << i;
+        qDebug () << c_savepath +list[i];
         QChar ret;
         if (list[i][0] == '.')
             continue;
         cnt++;
         if (list[i][0] == '1')
-            ret = recognize(c_savepath +list[i], chineseXmlPath);
+            ret = recognize(c_savepath +list[i], chineseXmlPath, 0);
         else if (list[i][0] == '2')
             ret = recognize(c_savepath +list[i], englishXmlPath, 0);
         else
@@ -114,6 +116,7 @@ void RecognizeDialog::on_pushButton_recognize_clicked()
     this->ui->lineEdit_result->setText(s);
     result = s;
     isRecognized = true;
+
 }
 
 QString RecognizeDialog::getResult() const
@@ -127,7 +130,7 @@ void RecognizeDialog::disableDialog()
     ui->pushButton_localize->setEnabled(false);
     ui->pushButton_okAndSave->setEnabled(false);
     ui->pushButton_recognize->setEnabled(false);
-    ui->lineEdit_matchRate->setEnabled(false);
+    //ui->lineEdit_matchRate->setEnabled(false);
     ui->lineEdit_result->setEnabled(false);
     ui->widget_targetImage->setEnabled(false);
     ui->widget_digit_1->setEnabled(false);
@@ -278,7 +281,9 @@ QChar RecognizeDialog::recognize(QString imagePath, const QString &type, int mod
 {
     NeuralNetwork network(type);
     QImage image(imagePath);
+    qDebug() << imageToVector(image, mode);
     QVector<double> res = network.test(imageToVector(image, mode));
+
     QString alphaString = network.getNetworkString();
     int maxI=0;
     for (int i = 0; i < res.size(); i++) {
