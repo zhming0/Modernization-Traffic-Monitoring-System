@@ -102,7 +102,7 @@ void RecognizeDialog::on_pushButton_recognize_clicked()
             continue;
         cnt++;
         if (list[i][0] == '1')
-            ret = recognize(c_savepath +list[i], chineseXmlPath);
+            ret = recognize(c_savepath +list[i], chineseXmlPath, 0);
         else if (list[i][0] == '2')
             ret = recognize(c_savepath +list[i], englishXmlPath, 0);
         else
