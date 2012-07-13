@@ -10,7 +10,7 @@
  Target Server Version : 3007004
  File Encoding         : utf-8
 
- Date: 06/28/2012 10:23:56 AM
+ Date: 07/13/2012 17:01:33 PM
 */
 
 PRAGMA foreign_keys = false;
@@ -44,6 +44,7 @@ CREATE TABLE "images" (
 	 "name" text(32,0) NOT NULL,
 	 "status" integer NOT NULL DEFAULT 0,
 	 "path" text(96,0) NOT NULL,
+	 "rec_result" text(10,0),
 	PRIMARY KEY("name")
 );
 

@@ -225,6 +225,7 @@ void ServerWindow::on_pushButton_recognize_clicked()
                 ImageListItem item(fileInfo);
                 m_modelProxy_recognized->add(item);
                 this->m_modelProxy_unrecognized->remove(r);
+                ui->tableView_unrecognized->selectRow(0);
 
                 //QString result = dlg.getResult();
                 ServerDBInterface::setImageResult(item.name(), dlg.getResult());
