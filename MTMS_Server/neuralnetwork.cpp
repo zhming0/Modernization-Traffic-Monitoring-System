@@ -3,10 +3,10 @@
 #include "gradient.h"
 #include <ctime>
 #include <QFile>
-#include<iostream>
-#include"gradient.h"
-#include<qmath.h>
-#include<cstdio>
+#include <iostream>
+#include <qmath.h>
+#include <cstdio>
+#include "gradient.h"
 NeuralNetwork::NeuralNetwork(const QVector<int>& sizeOfNetwork)
 {
     for (int i = 0; i < sizeOfNetwork.size(); i++)

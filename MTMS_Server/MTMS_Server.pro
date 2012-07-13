@@ -54,4 +54,6 @@ FORMS    += serverwindow.ui \
 RESOURCES += \
     images.qrc
 
+RC_FILE = logo.rc
+
 

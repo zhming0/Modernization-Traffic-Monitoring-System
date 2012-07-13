@@ -1,13 +1,14 @@
 #include <QtGui/QApplication>
+#include <QDir>
+#include <QMessageBox>
+#include <QtSql>
+#include "serverlogindialog.h"
 #include "serverwindow.h"
-#include<QMessageBox>
-#include<QtSql>
-#include"serverlogindialog.h"
-#include<QDir>
+
 bool createConnection()
 {
         QSqlDatabase db=QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName("MTMSDB.sqlite");
+        db.setDatabaseName("./database/MTMSDB.sqlite");
         if (!db.open()) {
                 QMessageBox::critical(0,QObject::tr("Database Error"),
                               db.lastError().text());

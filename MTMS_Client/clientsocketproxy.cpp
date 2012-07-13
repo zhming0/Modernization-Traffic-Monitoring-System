@@ -3,9 +3,9 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QDebug>
-#include<QImage>
-#include<QBuffer>
-#include<QCryptographicHash>
+#include <QImage>
+#include <QBuffer>
+#include <QCryptographicHash>
 ClientSocketProxy::ClientSocketProxy(ImageListModelProxy* modelProxy, QObject *parent) :
     QObject(parent)
 {
@@ -67,7 +67,7 @@ void ClientSocketProxy::sendData(const QImage& data)
     //m_socket->flush();
 }
 
-bool ClientSocketProxy::on_m_socket_connected()
+void ClientSocketProxy::on_m_socket_connected()
 {
     sendData(LOGIN);
     sendData(m_username);

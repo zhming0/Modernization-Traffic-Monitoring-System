@@ -2,8 +2,8 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <cmath>
-#include<QImage>
-#include<QBuffer>
+#include <QImage>
+#include <QBuffer>
 ImageListItem::ImageListItem(QFileInfo fileInfo, QObject *parent) :
     QObject(parent)
 {

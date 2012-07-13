@@ -1,5 +1,5 @@
 #include "neuron.h"
-#include<iostream>
+#include <iostream>
 Neuron::Neuron(int numOfDendrons, double threshold)
 {
     this->threshold = threshold;

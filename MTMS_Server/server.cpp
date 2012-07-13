@@ -1,9 +1,9 @@
 #include "server.h"
-#include<QTcpServer>
-#include<QTcpSocket>
-#include<QThread>
-#include<qDebug>
-#include"serversocket.h"
+#include <QTcpServer>
+#include <QTcpSocket>
+#include <QThread>
+#include <qDebug>
+#include "serversocket.h"
 Server::Server(QObject *parent) :
     QTcpServer(parent)
 {

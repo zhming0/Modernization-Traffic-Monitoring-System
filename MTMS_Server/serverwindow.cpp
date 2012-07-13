@@ -1,10 +1,5 @@
 #include "serverwindow.h"
 #include "ui_serverwindow.h"
-#include "server.h"
-#include "imagelistmodelproxy.h"
-#include"serverdbinterface.h"
-#include"imagelistitem.h"
-
 #include <QDebug>
 #include <QDateTime>
 #include <QFileInfo>
@@ -13,7 +8,12 @@
 #include <QStringList>
 #include <QModelIndex>
 #include <QMessageBox>
-#include"recognizedialog.h"
+#include "server.h"
+#include "imagelistmodelproxy.h"
+#include "serverdbinterface.h"
+#include "imagelistitem.h"
+#include "recognizedialog.h"
+
 
 
 ServerWindow::ServerWindow(QWidget *parent) :

@@ -75,7 +75,7 @@ public slots:
       server,
       Called also, when after terminated and reconnection needed.
       */
-    bool on_m_socket_connected();
+    void on_m_socket_connected();
 
 
 private slots:

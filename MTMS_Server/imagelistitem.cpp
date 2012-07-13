@@ -2,7 +2,7 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <cmath>
-#include<QFile>
+#include <QFile>
 
 ImageListItem::ImageListItem(const QFileInfo& fileInfo, bool aliasEnabled, QString alias, QObject *parent) :
     QObject(parent)
